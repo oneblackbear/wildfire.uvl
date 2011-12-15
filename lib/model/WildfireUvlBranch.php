@@ -35,7 +35,9 @@ class WildfireUvlBranch extends WildfireContent{
     $this->define("vehicles", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicle', 'group'=>'relationships'));
     
     //remove the date_start / date_end
-    unset($this->columns['date_start'], $this->columns['date_end']);
+    $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
+		$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
+    unset($this->columns['view'], $this->columns['layout']);
   }
 
   public function scope_live(){
@@ -43,6 +45,7 @@ class WildfireUvlBranch extends WildfireContent{
   }
 
   public function before_save(){
+    $this->date_end = $this->date_start = "1970-01-01 00:00:00"; //epoc
     parent::before_save();
     if($this->postcode && (!$this->lat == 0)){
       $coords = geo_locate($this->postcode, Config::get("analytics/key"));
