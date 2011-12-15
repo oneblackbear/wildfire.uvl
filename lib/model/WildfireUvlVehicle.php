@@ -9,6 +9,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("make", "CharField", array('required'=>true));
     $this->define("model", "CharField", array('required'=>true));
     $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
+    $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("engine_size", "CharField");
     $this->define("colour", "CharField");
 
