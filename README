@@ -1,0 +1,2 @@
+REQUIRES THE GEO PLUGIN - git://github.com/phpwax/geohelpers.git
+Needs config var - analytics/key - google maps key
