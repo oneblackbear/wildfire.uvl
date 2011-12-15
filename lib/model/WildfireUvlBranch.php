@@ -39,6 +39,11 @@ class WildfireUvlBranch extends WildfireContent{
     unset($this->columns['view'], $this->columns['layout']);
   }
 
+  public function url(){    
+    if($this->title != $this->columns['title'][1]['default']) return "dealership/".Inflections::to_url($this->title);
+    else return false;
+  }
+
   public function scope_live(){
     return $this->filter("status", 1)->order("sort ASC, title ASC");
   }
