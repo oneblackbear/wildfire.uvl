@@ -24,10 +24,11 @@ class WildfireUvlBranch extends WildfireContent{
     //configurable bits for the vehicle summary - make this overwriteable on the vehicle as well
     $this->define("vehicle_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVechileFeaturedField', 'group'=>'relationships'));    
     //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
-    $this->define("vehicle_price_has_vat", "IntegerField", array('label'=>'Show vehicle price inc VAT', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
+    $this->define("vehicle_price_has_vat", "IntegerField", array('group'=>'config', 'label'=>'Show vehicle price inc VAT', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
     //the vat rate to use (percentage, so 20, 17.5 etc)
-    $this->define("vehicle_vat_rate", "FloatField", array('label'=>'VAT rate'));
-    //
+    $this->define("vehicle_vat_rate", "FloatField", array('label'=>'VAT rate','group'=>'config'));
+    //ability to make offers etc
+    $this->define("vehicle_make_an_offer", "BooleanField", array('group'=>'config'))
     
     //vehicles assigned to this dealer
     $this->define("vehicles", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicle', 'group'=>'relationships'));
