@@ -1,5 +1,5 @@
 <?
-class WildfireUvlVechileFeaturedField extends WaxModel{
+class WildfireUvlVehicleFeaturedField extends WaxModel{
   
   public function setup(){
     $this->define("title", "CharField", array('scaffold'=>true, 'required'=>true));
