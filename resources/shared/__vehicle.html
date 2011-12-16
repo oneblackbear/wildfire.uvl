@@ -1,0 +1,42 @@
+<div class='vehicle_page clearfix'>
+  
+  <div class='vehicle_header_block clearfix'>
+    
+    <h1 class='vehicle_title clearfix'>
+    <?if($cms_content->sale_price > 1):?>
+    <span class='price sale_price vehicle_price vehicle_sale_price'>
+      NOW &pound;<?=number_format($cms_content->sale_price,2)?>
+      <span class='vehicle_previous_price previous_price'>WAS &pound;<?=number_format($cms_content->price,2)?></span>
+    </span>
+    <?else:?>
+    <span class='price vehicle_price'>&pound;<?=number_format($cms_content->sale_price,2)?></span>
+    <?endif?>
+    <span class='title vehicle_title'><?=$cms_content->title?></span>
+    </h1>
+    
+  </div>
+
+
+  <?if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()):?>
+  <div class='dealership_list'>
+
+    <?foreach($branches as $branch):?>
+    <div class='dealership_summary clearfix'>
+    <?=partial("__dealership_summary", array('cms_content'=>$branch))?>
+    </div>
+    <?endforeach?>
+  
+  </div>
+  <?endif?>
+
+  <div class='vehicle_details'>  
+  
+    <div class='vehicle_key_features'>
+    </div>
+  
+    <div class='vehicle_and_content'>
+    </div>
+  
+  </div>
+  
+</div>
