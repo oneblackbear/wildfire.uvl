@@ -1,7 +1,7 @@
 <?
 class WildfireUvlVehicle extends WildfireContent{
   public static $vat_options = array('N/A', 'exc VAT', 'inc Vat');
-  
+
   public function setup(){
     parent::setup();
     $this->define("code", "CharField", array('required'=>true)); //a unique ref from import
@@ -17,10 +17,10 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("fuel_type", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleFuel', 'group'=>'relationships'));
     $this->define("transmission", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleTransmission', 'group'=>'relationships'));
     $this->define("features", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleFeature', 'group'=>'relationships'));
-    
-    
+
+
     //configurable bits for the vehicle summary - make this overwriteable on the vehicle as well
-    $this->define("featured_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVehicleFeaturedField', 'group'=>'relationships'));    
+    $this->define("featured_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVehicleFeaturedField', 'group'=>'relationships'));
     //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
     $this->define("price_has_vat", "IntegerField", array('group'=>'extras', 'label'=>'Show vehicle price inc VAT', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
     //the vat rate to use (percentage, so 20, 17.5 etc)
@@ -29,6 +29,9 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("make_an_offer", "BooleanField", array('group'=>'extras'));
     $this->define("book_a_test_drive", "BooleanField", array('group'=>'extras'));
     
+    $this->define("seating_capacity", "IntegerField");
+    $this->define("standing_capacity", "IntegerField");
+
     //matched to carweb for future use
     $this->define("original_registration_mark", "CharField", array('group'=>'extras'));
     $this->define("VIN", "CharField", array('group'=>'extras'));
