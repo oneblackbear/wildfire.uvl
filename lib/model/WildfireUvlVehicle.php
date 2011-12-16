@@ -13,6 +13,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("engine_size", "CharField");
     $this->define("colour", "CharField");
+    $this->define("co2", "CharField");
 
     $this->define("branches", 'ManyToManyField', array('target_model'=>'WildfireUvlBranch', 'group'=>'relationships'));
     $this->define("fuel_type", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleFuel', 'group'=>'relationships'));
