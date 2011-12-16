@@ -41,7 +41,7 @@ class WildfireUvlBranch extends WildfireContent{
   }
 
   public function url(){    
-    if($this->title != $this->columns['title'][1]['default']) return "dealership/".Inflections::to_url($this->title);
+    if($this->title != $this->columns['title'][1]['default']) return "dealerships/".Inflections::to_url($this->title);
     else return false;
   }
 
