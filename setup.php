@@ -5,4 +5,5 @@ CMSApplication::register_module("uvlvehicle", array("display_name"=>"Vehicles", 
 CMSApplication::register_module("uvlvehiclefeature", array("display_name"=>"Vehicle Features", "link"=>"/admin/uvlvehiclefeature/"));
 CMSApplication::register_module("uvlvehiclefeaturedfield", array("display_name"=>"Vehicle Featured Fields", "link"=>"/admin/uvlvehiclefeaturedfield/"));
 CMSApplication::register_module("uvlvehiclefuel", array("display_name"=>"Fuel Types", "link"=>"/admin/uvlvehiclefuel/"));
+CMSApplication::register_module("uvlvehicletransmission", array("display_name"=>"Tranmissions", "link"=>"/admin/uvlvehicletransmission/"));
 ?>
