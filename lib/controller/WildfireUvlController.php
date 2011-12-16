@@ -8,6 +8,7 @@ class WildfireUvlController extends ApplicationController{
       array_unshift($obj->cms_stack, $obj->controller);
     });
     parent::controller_global();
+    if(!$this->cms_called) $this->cms();
   }
 
 
