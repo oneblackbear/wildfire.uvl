@@ -5,6 +5,7 @@ class WildfireUvlBranch extends WildfireContent{
   public function setup(){
     $this->define("code", "CharField", array('required'=>true, 'scaffold'=>true, 'info_preview'=>true)); //a unique ref - if dealer is getting a multi branch import, this code needs to match
     parent::setup();
+    $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'label'=>"Live"));
     //add in address details etc
     $this->define("address_line_1", "CharField", array('group'=>'address'));
     $this->define("address_line_2", "CharField", array('group'=>'address'));
