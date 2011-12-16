@@ -3,11 +3,12 @@ class WildfireUvlVehicle extends WildfireContent{
   public static $vat_options = array('N/A', 'exc VAT', 'inc Vat');
 
   public function setup(){
+    $this->define("registration", "CharField", array('required'=>true, 'scaffold'=>true)); //reg plate
+    $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true));
+    $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
     parent::setup();
     $this->define("code", "CharField", array('required'=>true)); //a unique ref from import
-    $this->define("registration", "CharField", array('required'=>true)); //reg plate
-    $this->define("make", "CharField", array('required'=>true));
-    $this->define("model", "CharField", array('required'=>true));
+    
     $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("engine_size", "CharField");
