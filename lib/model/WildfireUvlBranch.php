@@ -3,8 +3,8 @@ class WildfireUvlBranch extends WildfireContent{
   public static $vat_options = array('N/A', 'exc VAT', 'inc Vat');
 
   public function setup(){
+    $this->define("code", "CharField", array('required'=>true, 'scaffold'=>true, 'info_preview'=>true)); //a unique ref - if dealer is getting a multi branch import, this code needs to match
     parent::setup();
-    $this->define("code", "CharField", array('required'=>true)); //a unique ref - if dealer is getting a multi branch import, this code needs to match
     //add in address details etc
     $this->define("address_line_1", "CharField", array('group'=>'address'));
     $this->define("address_line_2", "CharField", array('group'=>'address'));
@@ -17,8 +17,8 @@ class WildfireUvlBranch extends WildfireContent{
     $this->define("email", "CharField", array('group'=>'address'));
     $this->define("opening_hours", "TextField", array('group'=>'address'));
     //coords
-    $this->define("lat", "CharField", array('group'=>'advanced'));
-    $this->define("lng", "CharField", array('group'=>'advanced'));
+    $this->define("lat", "CharField", array('group'=>'address'));
+    $this->define("lng", "CharField", array('group'=>'address'));
 
     //configurable bits for the vehicle summary - make this overwriteable on the vehicle as well
     $this->define("vehicle_featured_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVehicleFeaturedField', 'group'=>'relationships'));    
