@@ -26,7 +26,7 @@ class WildfireUvlController extends ApplicationController{
   /**
    * handle dealership lookups
    */
-  public function __dealership_listings(){}
+  public function __dealership_listing(){}
   public function __dealership_summary(){}
   public function __dealership(){}
 
