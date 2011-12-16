@@ -47,20 +47,20 @@ class WildfireUvlVehicle extends WildfireContent{
 		$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
     unset($this->columns['view'], $this->columns['layout']);
   }
-  
-  public function url(){    
-    if($this->title != $this->columns['title'][1]['default']) return "vehicle/".Inflections::to_url($this->title);
+
+  public function url(){
+    if($this->title != $this->columns['title'][1]['default']) return "vehicles/".Inflections::to_url($this->title);
     else return false;
   }
-  
+
   public function scope_live(){
     return $this->filter("status", 1)->order("sort ASC, title ASC");
   }
-  
+
   public function before_save(){
     $this->date_end = $this->date_start = "1970-01-01 00:00:00"; //epoc
     parent::before_save();
   }
-  
+
 }
 ?>
