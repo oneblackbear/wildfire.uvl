@@ -1,5 +1,5 @@
 <?
 class CMSAdminUvlBaseController extends AdminContentController{
-  public $tree_layout = true;
+  public $tree_layout = false;
 }
 ?>
