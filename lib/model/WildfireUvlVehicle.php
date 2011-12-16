@@ -46,11 +46,13 @@ class WildfireUvlVehicle extends WildfireContent{
     //remove the date_start / date_end
     $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
 		$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
+		$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>''));
     unset($this->columns['view'], $this->columns['layout']);
   }
+  
 
   public function url(){
-    if($this->title != $this->columns['title'][1]['default']) return "vehicles/".Inflections::to_url($this->title);
+    if($this->title != $this->columns['title'][1]['default']) return "used/".Inflections::to_url($this->title);
     else return false;
   }
 
