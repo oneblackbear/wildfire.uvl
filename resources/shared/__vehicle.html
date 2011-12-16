@@ -1,7 +1,12 @@
+<?
+if(!$default_fields) $default_fields = array('engine_size'=>"Engine Size", 'transmission' =>'Transmission', 'fuel_type'=>'Fuel Type');
+$vehicle_fields = array();
+foreach($cms_content->featured_fields as $f) $vehicle_fields[$f->column_name] = $f->title;
+?>
 <div class='vehicle_page clearfix'>
-  
+
   <div class='vehicle_header_block clearfix'>
-    
+
     <h1 class='vehicle_title clearfix'>
     <?if($cms_content->sale_price > 1):?>
     <span class='price sale_price vehicle_price vehicle_sale_price'>
@@ -13,7 +18,7 @@
     <?endif?>
     <span class='title vehicle_title'><?=$cms_content->title?></span>
     </h1>
-    
+
   </div>
 
 
@@ -23,20 +28,28 @@
     <?foreach($branches as $branch):?>
     <div class='dealership_summary clearfix'>
     <?=partial("__dealership_summary", array('cms_content'=>$branch))?>
+    <?
+    if(!count($vehicle_fields)) foreach($branch->vehicle_featured_fields as $f) $vehicle_fields[$f->column_name] = $f->title;
+    ?>
     </div>
     <?endforeach?>
-  
+
   </div>
   <?endif?>
 
-  <div class='vehicle_details'>  
-  
-    <div class='vehicle_key_features'>
+  <div class='vehicle_details'>
+    <?if(!$vehicle_fields) $vehicle_fields = $default_fields;?>
+    <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
+      <?foreach($vehicle_fields as $name=>$field):?>
+      <span class='vehicle_key_feature'><?=$name?><span class='vehicle_key_feature_value'><?=$cms_content->humanize($field)?></span></span>
+      <?endforeach?>
     </div>
-  
-    <div class='vehicle_and_content'>
+
+    <div class='vehicle_and_content clearfix'>
+      <div class='vehicle_content_and_details'></div>
+      <div class='vehicle_gallery'></div>
     </div>
-  
+
   </div>
-  
+
 </div>
