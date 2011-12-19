@@ -1,0 +1,11 @@
+<h3 class='dealership_title'><a href="<?=$cms_content->permalink?>"><?=$cms_content->title?></a></h3>
+<div class='dealership_summary clearfix'>
+  <div class='opening_hours_and_contact_details' id="ohacd<?=$cms_content->primval?>">
+    <?=CmsTextFilter::filter("before_output", $cms_content->opening_hours)?>
+    <?if($cms_content->telephone):?><a href="#ohacd<?=$cms_content->primval?>" class='telephone'><span>T:</span> <?=$cms_content->telephone?></a><?endif?>
+    <?if($cms_content->fax):?><a href="#ohacd<?=$cms_content->primval?>" class='fax'><span>F:</span> <?=$cms_content->fax?></a><?endif?>
+    <a href="<?=$cms_content->permalink?>" class='button details'>Details</a>
+    <a href="<?=$cms_content->permalink?>#stocklist" class='button stocklist'>View Stock List</a>
+  </div>
+
+</div>
