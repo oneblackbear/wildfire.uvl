@@ -3,6 +3,7 @@ $address_columns = array();
 $contact_columns = array();
 //find all cols in the address group to output them
 foreach($cms_content->columns as $name=>$info){
+  $info = $info[1];
   if($info['subgroup'] == 'address' && ($v = $cms_content->$name)) $address_columns[$name] = $v;
   elseif($info['subgroup'] == 'contact' && ($v = $cms_content->$name)) $contact_columns[$name] = $v;
 }
