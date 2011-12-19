@@ -87,7 +87,6 @@ foreach($cms_content->featured_fields as $f){
             ?>
             <?$image = new WildfireFile($a->wildfire_file_id);?>
             <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
-            <?endif?>
           <?endforeach?>
         <?endif?>
       </div>
