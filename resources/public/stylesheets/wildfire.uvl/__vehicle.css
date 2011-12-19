@@ -1,0 +1,50 @@
+.vehicle_page{
+  width:100%;
+  margin:0;
+  padding:0;
+}
+  .vehicle_page .vehicle_header_block{
+    width:100%;
+  }
+    .vehicle_page .vehicle_header_block .vehicle_title{
+      font-size:164%;
+      font-weight:bold;
+    }
+      .vehicle_page .vehicle_title .price{}
+      .vehicle_page .vehicle_title .vehicle_price{
+        float:right;
+      }
+        .vehicle_page .vehicle_title .vehicle_price span{
+          display:block;
+          text-align:right;
+        }
+        .vehicle_page .vehicle_title .previous_price{
+          font-size:83%;
+        }
+
+  
+  .vehicle_page .vehicle_wrapper .dealership_list{
+    float:left;
+    width:25%;
+    margin-left:2%;
+  }
+  
+  .vehicle_page .vehicle_wrapper .vehicle_details{
+    float:left;
+    width:72%;
+  }
+  
+  .vehicle_page .vehicle_gallery{
+    float:left;
+    margin:0 10px 10px 0;
+    width:220px; /*this is matched to $primary_image_size*/
+  }
+  .vehicle_page .vehicle_summary{
+    float:left;
+    width:350px;
+  }
+  .vehicle_page .vehicle_content{
+    margin-top:15px;
+    float:left;
+    width:100%;
+  }
