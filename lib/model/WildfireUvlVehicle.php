@@ -8,7 +8,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
     parent::setup();
     $this->define("code", "CharField", array('required'=>true)); //a unique ref from import
-    
+
     $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
     $this->define("engine_size", "CharField");
@@ -31,7 +31,7 @@ class WildfireUvlVehicle extends WildfireContent{
     //ability to make offers etc
     $this->define("make_an_offer", "BooleanField", array('group'=>'extras'));
     $this->define("book_a_test_drive", "BooleanField", array('group'=>'extras'));
-    
+
     $this->define("seating_capacity", "IntegerField");
     $this->define("standing_capacity", "IntegerField");
 
@@ -51,7 +51,7 @@ class WildfireUvlVehicle extends WildfireContent{
 		$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
     unset($this->columns['view'], $this->columns['layout']);
   }
-  
+
 
   public function url(){
     if($this->title != $this->columns['title'][1]['default']) return "used/".Inflections::to_url($this->title);
