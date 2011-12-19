@@ -1,0 +1,64 @@
+.dealership_page{
+  width:100%;
+  margin:0;
+  padding:0;
+}
+  .dealership_page .dealership_header_block{
+    width:100%;
+  }
+    .dealership_page .dealership_header_block .dealership_title{
+      font-size:164%;
+      font-weight:bold;
+    }
+      .dealership_page .dealership_title .price{}
+      .dealership_page .dealership_title .dealership_price{
+        float:right;
+      }
+        .dealership_page .dealership_title .dealership_price span{
+          display:block;
+          text-align:right;
+        }
+        .dealership_page .dealership_title .previous_price{
+          font-size:83%;
+        }
+
+  
+  .dealership_page .dealership_wrapper .location_details{
+    float:right;
+    width:25%; /*$static_map_size*/
+    margin-left:2%; 
+  }
+  
+  .dealership_page .dealership_wrapper .dealership_details{
+    float:left;
+    width:72%;
+  }
+  
+  .dealership_page .dealership_gallery{
+    float:left;
+    margin:0 10px 10px 0;
+    width:220px; /*this is matched to $primary_image_size*/
+  }
+  .dealership_page .dealership_summary{
+    float:left;
+    width:350px;
+  }
+  .dealership_page .dealership_content{
+    margin-top:15px;
+    float:left;
+    width:100%;
+  }
+  
+  .dealership_key_features{
+    float:left;
+    width:100%;
+  }
+  .key_feature{
+    float:left;
+    padding:10px;
+    text-align:center;
+    margin-right:5px;
+  }
+    .key_feature span{
+      display:block;
+    }
