@@ -18,7 +18,7 @@ if(!$static_map_size) $static_map_size = 300;
         <?if(Config::get("uvl/dynamic_dealer_map")):?>
         <div class='dealership_map' data-lat="<?=$cms_content->lat?>" data-lng="<?=$cms_content->lng?>"></div>
         <?else:?>
-        <a href='http://maps.google.com/?q=<?=urlencode($cms_content->postcode)?>'><img src="http://maps.google.com/maps/api/staticmap?sensor=false&amp;maptype=roadmap&amp;size=<?=$static_map_size?>&amp;center=<?=$cms_content->lat.",".$cms_content->lng?>&amp;markers=color:red|<?=$cms_content->lat.",".$cms_content->lng;?>" alt="location of map" class='dealership_static_map'></a>
+        <a href='http://maps.google.com/?q=<?=urlencode($cms_content->postcode)?>'><img src="http://maps.googleapis.com/maps/api/staticmap?sensor=false&amp;maptype=roadmap&amp;size=<?=$static_map_size?>x<?=($static_map_size-50)?>&amp;center=<?=$cms_content->lat.",".$cms_content->lng?>&amp;markers=color:red|<?=$cms_content->lat.",".$cms_content->lng;?>" alt="location of map" class='dealership_static_map'></a>
         <?endif?>
         <a href="http://maps.google.com/?q=<?=urlencode($cms_content->postcode)?>" class='button dealership_map_link' target="_new">View bigger map</a>
         <a href="http://maps.google.com/?daddr=<?=urlencode($cms_content->postcode)?>" class='button dealership_directions_link' target="_new">Get directions</a>
