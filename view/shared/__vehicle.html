@@ -63,35 +63,22 @@ foreach($cms_content->featured_fields as $f){
     </div>
 
     <div class='vehicle_and_content clearfix'>
-      <div class='vehicle_content_and_details'>
-        <?=$cms_content->format_content()?>
-        
-        <?if($summary_fields && count($summary_fields)):?>
-        <table class='vehicle_summary_fields clearfix'>
-          <?foreach($summary_fields as $field=>$name):?>
-            <?if($val = $cms_content->humanize($field)):?>
-            <tr class='vehicle_feature'><th><?=$name?></th><td><?=$val?></td></tr>
-            <?endif?>
-          <?endforeach?>
-        </table>
-        <?endif?>
-        
-      </div>
-      
-      <div class='vehicle_gallery'>        
+      <div class='vehicle_gallery'>
         <?if(($attached = $cms_content->file_meta_get(false, $gallery_image_type)) && $attached->count()):?>
-          <?foreach($attached as $i=>$a):?>
-            <?
-            if($i == 0) $sz = $primary_image_size;
-            else $sz = $gallery_image_type_size;
-            ?>
-            <?$image = new WildfireFile($a->wildfire_file_id);?>
-            <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
-          <?endforeach?>
-        <?endif?>
+            <?foreach($attached as $i=>$a):?>
+              <?
+              if($i == 0) $sz = $primary_image_size;
+              else $sz = $gallery_image_type_size;
+              ?>
+              <?$image = new WildfireFile($a->wildfire_file_id);?>
+              <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
+            <?endforeach?>
+          <?endif?>
       </div>
-    </div>
 
+      <div class='vehicle_content_and_details'>
+    </div>
+    
   </div>
 
 </div>
