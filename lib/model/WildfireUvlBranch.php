@@ -53,7 +53,7 @@ class WildfireUvlBranch extends WildfireContent{
     $this->date_end = $this->date_start = "1970-01-01 00:00:00"; //epoc
     parent::before_save();
     if($this->postcode && ($this->lat == 0)){
-      $coords = geo_locate($this->postcode, Config::get("analytics/key"));
+      $coords = geo_locate($this->postcode, Config::get("uvl/google_maps_key"));
       WaxLog::log("error", print_r($coords,1), "geo_locate");
       $this->lat = $coords['lat'];
       $this->lng = $coords['lng'];
