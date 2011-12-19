@@ -1,0 +1,23 @@
+<?
+if(!$default_fields) $default_fields = array('registration'=>"Registration", 'colour' =>'Colour', 'features'=>'Features');
+
+$vehicle_fields = array();
+foreach($cms_content->featured_fields as $f) if(!$f->featured) $vehicle_fields[$f->column_name] = $f->title;
+if(!$vehicle_fields){
+  if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()){
+    foreach($branches as $branch) foreach($branch->vehicle_featured_fields as $f) if(!$f->featured) $vehicle_fields[$f->column_name] = $f->title;
+  }
+}
+if(!$vehicle_fields) $vehicle_fields = $default_fields;
+?>
+
+<?if($vehicle_fields):?>
+<table>
+<?foreach($vehicle_fields as $field=>$name):?>
+  <?$val = $cms_content->humanize($field);?>
+  <?if($val):?>
+  <tr><th><?=$name?></th><td><?=$val?></td></tr>
+  <?endif?>
+<?endforeach?>
+</table>
+<?endif?>
