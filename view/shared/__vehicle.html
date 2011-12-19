@@ -3,9 +3,9 @@ if(!$default_fields) $default_fields = array('engine_size'=>"Engine Size", 'tran
 if(!$default_summary_fields) $default_summary_fields = array('registration'=>"Registration", 'colour' =>'Colour', 'features'=>'Features');
 
 if(!$gallery_image_type) $gallery_image_type = "gallery image";
-if(!$gallery_image_type_size) $gallery_image_type_size = 91; //380 -15 (3*5 margin) / 4
-if(!$primary_image_size) $primary_image_size = 380;
-if(!$large_image_size) $primary_image_size = 600;
+if(!$gallery_image_type_size) $gallery_image_type_size = 70; //220 -10 (2*5 margin) / 3
+if(!$primary_image_size) $primary_image_size = 220;
+if(!$large_image_size) $large_image_size = 600;
 
 
 ?>
@@ -15,19 +15,38 @@ if(!$large_image_size) $primary_image_size = 600;
 
     <h1 class='vehicle_title clearfix'>
     <?if($cms_content->sale_price > 1):?>
-    <span class='price sale_price vehicle_price vehicle_sale_price'>
-      NOW &pound;<?=number_format($cms_content->sale_price,2)?>
+    <span class='has_sale_price vehicle_price'>
+      <span class='vehicle_sale_price'>NOW &pound;<?=number_format($cms_content->sale_price,2)?></span>
       <span class='vehicle_previous_price previous_price'>WAS &pound;<?=number_format($cms_content->price,2)?></span>
     </span>
     <?else:?>
     <span class='price vehicle_price'>&pound;<?=number_format($cms_content->sale_price,2)?></span>
     <?endif?>
-    <span class='title vehicle_title'><?=$cms_content->title?></span>
+    <span class='title vehicle_title_content'><?=$cms_content->title?></span>
     </h1>
 
   </div>
 
-  <div class='vehicle_wrapper clearfix'>
+  <div class='vehicle_wrapper clearfix'>    
+
+    <div class='vehicle_details'>
+      <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
+        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields))?>
+      </div>
+
+      <div class='vehicle_and_content clearfix'>
+        <div class='vehicle_gallery'>
+          <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>$gallery_image_type, 'gallery_image_type_size'=>$gallery_image_type_size, 'primary_image_size'=>$primary_image_size, 'large_image_size'=>$large_image_size))?>
+        </div>
+        <div class='vehicle_summary clearfix'>
+          <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields))?>
+        </div>
+        <div class='vehicle_content clearfix'>
+          <?=$cms_content->format_content()?>
+        </div>
+      </div>
+
+    </div>
     <?if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()):?>
     <div class='dealership_list'>
 
@@ -39,24 +58,5 @@ if(!$large_image_size) $primary_image_size = 600;
 
     </div>
     <?endif?>
-
-    <div class='vehicle_details'>
-      <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
-        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields))?>
-      </div>
-
-      <div class='vehicle_and_content clearfix'>
-        <div class='vehicle_gallery'>
-          <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>$gallery_image_type, 'gallery_image_type_size'=>$gallery_image_type_size, 'primary_image_size'=>$primary_image_size, 'large_image_size'=>$large_image_size))?>
-        </div>
-        <div class='vehicle_content_and_details clearfix'>          
-          <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields))?>
-        </div>
-        <div class='vehicle_content clearfix'>
-          <?=$cms_content->format_content()?>
-        </div>
-      </div>
-    
-    </div>
   </div>
 </div>
