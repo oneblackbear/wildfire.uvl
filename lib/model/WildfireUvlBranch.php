@@ -7,15 +7,15 @@ class WildfireUvlBranch extends WildfireContent{
     parent::setup();
     $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'label'=>"Live"));
     //add in address details etc
-    $this->define("address_line_1", "CharField", array('group'=>'address'));
-    $this->define("address_line_2", "CharField", array('group'=>'address'));
-    $this->define("address_line_3", "CharField", array('group'=>'address'));
-    $this->define("address_line_4", "CharField", array('group'=>'address'));
-    $this->define("address_line_5", "CharField", array('group'=>'address'));
-    $this->define("postcode", "CharField", array('group'=>'address'));
-    $this->define("telephone", "CharField", array('group'=>'address'));
-    $this->define("fax", "CharField", array('group'=>'address'));
-    $this->define("email", "CharField", array('group'=>'address'));
+    $this->define("address_line_1", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("address_line_2", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("address_line_3", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("address_line_4", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("address_line_5", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("postcode", "CharField", array('group'=>'address', 'subgroup'=>'address'));
+    $this->define("telephone", "CharField", array('group'=>'address', 'subgroup'=>'contact'));
+    $this->define("fax", "CharField", array('group'=>'address', 'subgroup'=>'contact'));
+    $this->define("email", "CharField", array('group'=>'address', 'subgroup'=>'contact'));
     $this->define("opening_hours", "TextField", array('group'=>'address', 'widget'=>"TinymceTextareaInput"));
     //coords
     $this->define("lat", "CharField", array('group'=>'address'));
