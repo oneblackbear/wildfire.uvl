@@ -48,3 +48,16 @@
     float:left;
     width:100%;
   }
+  
+  .vehicle_key_features{
+    float:left;
+    width:100%;
+  }
+  .key_feature{
+    float:left;
+    padding:10px;
+    text-align:center;
+  }
+    .key_feature span{
+      display:block;
+    }
