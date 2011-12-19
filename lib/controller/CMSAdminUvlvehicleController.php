@@ -4,6 +4,8 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   public $model_class = 'WildfireUvlVehicle';
   public $display_name = "Vehicles";
   public $dashboard = false;
+  public $file_tags = array('gallery image');
+  
   
 }
 ?>
