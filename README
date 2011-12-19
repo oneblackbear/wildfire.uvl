@@ -1,9 +1,12 @@
-REQUIRES THE GEO PLUGIN - git://github.com/phpwax/geohelpers.git
-Needs config var - analytics/key - google maps key
-checks for Config -> uvl
+/**
+ * REQUIRES GEO LOCATION PLUGIN - git://github.com/phpwax/geohelpers.git
+ */ 
+uses for config/uvl/google_maps_key
+
 /**
  * DEALERSHIP
  */
+Usage: 
 <?=partial("__dealership", array('cms_content'=>$cms_content))?>
 
 looks for config/uvl/dynamic_dealer_map - not set by default as relies on js
@@ -12,10 +15,13 @@ $static_map_size
 /**
  * DEALERSHIP LIST
  */
+
 /**
  * DEALERSHIP SUMMARY
  */
-<?=partial("__dealership_summary", array('cms_content'=>$branch))?>
+Usage:
+<?=partial("__dealership_summary", array('cms_content'=>$dealership))?>
+
 /**
  * VEHICLE LIST
  */
@@ -27,8 +33,7 @@ $static_map_size
 /**
  * VEHICLE PAGE
  */
-To use vehicle main page (__vehicle.html) on the cms_view use this:
-
+Usage:
 <?=partial("__vehicle", array('cms_content'=>$cms_content))?>
 
 There are some extra params:
