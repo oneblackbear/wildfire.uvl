@@ -34,51 +34,51 @@ foreach($cms_content->featured_fields as $f){
 
   </div>
 
+  <div class='vehicle_wrapper clearfix'>
+    <?if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()):?>
+    <div class='dealership_list'>
 
-  <?if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()):?>
-  <div class='dealership_list'>
-
-    <?foreach($branches as $branch):?>
-    <div class='dealership_summary clearfix'>
-    <?=partial("__dealership_summary", array('cms_content'=>$branch))?>
-    <?
-    if(!count($vehicle_fields)) foreach($branch->vehicle_featured_fields as $f) $vehicle_fields[$f->column_name] = $f->title;
-    ?>
-    </div>
-    <?endforeach?>
-
-  </div>
-  <?endif?>
-
-  <div class='vehicle_details'>
-    <?if(!$vehicle_fields) $vehicle_fields = $default_fields;?>
-    <?if(!$summary_fields) $summary_fields = $default_summary_fields;?>
-    <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
-      <?foreach($vehicle_fields as $field=>$name):?>
-        <?$val = $cms_content->humanize($field);?>
-        <?if($val):?>
-        <span class='vehicle_key_feature'><?=$name?><span class='vehicle_key_feature_value'><?=$val?></span></span>
-        <?endif?>
+      <?foreach($branches as $branch):?>
+      <div class='dealership_summary clearfix'>
+      <?=partial("__dealership_summary", array('cms_content'=>$branch))?>
+      <?
+      if(!count($vehicle_fields)) foreach($branch->vehicle_featured_fields as $f) $vehicle_fields[$f->column_name] = $f->title;
+      ?>
+      </div>
       <?endforeach?>
-    </div>
 
-    <div class='vehicle_and_content clearfix'>
-      <div class='vehicle_gallery'>
-        <?if(($attached = $cms_content->file_meta_get(false, $gallery_image_type)) && $attached->count()):?>
-            <?foreach($attached as $i=>$a):?>
-              <?
-              if($i == 0) $sz = $primary_image_size;
-              else $sz = $gallery_image_type_size;
-              ?>
-              <?$image = new WildfireFile($a->wildfire_file_id);?>
-              <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
-            <?endforeach?>
+    </div>
+    <?endif?>
+
+    <div class='vehicle_details'>
+      <?if(!$vehicle_fields) $vehicle_fields = $default_fields;?>
+      <?if(!$summary_fields) $summary_fields = $default_summary_fields;?>
+      <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
+        <?foreach($vehicle_fields as $field=>$name):?>
+          <?$val = $cms_content->humanize($field);?>
+          <?if($val):?>
+          <span class='vehicle_key_feature'><?=$name?><span class='vehicle_key_feature_value'><?=$val?></span></span>
           <?endif?>
+        <?endforeach?>
       </div>
 
-      <div class='vehicle_content_and_details'>
-    </div>
-    
-  </div>
+      <div class='vehicle_and_content clearfix'>
+        <div class='vehicle_gallery'>
+          <?if(($attached = $cms_content->file_meta_get(false, $gallery_image_type)) && $attached->count()):?>
+              <?foreach($attached as $i=>$a):?>
+                <?
+                if($i == 0) $sz = $primary_image_size;
+                else $sz = $gallery_image_type_size;
+                ?>
+                <?$image = new WildfireFile($a->wildfire_file_id);?>
+                <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
+              <?endforeach?>
+            <?endif?>
+        </div>
 
+        <div class='vehicle_content_and_details'>
+      </div>
+    
+    </div>
+  </div>
 </div>
