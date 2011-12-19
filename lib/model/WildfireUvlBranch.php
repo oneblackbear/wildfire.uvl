@@ -16,7 +16,7 @@ class WildfireUvlBranch extends WildfireContent{
     $this->define("telephone", "CharField", array('group'=>'address'));
     $this->define("fax", "CharField", array('group'=>'address'));
     $this->define("email", "CharField", array('group'=>'address'));
-    $this->define("opening_hours", "TextField", array('group'=>'address'));
+    $this->define("opening_hours", "TextField", array('group'=>'address', 'widget'=>"TinymceTextareaInput"));
     //coords
     $this->define("lat", "CharField", array('group'=>'address'));
     $this->define("lng", "CharField", array('group'=>'address'));
