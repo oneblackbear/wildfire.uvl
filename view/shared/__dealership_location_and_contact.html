@@ -1,0 +1,24 @@
+<?
+$address_columns = array();
+$contact_columns = array();
+//find all cols in the address group to output them
+foreach($cms_content->columns as $name=>$info){
+  if($info['subgroup'] == 'address' && ($v = $cms_content->$name)) $address_columns[$name] = $v;
+  elseif($info['subgroup'] == 'contact' && ($v = $cms_content->$name)) $contact_columns[$name] = $v;
+}
+?>
+<?if(count($address_columns)):?>
+<div class='dealership_address'>
+  <?foreach($address_columns as $col=>$val):?><span class='<?=$col?>'><?=$val?></span><?endforeach?>
+</div>
+<?endif?>
+
+<?if(count($contact_columns)):?>
+<div class='dealership_contact'>
+  <?foreach($contact_columns as $col=>$val):?><span class='<?=$col?>'><span><?=$col[0]?>:</span><?=$val?></span><?endforeach?>
+</div>
+<?endif?>
+
+<?if($cms_content->opening_hours):?>
+<?=CmsTextFilter::filter("before_output", $cms_content->opening_hours)?>
+<?endif?>
