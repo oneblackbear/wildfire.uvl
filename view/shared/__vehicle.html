@@ -51,6 +51,8 @@ if(!$large_image_size) $primary_image_size = 600;
         </div>
 
         <div class='vehicle_content_and_details'>
+          <?=$cms_content->format_content()?>
+          <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields))?>
         </div>
       </div>
     
