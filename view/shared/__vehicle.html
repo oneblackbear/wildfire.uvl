@@ -8,13 +8,6 @@ if(!$primary_image_size) $primary_image_size = 380;
 if(!$large_image_size) $primary_image_size = 600;
 
 
-$vehicle_fields = array();
-foreach($cms_content->featured_fields as $f){
-  if($f->featured) $vehicle_fields[$f->column_name] = $f->title;
-  else $summary_fields[$f->column_name] = $f->title;
-}
-
-
 ?>
 <div class='vehicle_page clearfix'>
 
@@ -41,9 +34,6 @@ foreach($cms_content->featured_fields as $f){
       <?foreach($branches as $branch):?>
       <div class='dealership_summary clearfix'>
       <?=partial("__dealership_summary", array('cms_content'=>$branch))?>
-      <?
-      if(!count($vehicle_fields)) foreach($branch->vehicle_featured_fields as $f) $vehicle_fields[$f->column_name] = $f->title;
-      ?>
       </div>
       <?endforeach?>
 
@@ -51,15 +41,8 @@ foreach($cms_content->featured_fields as $f){
     <?endif?>
 
     <div class='vehicle_details'>
-      <?if(!$vehicle_fields) $vehicle_fields = $default_fields;?>
-      <?if(!$summary_fields) $summary_fields = $default_summary_fields;?>
       <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
-        <?foreach($vehicle_fields as $field=>$name):?>
-          <?$val = $cms_content->humanize($field);?>
-          <?if($val):?>
-          <span class='vehicle_key_feature'><?=$name?><span class='vehicle_key_feature_value'><?=$val?></span></span>
-          <?endif?>
-        <?endforeach?>
+        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields))?>
       </div>
 
       <div class='vehicle_and_content clearfix'>
@@ -68,6 +51,7 @@ foreach($cms_content->featured_fields as $f){
         </div>
 
         <div class='vehicle_content_and_details'>
+        </div>
       </div>
     
     </div>

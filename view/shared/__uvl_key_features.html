@@ -1,0 +1,19 @@
+<?
+if(!$default_fields) $default_fields = array('engine_size'=>"Engine Size", 'transmission' =>'Transmission', 'fuel_type'=>'Fuel Type');
+
+$vehicle_fields = array();
+foreach($cms_content->featured_fields as $f) if($f->featured) $vehicle_fields[$f->column_name] = $f->title;
+if(!$vehicle_fields){
+  if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all()) && $branches->count()){
+    foreach($branches as $branch) foreach($branch->vehicle_featured_fields as $f) if($f->featured) $vehicle_fields[$f->column_name] = $f->title;
+  }
+}
+if(!$vehicle_fields) $vehicle_fields = $default_fields;
+?>
+
+<?foreach($vehicle_fields as $field=>$name):?>
+  <?$val = $cms_content->humanize($field);?>
+  <?if($val):?>
+  <span class='vehicle_key_feature'><?=$name?><span class='vehicle_key_feature_value'><?=$val?></span></span>
+  <?endif?>
+<?endforeach?>
