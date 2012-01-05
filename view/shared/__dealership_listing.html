@@ -1,0 +1,19 @@
+<div class='dealership_page dealership_listing clearfix'>
+
+  <div class='dealership_header_block clearfix'>
+    <h1 class='dealership_title clearfix'><?=$cms_content->title?></h1>
+  </div>
+  <div class='dealership_wrapper clearfix'>
+    <?if($cms_content->content):?>
+    <div class='dealership_content clearfix'>
+      <?=$cms_content->format_content()?>
+    </div>
+    <?endif?>
+    <?if($dealerships):?>
+    <div class='clearfix dealership_list'>
+      <?foreach($dealerships as $dealer):?><?=partial("__dealership_listing", array('cms_content'=>$dealer))?><?endforeach?>
+    </div>
+    <?endif?>
+  </div>
+  
+</div>
