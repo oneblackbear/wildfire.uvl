@@ -2,6 +2,7 @@
 class WildfireUvlController extends ApplicationController{
   
   public $paginate_dealership_list = false;
+  public $paginate_vehicle_list = true;
   
   //pushing back to the stack
   public function controller_global(){
@@ -18,13 +19,23 @@ class WildfireUvlController extends ApplicationController{
    * handles the display, filtering, search etc of vehicles
    */
 
-  public function __vehicle_listing(){}
+  public function __vehicle_listing(){
+    $model = new $this->cms_content_class($this->cms_live_scope);
+    $model = $this->__vehicle_filters($model);
+    if($this->paginate_vehicle_list){
+      if(!$this->this_page = Request::param('page')) $this->this_page = 1;
+      $this->vehicles = $model->page($this->this_page, $this->per_page);
+    }else $this->vehicles = $model->all();
+
+  }
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one
   public function __vehicle(){}    
 
-  protected function __vehicle_filters(){}
+  protected function __vehicle_filters($model){
+    return $model;
+  }
 
   /**
    * handle dealership lookups
