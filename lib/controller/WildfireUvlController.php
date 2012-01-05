@@ -1,5 +1,8 @@
 <?
 class WildfireUvlController extends ApplicationController{
+  
+  public $paginate_dealership_list = false;
+  
   //pushing back to the stack
   public function controller_global(){
     WaxEvent::add("cms.cms_stack_set", function(){
@@ -31,7 +34,10 @@ class WildfireUvlController extends ApplicationController{
      * will keep this one simple, just list all dealership branches
      */
     $model = new $this->cms_content_class($this->cms_live_scope);
-    $this->dealerships = $model->all();
+    if($this->paginate_dealership_list){
+      if(!$this->this_page = Request::param('page')) $this->this_page = 1;
+      $this->dealerships = $model->page($this->this_page, $this->per_page);
+    }else $this->dealerships = $model->all();
   }
   public function __dealership_summary(){}
   public function __dealership(){}

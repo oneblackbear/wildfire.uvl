@@ -13,6 +13,12 @@
     <div class='clearfix dealership_list'>
       <?foreach($dealerships as $dealer):?><?=partial("__dealership_summary", array('cms_content'=>$dealer))?><?endforeach?>
     </div>
+      <?if($paginate_dealership_list && $dealerships->total_pages > 1):?>
+    <div class='pagination_block dealership_pagination clearfix'>
+      <?=paginate_links($dealerships, 2)?>
+      <h5>Page <?=$this_page?> of <?=$dealerships->total_pages?></h5>
+    </div>
+      <?endif?>
     <?endif?>
   </div>
   
