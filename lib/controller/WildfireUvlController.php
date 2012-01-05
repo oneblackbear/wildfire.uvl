@@ -1,6 +1,6 @@
 <?
 class WildfireUvlController extends ApplicationController{
-  
+
   public $paginate_dealership_list = false;
   public $paginate_vehicle_list = true;
 
@@ -14,6 +14,7 @@ class WildfireUvlController extends ApplicationController{
     });
     parent::controller_global();
     if(!$this->cms_called) $this->cms();
+
   }
 
 
