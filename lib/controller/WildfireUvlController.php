@@ -3,7 +3,9 @@ class WildfireUvlController extends ApplicationController{
   
   public $paginate_dealership_list = false;
   public $paginate_vehicle_list = true;
-  
+
+  public $vehicle_class = "WildfireUvlVehicle";
+
   //pushing back to the stack
   public function controller_global(){
     WaxEvent::add("cms.cms_stack_set", function(){
