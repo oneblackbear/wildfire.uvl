@@ -60,9 +60,16 @@ class WildfireUvlController extends ApplicationController{
   //this goes over a join, so we have multiple options to look at
   protected function __vehicle_search_select_options($model, $join_name){
     $options = array();
-    $j_class = $model->columns[$join_name][1]['target_model'];
-    $join_model = new $j_class($this->cms_content_scope);
-    foreach($join_model->all() as $row) $options[] = array('title'=>$row->humanize(), 'primval'=>$row->primval);
+    //join
+    if($j_class = $model->columns[$join_name][1]['target_model']){
+      $join_model = new $j_class($this->cms_content_scope);
+      foreach($join_model->all() as $row) $options[] = array('title'=>$row->humanize(), 'primval'=>$row->primval);
+    }else{
+      //assume its a column, so grab all the versions of that col from this table
+      $class = get_class($model);
+      $cloned = new $class($this->cms_content_scope);
+      foreach($cloned->group($join_name)->all() as $item) $options[] = array('title'=>$item->$join_name, 'primval'=>urlencode($item->$join_name));
+    }
     return $options;
   }
 
