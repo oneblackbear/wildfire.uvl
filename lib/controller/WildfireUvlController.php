@@ -122,6 +122,10 @@ class WildfireUvlController extends ApplicationController{
     return $model->filter($model->primary_key, $filter_ids);
   }
   
+  protected function __vehicle_filter_select($model, $col, $value){
+    return $this->__vehicle_filter_multiselect($model, $col, $value);
+  }
+
   /**
    * handle dealership lookups
    */
