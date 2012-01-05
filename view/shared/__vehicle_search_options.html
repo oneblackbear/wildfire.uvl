@@ -1,0 +1,3 @@
+<?foreach($search_options as $search):?>
+  <?=partial("__uvl_search_".$search['type'], array('data'=>$search))?>
+<?endforeach?>
