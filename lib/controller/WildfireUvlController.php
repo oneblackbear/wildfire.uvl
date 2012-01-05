@@ -1,6 +1,5 @@
 <?
 class WildfireUvlController extends ApplicationController{
-
   //pushing back to the stack
   public function controller_global(){
     WaxEvent::add("cms.cms_stack_set", function(){
@@ -27,7 +26,13 @@ class WildfireUvlController extends ApplicationController{
   /**
    * handle dealership lookups
    */
-  public function __dealership_listing(){}
+  public function __dealership_listing(){
+    /**
+     * will keep this one simple, just list all dealership branches
+     */
+    $model = new $this->cms_content_class($this->cms_live_scope);
+    $this->dealerships = $model->all();
+  }
   public function __dealership_summary(){}
   public function __dealership(){}
 
