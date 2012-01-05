@@ -23,7 +23,7 @@ class WildfireUvlController extends ApplicationController{
    */
 
   public function __vehicle_listing(){
-    $model = new $this->cms_content_class($this->cms_live_scope);
+    $model = new $this->vehicle_class($this->cms_live_scope);
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
     $model = $this->__vehicle_filters($model, $this->vehicle_filters);
     if($this->paginate_vehicle_list){
