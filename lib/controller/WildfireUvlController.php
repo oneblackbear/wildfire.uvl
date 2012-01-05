@@ -80,6 +80,12 @@ class WildfireUvlController extends ApplicationController{
   public function __vehicle(){}
 
   protected function __vehicle_filters($model, $filters){
+    //go over the filters, compare to the search and based on what type they are run code to update the model filters
+    $search_options = $this->__vehicle_search_options(true, true);
+    $process = array();
+    foreach($filters as $key=>$val){
+      if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key]);
+    }
     return $model;
   }
 
