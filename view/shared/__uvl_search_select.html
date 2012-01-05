@@ -8,9 +8,9 @@ else $vals = array();
   <h3><?=$data['title']?></h3>
   
   <label for="vehicle_<?=$col?>"><?=$data['title']?></label>
-  <select name="vehicle_<?=$col?>" id="vehicle_<?=$col?>" class="range_select_dropdown">
-    <option value=''>-- Select --</option>
-    <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == $opt['primval']):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
+  <select name="vehicle[<?=$col?>]" id="vehicle_<?=$col?>" class="range_select_dropdown">
+    <option value=''>-- Any --</option>
+    <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == urldecode($opt['primval'])):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
   </select>
   
 </fieldset>
