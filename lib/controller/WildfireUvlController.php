@@ -58,5 +58,20 @@ class WildfireUvlController extends ApplicationController{
 
   protected function __dealership_filters($model){ return $model; }
 
+  /**
+   * a small cache helper for the slow queries that runs on memcached 
+   */
+  protected function __uvl_cache($func, $lifetime=3600){
+    if(class_exists("Memcache", false)){
+      $store = new WaxCache("wuvl/".$func, "memcache", array("lifetime"=>$lifetime));
+      if($cache = $store->get()) return unserialize($cache);
+      else{
+        $value = $this->$func(false, true);
+        $store->set(serialize($value));
+        return $value;
+      }
+    }
+    return false;
+  }
 }
 ?>
