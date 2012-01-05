@@ -99,7 +99,8 @@ class WildfireUvlController extends ApplicationController{
     //many to many
     if($model->columns[$col][1]['target_model'] && $model->columns[$col][0] == "ManyToManyField") return $this->__vehicle_join_filter($model, $col, $values);
     //otherise assume its a filter on a foreign key or a group col like body_style etc
-    else return $model->filter($col, $values);
+    elseif($values) return $model->filter($col, $values);
+    else return $model;
   }
   //looks at the join table
   protected function __vehicle_join_filter($model, $col, $values){
