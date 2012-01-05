@@ -83,6 +83,11 @@ class WildfireUvlController extends ApplicationController{
     return $model;
   }
 
+  protected function __vehicle_filter_range($model, $col, $values){
+    if($values['min']) $model = $model->filter($col, $values['min'], ">=");
+    if($values['max']) $model = $model->filter($col, $values['max'], "<=");
+    return $model;
+  }
   /**
    * handle dealership lookups
    */
