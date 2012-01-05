@@ -88,6 +88,26 @@ class WildfireUvlController extends ApplicationController{
     if($values['max']) $model = $model->filter($col, $values['max'], "<=");
     return $model;
   }
+  protected function __vehicle_join_filter($model, $col, $values){
+    $target_class = $model->columns[$col][1]['target_model'];
+    $target = new $target_class;
+    $target_table = $target->table;
+    $original_table = $model->table;
+    
+    $target_key = $target->table."_".$target->primary_key;
+    $original_key = $model->table."_".$model->primary_key;
+        
+    if($target_table < $original_table) $table = $target_table."_".$original_table;
+    else $table = $original_table."_".$target_table;
+    
+    $ids = implode(",", $values);
+    $query_model = new WaxModel;
+    $filter_ids = array(0);
+    foreach($query_model->query("SELECT `$original_key` as filterid FROM `$table` WHERE `$target_key` IN($ids)")->fetchAll() as $row) $filter_ids[] = $row['filterid'];
+    
+    return $model->filter($model->primary_key, $filter_ids);
+  }
+  
   /**
    * handle dealership lookups
    */
