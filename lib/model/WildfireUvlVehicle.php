@@ -7,33 +7,42 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true));
     $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
     parent::setup();
-    $this->define("code", "CharField", array('required'=>true)); //a unique ref from import
 
-    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
-    $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2')); //reg plate
-    $this->define("engine_size", "CharField");
+
+    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
+    $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
+    //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
+    $this->define("price_has_vat", "IntegerField", array('group'=>'prices', 'label'=>'Show vehicle price inc VAT**', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
+    //the vat rate to use (percentage, so 20, 17.5 etc)
+    $this->define("vat_rate", "FloatField", array('label'=>'VAT rate**','group'=>'prices', 'maxlength'=>'6,2'));
+
+    $this->define("engine_size", "CharField", array('group'=>'engine'));
+    $this->define("co2", "CharField", array('group'=>'engine'));
+    $this->define("mileage", "CharField", array('group'=>'engine'));
+
+    $this->define("seating_capacity", "IntegerField", array('group'=>'sizes'));
+    $this->define("standing_capacity", "IntegerField", array('group'=>'sizes'));
+    $this->define("length", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
+    $this->define("width", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
+    $this->define("height", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
+
+
     $this->define("colour", "CharField");
-    $this->define("co2", "CharField");
-    $this->define("mileage", "CharField");
+
 
     $this->define("branches", 'ManyToManyField', array('target_model'=>'WildfireUvlBranch', 'group'=>'relationships'));
     $this->define("fuel_type", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleFuel', 'group'=>'relationships'));
     $this->define("transmission", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleTransmission', 'group'=>'relationships'));
     $this->define("features", 'ManyToManyField', array('target_model'=>'WildfireUvlVehicleFeature', 'group'=>'relationships'));
-
-
     //configurable bits for the vehicle summary - make this overwriteable on the vehicle as well
     $this->define("featured_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVehicleField', 'group'=>'relationships'));
-    //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
-    $this->define("price_has_vat", "IntegerField", array('group'=>'extras', 'label'=>'Show vehicle price inc VAT', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
-    //the vat rate to use (percentage, so 20, 17.5 etc)
-    $this->define("vat_rate", "FloatField", array('label'=>'VAT rate','group'=>'extras', 'maxlength'=>'6,2'));
+
     //ability to make offers etc
+    $this->define("code", "CharField", array('required'=>true, 'group'=>'extras')); //a unique ref from import
     $this->define("make_an_offer", "BooleanField", array('group'=>'extras'));
     $this->define("book_a_test_drive", "BooleanField", array('group'=>'extras'));
 
-    $this->define("seating_capacity", "IntegerField");
-    $this->define("standing_capacity", "IntegerField");
+
 
     //matched to carweb for future use
     $this->define("original_registration_mark", "CharField", array('group'=>'extras'));
