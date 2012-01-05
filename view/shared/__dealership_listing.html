@@ -11,7 +11,7 @@
     <?endif?>
     <?if($dealerships):?>
     <div class='clearfix dealership_list'>
-      <?foreach($dealerships as $dealer):?><?=partial("__dealership_listing", array('cms_content'=>$dealer))?><?endforeach?>
+      <?foreach($dealerships as $dealer):?><?=partial("__dealership_summary", array('cms_content'=>$dealer))?><?endforeach?>
     </div>
     <?endif?>
   </div>
