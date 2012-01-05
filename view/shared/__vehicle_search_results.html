@@ -1,0 +1,12 @@
+      
+<fieldset class='clearfix vehicles_set'>
+  <div class='clearfix vehicle_result_list'>
+  <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
+  </div>
+  <?if($paginate_vehicles_list && $vehicles->total_pages > 1):?>
+  <div class='pagination_block vehicles_pagination clearfix'>
+    <?=paginate_links($vehicles, 2)?>
+    <h5>Page <?=$this_page?> of <?=$vehicles->total_pages?></h5>
+  </div>
+  <?endif?>
+</fieldset>

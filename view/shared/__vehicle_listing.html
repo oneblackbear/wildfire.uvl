@@ -11,22 +11,11 @@
     <?endif?>
     <?if($vehicles):?>
     <form class='clearfix vehicles_search_container' action="" method="get">
-      
       <div class='clearfix vehicle_search_options'>
         <?=partial("__vehicle_search_options")?>        
       </div>
-            
-      <fieldset class='clearfix vehicles_set'>
-        <div class='clearfix vehicle_result_list'>
-        <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
-        </div>
-        <?if($paginate_vehicles_list && $vehicles->total_pages > 1):?>
-        <div class='pagination_block vehicles_pagination clearfix'>
-          <?=paginate_links($vehicles, 2)?>
-          <h5>Page <?=$this_page?> of <?=$vehicles->total_pages?></h5>
-        </div>
-        <?endif?>
-      </fieldset>      
+      
+      <?=partial("__vehicle_search_results", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list))?>
       <input type="submit" name="vehicle_submit" value="Search" class='button submit_button'>
     </form> 
     <?endif?>
