@@ -1,0 +1,15 @@
+<?
+$posted = Request::param('vehicle');
+if(($col = $data['col']) && $posted[$col]) $vals = $posted[$col];
+else $vals = array();
+?>
+<?if(count($data['options']) > 1):?>
+<fieldset class='range_multiselect col_<?=$col?>'>
+  <h3><?=$data['title']?></h3>
+  
+  <?foreach($data['options'] as $opt):?>
+  <span class='range_multiselect_option'><input id="vehicle_<?=$col?>_<?=$opt['primval']?>" type='checkbox' name='vehicle[<?=$col?>][]' value='<?=$opt['primval']?>'<?if(in_array($opt['primval'], $vals) ):?> checked="checked"<?endif?>><label for="vehicle_<?=$col?>_<?=$opt['primval']?>"><?=$opt['title']?></label></span>
+  <?endforeach?>
+  
+</fieldset>
+<?endif?>

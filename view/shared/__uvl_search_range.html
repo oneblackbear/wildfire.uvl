@@ -1,0 +1,22 @@
+<?
+$posted = Request::param('vehicle');
+if(($col = $data['col']) && ($vals = $posted[$col])){
+  $min = $vals['min'];
+  $max = $vals['min'];
+}else{
+  $min = $data['range']['min'];
+  $max = $data['range']['max'];  
+}
+?>
+<?if($min != $max):?>
+<fieldset class='range_slider col_<?=$col?> clearfix'>
+  <h3><?=$data['title']?></h3>
+  
+  <label for="vehicle_<?=$col?>_min">Min</label>
+  <input type="text" value="<?=$min?>" data-min="<?=$data['range']['min']?>" name='vehicle[<?=$col?>][min]' class='range_slider_input range_slider_min' id="vehicle_<?=$col?>_min">
+  
+  <label for="vehicle_<?=$col?>_max">Max</label>
+  <input type="text" value="<?=$max?>" data-min="<?=$data['range']['max']?>" name='vehicle[<?=$col?>][max]' class='range_slider_input range_slider_max' id="vehicle_<?=$col?>_max">
+  
+</fieldset>
+<?endif?>

@@ -1,0 +1,17 @@
+<?
+$posted = Request::param('vehicle');
+if(($col = $data['col']) && $posted[$col]) $val = $posted[$col];
+else $vals = array();
+?>
+<?if(count($data['options']) > 1):?>
+<fieldset class='range_select col_<?=$col?>'>
+  <h3><?=$data['title']?></h3>
+  
+  <label for="vehicle_<?=$col?>"><?=$data['title']?></label>
+  <select name="vehicle_<?=$col?>" id="vehicle_<?=$col?>" class="range_select_dropdown">
+    <option value=''>-- Select --</option>
+    <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == $opt['primval']):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
+  </select>
+  
+</fieldset>
+<?endif?>
