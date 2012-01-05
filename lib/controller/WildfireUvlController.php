@@ -36,7 +36,7 @@ class WildfireUvlController extends ApplicationController{
     //this could be a very slow query, lots of db look ups, so add in some caching
     if($cache && ($cached = $this->__uvl_cache("__vehicle_search_options"))) $search_options = $cached;
     else $search_options = array();
-    
+
     if(!$search_options){
       $model = new WildfireUvlVehicleSearchField;
       foreach($model->all() as $search){
@@ -107,21 +107,21 @@ class WildfireUvlController extends ApplicationController{
     $target = new $target_class;
     $target_table = $target->table;
     $original_table = $model->table;
-    
+
     $target_key = $target->table."_".$target->primary_key;
     $original_key = $model->table."_".$model->primary_key;
-        
+
     if($target_table < $original_table) $table = $target_table."_".$original_table;
     else $table = $original_table."_".$target_table;
-    
+
     $ids = implode(",", $values);
     $query_model = new WaxModel;
     $filter_ids = array(0);
     foreach($query_model->query("SELECT `$original_key` as filterid FROM `$table` WHERE `$target_key` IN($ids)")->fetchAll() as $row) $filter_ids[] = $row['filterid'];
-    
+
     return $model->filter($model->primary_key, $filter_ids);
   }
-  
+
   protected function __vehicle_filter_select($model, $col, $value){
     return $this->__vehicle_filter_multiselect($model, $col, $value);
   }
@@ -146,7 +146,7 @@ class WildfireUvlController extends ApplicationController{
   protected function __dealership_filters($model, $filters){ return $model; }
 
   /**
-   * a small cache helper for the slow queries that runs on memcached 
+   * a small cache helper for the slow queries that runs on memcached
    */
   protected function __uvl_cache($func, $lifetime=3600){
     if(class_exists("Memcache", false)){
