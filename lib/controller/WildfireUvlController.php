@@ -94,6 +94,14 @@ class WildfireUvlController extends ApplicationController{
     if($values['max']) $model = $model->filter($col, $values['max'], "<=");
     return $model;
   }
+
+  protected function __vehicle_filter_multiselect($model, $col,$values){
+    //many to many
+    if($model->columns[$col][1]['target_model'] && $model->columns[$col][0] == "ManyToManyField") return $this->__vehicle_join_filter($model, $col, $values);
+    //otherise assume its a filter on a foreign key or a group col like body_style etc
+    else return $model->filter($col, $values);
+  }
+  //looks at the join table
   protected function __vehicle_join_filter($model, $col, $values){
     $target_class = $model->columns[$col][1]['target_model'];
     $target = new $target_class;
