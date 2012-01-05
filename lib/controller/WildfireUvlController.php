@@ -43,7 +43,7 @@ class WildfireUvlController extends ApplicationController{
   public function __dealership_summary(){}
   public function __dealership(){}
 
-  public function __dealership_filters($model){ return $model; }
+  protected function __dealership_filters($model){ return $model; }
 
 }
 ?>
