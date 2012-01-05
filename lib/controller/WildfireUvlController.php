@@ -30,10 +30,46 @@ class WildfireUvlController extends ApplicationController{
     }else $this->vehicles = $model->all();
 
   }
+  //find min - max values for search options, custom search fields etc
+  public function __vehicle_search_options($cache=true, $return=false){
+    //this could be a very slow query, lots of db look ups, so add in some caching
+    if($cache && ($cached = $this->__uvl_cache("__vehicle_search_options"))) $search_options = $cached;
+    else $search_options = array();
+    
+    if(!$search_options){
+      $model = new WildfireUvlVehicleSearchField;
+      foreach($model->all() as $search){
+        $opt =  array('col'=>$search->column_name, 'title'=>$search->title, 'type'=>$search->search_type);
+        if($search->search_type == "range") $opt['range'] = $this->__vehicle_search_range_values(new $this->vehicle_class, $search->column_name);
+        else $opt['options'] = $this->__vehicle_search_select_options(new $this->vehicle_class, $search->column_name);
+        $search_options[] = $opt;
+      }
+    }
+    $this->search_options = $search_options;
+    if($return) return $this->search_options;
+  }
+  //this is a range column, so we just look for the min & max values on the db
+  protected function __vehicle_search_range_values($model, $column){
+    //find min & max of this column
+    $wax_model = new WaxModel;
+    $sql = "SELECT DISTINCT MIN(`$column`) as minval, MAX(`$column`) as maxval FROM ".$model->table." WHERE `$column` > 0";
+    $res = $wax_model->query($sql)->fetchAll();
+    return array('min'=>$res[0]['minval'], 'max'=>$res[0]['maxval']);
+  }
+  //this goes over a join, so we have multiple options to look at
+  protected function __vehicle_search_select_options($model, $join_name){
+    $options = array();
+    $j_class = $model->columns[$join_name][1]['target_model'];
+    $join_model = new $j_class($this->cms_content_scope);
+    foreach($join_model->all() as $row) $options[] = array('title'=>$row->humanize(), 'primval'=>$row->primval);
+    return $options;
+  }
+
+
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one
-  public function __vehicle(){}    
+  public function __vehicle(){}
 
   protected function __vehicle_filters($model){
     return $model;
