@@ -1,10 +1,14 @@
 <?if(($attached = $cms_content->file_meta_get(false, $gallery_image_type)) && $attached->count()):?>
-  <?foreach($attached as $i=>$a):?>
+  <?$i=0;?>
+  <?foreach($attached as $x=>$a):?>
     <?
     if($i == 0) $sz = $primary_image_size;
     else $sz = $gallery_image_type_size;
     ?>
     <?$image = new WildfireFile($a->wildfire_file_id);?>
+    <?if($image->primval && is_readable(PUBLIC_DIR.$image->rpath.$image->filename) && is_file(PUBLIC_DIR.$image->rpath.$image->filename)):?>
+      <?$i++;?>
     <a href="<?=$image->permalink($large_image_size,1)?>" data-s="<?=$image->permalink($gallery_image_type_size,1)?>"  data-m="<?=$image->permalink($primary_image_size,1)?>" data-l="<?=$image->permalink($large_image_size,1)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz, 1)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
+    <?endif?>
   <?endforeach?>
 <?endif?>
