@@ -34,6 +34,7 @@ class WildfireUvlController extends ApplicationController{
      * will keep this one simple, just list all dealership branches
      */
     $model = new $this->cms_content_class($this->cms_live_scope);
+    $model = $this->__dealership_filters($model);
     if($this->paginate_dealership_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
       $this->dealerships = $model->page($this->this_page, $this->per_page);
@@ -42,7 +43,7 @@ class WildfireUvlController extends ApplicationController{
   public function __dealership_summary(){}
   public function __dealership(){}
 
-  public function __dealership_filters(){}
+  public function __dealership_filters($model){ return $model; }
 
 }
 ?>
