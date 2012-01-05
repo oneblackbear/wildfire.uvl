@@ -24,7 +24,8 @@ class WildfireUvlController extends ApplicationController{
 
   public function __vehicle_listing(){
     $model = new $this->cms_content_class($this->cms_live_scope);
-    $model = $this->__vehicle_filters($model, Request::param('vehicle'));
+    if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
+    $model = $this->__vehicle_filters($model, $this->vehicle_filters);
     if($this->paginate_vehicle_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
       $this->vehicles = $model->page($this->this_page, $this->per_page);
