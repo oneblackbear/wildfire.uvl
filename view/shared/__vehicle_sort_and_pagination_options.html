@@ -1,0 +1,11 @@
+<?if($paginate_vehicles_list && $vehicles->total_pages > 1):?>
+<div class='pagination_top_block vehicles_pagination clearfix'>
+  <?=paginate_links($vehicles, 2)?>
+  <h5>Page <?=$this_page?> of <?=$vehicles->total_pages?></h5>
+</div>
+<?endif?>
+<div class='vehicles_sort_options clearfix'>
+  <?
+  
+  ?>
+</div>
