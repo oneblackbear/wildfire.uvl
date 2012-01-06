@@ -4,7 +4,11 @@
     <?=partial("__vehicle_sort_and_pagination_options", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page))?>
   </div>
   <div class='clearfix vehicle_result_list'>
-  <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
+  <?if($vehicles):?>
+    <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
+  <?else:?>
+    <p class='vehicle_error'>No vehicles found.</p>
+  <?endif?>
   </div>
   <?if($paginate_vehicles_list && $vehicles->total_pages > 1):?>
   <div class='pagination_block vehicles_pagination clearfix'>
