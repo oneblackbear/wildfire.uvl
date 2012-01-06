@@ -1,5 +1,8 @@
       
 <fieldset class='clearfix vehicles_set'>
+  <div class='clearfix vehicle_sort_options'>
+    <?=partial("__vehicle_sort_and_pagination_options", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page))?>
+  </div>
   <div class='clearfix vehicle_result_list'>
   <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
   </div>

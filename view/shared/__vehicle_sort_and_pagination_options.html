@@ -4,8 +4,9 @@
   <h5>Page <?=$this_page?> of <?=$vehicles->total_pages?></h5>
 </div>
 <?endif?>
+<?if($sort_options && $sort_options->count()):?>
 <div class='vehicles_sort_options clearfix'>
-  <?
   
-  ?>
+  <select name="sort" id="vehicle_sort"><?foreach($sort_options as $sort):?><option value="<?=$sort->primval?>"><?=$sort->title?></option><?endforeach?></select>
 </div>
+<?endif?>

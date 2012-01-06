@@ -12,10 +12,6 @@
     <?if($vehicles):?>
     <form class='clearfix vehicles_search_container' action="" method="get">
       
-      <div class='clearfix vehicle_sort_options'>
-        <?=partial("__vehicle_sort_and_pagination_options", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page))?>
-      </div>
-      
       <div class='clearfix vehicle_search_options'>
         <?=partial("__vehicle_search_options")?>        
       </div>

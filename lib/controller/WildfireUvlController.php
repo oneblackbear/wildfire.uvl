@@ -163,6 +163,13 @@ class WildfireUvlController extends ApplicationController{
   }
   
   /**
+   * partial to show sort options
+   */
+  public function __vehicle_sort_and_pagination_options(){
+    $sort = new WildfireUvlVehicleSortField($this->cms_content_scope);
+    $this->sort_options = $sort->all();
+  }
+  /**
    * DEALERSHIPS
    */
    
