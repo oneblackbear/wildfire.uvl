@@ -16,7 +16,7 @@ if(($col = $data['col']) && ($vals = $posted[$col])){
   <input type="text" value="<?=$min?>" data-inc="<?=$data['inc']?>" data-min="<?=$data['range']['min']?>" name='vehicle[<?=$col?>][min]' class='range_slider_input range_slider_min' id="vehicle_<?=$col?>_min">
   
   <label for="vehicle_<?=$col?>_max">Max</label>
-  <input type="text" value="<?=$max?>" data-inc="<?=$data['inc']?>" data-min="<?=$data['range']['max']?>" name='vehicle[<?=$col?>][max]' class='range_slider_input range_slider_max' id="vehicle_<?=$col?>_max">
-  
+  <input type="text" value="<?=$max?>" data-inc="<?=$data['inc']?>" data-max="<?=$data['range']['max']?>" name='vehicle[<?=$col?>][max]' class='range_slider_input range_slider_max' id="vehicle_<?=$col?>_max">
+  <div class='slider'></div>
 </fieldset>
 <?endif?>
