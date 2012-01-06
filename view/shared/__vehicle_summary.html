@@ -30,7 +30,7 @@ if(!$large_image_size) $large_image_size = 600;
 
     <div class='vehicle_details'>
       <div class='vehicle_key_features vkf-<?=count($vehicle_fields)?>'>
-        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields))?>
+        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields, 'limited'=>$key_limited))?>
       </div>
 
       <div class='vehicle_and_content clearfix'>
@@ -38,7 +38,7 @@ if(!$large_image_size) $large_image_size = 600;
           <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>$gallery_image_type, 'gallery_image_type_size'=>$gallery_image_type_size, 'primary_image_size'=>$primary_image_size, 'large_image_size'=>$large_image_size))?>
         </div>
         <div class='vehicle_summary clearfix'>
-          <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields, 'limited'=>3))?>
+          <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields, 'limited'=>$summary_limited))?>
         </div>
         
       </div>
