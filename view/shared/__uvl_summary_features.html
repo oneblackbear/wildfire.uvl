@@ -9,6 +9,7 @@ if(!$vehicle_fields){
   }
 }
 if(!$vehicle_fields) $vehicle_fields = $default_fields;
+if($limited > 0) $vehicle_fields = array_slice($vehicle_fields, 0, $limited, true);
 ?>
 
 <?if($vehicle_fields):?>
