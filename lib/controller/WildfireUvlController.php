@@ -8,6 +8,10 @@ class WildfireUvlController extends ApplicationController{
 
   //pushing back to the stack
   public function controller_global(){
+    WaxEvent::add("cms.action_set", function(){
+      $obj = WaxEvent::data();
+      if(Request::param("uvl")) $obj->action = "vehicle_search";
+    });
     WaxEvent::add("cms.cms_stack_set", function(){
       $obj = WaxEvent::data();
       array_unshift($obj->cms_stack, $obj->controller);
@@ -20,12 +24,16 @@ class WildfireUvlController extends ApplicationController{
   /**
    * VEHICLES
    */
-   
+  public function vehicle_search(){
+    $this->__vehicle_listing();
+    $this->use_view = "vehicle-search";
+    $this->use_layout = false;
+  }
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one - view of the actual vehicle
   public function __vehicle(){}
-
+  
   /**
    * handles the display, filtering, search etc of vehicles - main partial
    */
