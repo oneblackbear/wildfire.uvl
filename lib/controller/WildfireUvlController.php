@@ -168,6 +168,7 @@ class WildfireUvlController extends ApplicationController{
   public function __vehicle_sort_and_pagination_options(){
     $sort = new WildfireUvlVehicleSortField($this->cms_content_scope);
     $this->sort_options = $sort->all();
+    $this->posted_sort = Request::param('sort');
   }
   /**
    * DEALERSHIPS
