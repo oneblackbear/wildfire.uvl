@@ -6,7 +6,6 @@
 <?endif?>
 <?if($sort_options && $sort_options->count()):?>
 <div class='vehicles_sort_options clearfix'>
-  
-  <select name="sort" id="vehicle_sort"><?foreach($sort_options as $sort):?><option value="<?=$sort->primval?>"><?=$sort->title?></option><?endforeach?></select>
+  <select name="sort" id="vehicle_sort"><?foreach($sort_options as $sort):?><option value="<?=$sort->primval?>"<?if($posted_sort == $sort->primval):?> selected="selected"<?endif?>><?=$sort->title?></option><?endforeach?></select>
 </div>
 <?endif?>
