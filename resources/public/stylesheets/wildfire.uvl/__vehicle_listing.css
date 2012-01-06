@@ -1,5 +1,17 @@
 .vehicles_search_container{}
   
+  .vehicle_sort{
+    padding:8px 5px;
+  }
+  .vehicle_sort  .pagination_top_block{
+    float:right;
+    width:34%;
+  }
+  .vehicle_sort_options .vehicles_sort{
+    float:left;
+    width:62%;
+  }
+  
   .vehicles_search_container .vehicle_search_options{
     float:left;
     width:24%;
@@ -12,3 +24,27 @@
     .vehicles_search_container .vehicle_summary{
       margin-bottom:10px;
     }
+    
+  
+  
+.vehicles_pagination .pagination{
+  margin:0;
+  padding:0;
+  float:right;
+}
+  .vehicles_pagination .pagination li{
+    margin:0;
+    list-style-type:none;
+    float:left;
+  }
+    .vehicles_pagination .pagination li a, .vehicles_pagination .pagination li span{
+      display:block;
+      line-height:1em;
+      padding:4px 5px;
+    }
+  
+  .vehicles_pagination h5{
+    float:left;
+    margin-right:5px;
+  }
+  
