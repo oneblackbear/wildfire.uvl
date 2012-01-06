@@ -1,6 +1,7 @@
 Base css:
 <?=css_bundle("wildfire.uvl", array('media'=>'all'), "wildfire.uvl")?>
-
+Base js:
+<?=js_bundle("wildfire.uvl", array(), "wildfire.uvl")?>
 /**
  * REQUIRES GEO LOCATION PLUGIN - git://github.com/phpwax/geohelpers.git
  */ 
