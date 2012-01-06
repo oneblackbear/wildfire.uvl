@@ -10,7 +10,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
 
     $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
-    $this->define("sale_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
+    $this->define("previous_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
     //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
     $this->define("price_has_vat", "IntegerField", array('group'=>'prices', 'label'=>'Show vehicle price inc VAT**', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
     //the vat rate to use (percentage, so 20, 17.5 etc)

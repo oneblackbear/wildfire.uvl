@@ -14,13 +14,13 @@ if(!$large_image_size) $large_image_size = 600;
   <div class='vehicle_header_block clearfix'>
 
     <h1 class='vehicle_title clearfix'>
-    <?if($cms_content->sale_price > 1):?>
+    <?if($cms_content->previous_price > 1):?>
     <span class='has_sale_price vehicle_price'>
-      <span class='vehicle_sale_price'>NOW &pound;<?=number_format($cms_content->sale_price,2)?></span>
-      <span class='vehicle_previous_price previous_price'>WAS &pound;<?=number_format($cms_content->price,2)?></span>
+      <span class='vehicle_sale_price'>NOW &pound;<?=number_format($cms_content->price,2)?></span>
+      <span class='vehicle_previous_price previous_price'>WAS &pound;<?=number_format($cms_content->previous_price,2)?></span>
     </span>
     <?else:?>
-    <span class='price vehicle_price'>&pound;<?=number_format($cms_content->sale_price,2)?></span>
+    <span class='price vehicle_price'>&pound;<?=number_format($cms_content->price,2)?></span>
     <?endif?>
     <span class='title vehicle_title_content'><?=$cms_content->title?></span>
     </h1>
