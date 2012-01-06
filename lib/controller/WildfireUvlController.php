@@ -2,7 +2,7 @@
 class WildfireUvlController extends ApplicationController{
 
   public $paginate_dealership_list = false;
-  public $paginate_vehicle_list = true;
+  public $paginate_vehicles_list = true;
 
   public $vehicle_class = "WildfireUvlVehicle";
 
@@ -35,7 +35,7 @@ class WildfireUvlController extends ApplicationController{
     if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
     $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);
 
-    if($this->paginate_vehicle_list){
+    if($this->paginate_vehicles_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
       $this->vehicles = $model->page($this->this_page, $this->per_page);
     }else $this->vehicles = $model->all();
