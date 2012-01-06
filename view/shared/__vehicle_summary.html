@@ -11,7 +11,7 @@ if(!$large_image_size) $large_image_size = 600;
 <div class='vehicle_summary clearfix'>
   <div class='vehicle_header_block clearfix'>
 
-    <h3 class='vehicle_title clearfix'>
+    <h3 class='vehicle_title clearfix'><a href="<?=$cms_content->permalink?>">
     <?if($cms_content->sale_price > 1):?>
     <span class='has_sale_price vehicle_price'>
       <span class='vehicle_sale_price'>NOW &pound;<?=number_format($cms_content->sale_price,2)?></span>
@@ -21,6 +21,7 @@ if(!$large_image_size) $large_image_size = 600;
     <span class='price vehicle_price'>&pound;<?=number_format($cms_content->sale_price,2)?></span>
     <?endif?>
     <span class='title vehicle_title_content'><?=$cms_content->title?></span>
+    </a>
     </h3>
 
   </div>
