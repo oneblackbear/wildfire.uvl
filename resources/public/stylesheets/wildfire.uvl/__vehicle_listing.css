@@ -1,0 +1,14 @@
+.vehicles_search_container{}
+  
+  .vehicles_search_container .vehicle_search_options{
+    float:left;
+    width:24%;
+    margin-right:1%;
+  }
+  .vehicles_search_container .vehicles_set{
+    float:left;
+    width:73%;
+  }
+    .vehicles_search_container .vehicle_summary{
+      margin-bottom:10px;
+    }
