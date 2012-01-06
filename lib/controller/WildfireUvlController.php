@@ -25,7 +25,9 @@ class WildfireUvlController extends ApplicationController{
   public function __vehicle_listing(){
     $model = new $this->vehicle_class($this->cms_live_scope);
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
-    $model = $this->__vehicle_filters($model, $this->vehicle_filters);
+    if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
+    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);
+    
     if($this->paginate_vehicle_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
       $this->vehicles = $model->page($this->this_page, $this->per_page);
@@ -87,6 +89,12 @@ class WildfireUvlController extends ApplicationController{
     foreach($filters as $key=>$val){
       if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key]);
     }
+    return $model;
+  }
+
+  protected function __vehicle_sort($model, $posted){
+    if(!$posted && ($sort = new WildfireUvlVehicleSortField($this->cms_content_scope)) && ($first = $sort->first())) $posted = $first->primval;
+    if(($info = new WildfireUvlVehicleSortField($posted)) && $info->primval) $model = $model->order($info->column_name." ".$info->direction);
     return $model;
   }
 
