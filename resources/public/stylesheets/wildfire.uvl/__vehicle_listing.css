@@ -48,3 +48,12 @@
     margin-right:5px;
   }
   
+  
+.range_status{}
+  .range_status span{
+    display:block;
+    float:left;
+  }
+  .range_status .range_current_val_max{
+    float:right;
+  }
