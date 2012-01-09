@@ -34,7 +34,7 @@ class WildfireUvlController extends ApplicationController{
   public function __vehicle_summary(){}
   //main one - view of the actual vehicle
   public function __vehicle(){}
-  
+
   /**
    * handles the display, filtering, search etc of vehicles - main partial
    */
@@ -148,7 +148,7 @@ class WildfireUvlController extends ApplicationController{
     //figure what the join table is called
     if($target_table < $original_table) $table = $target_table."_".$original_table;
     else $table = $original_table."_".$target_table;
-    
+
     $ids = implode(",", $values);
     $query_model = new WaxModel;
     $filter_ids = array(0);
@@ -170,7 +170,7 @@ class WildfireUvlController extends ApplicationController{
     if(($info = new WildfireUvlVehicleSortField($posted)) && $info->primval) $model = $model->order($info->column_name." ".$info->direction);
     return $model;
   }
-  
+
   /**
    * partial to show sort options
    */
@@ -182,7 +182,7 @@ class WildfireUvlController extends ApplicationController{
   /**
    * DEALERSHIPS
    */
-   
+
   /**
    * handle dealership lookups
    */
