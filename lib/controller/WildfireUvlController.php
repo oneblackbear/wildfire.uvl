@@ -28,8 +28,8 @@ class WildfireUvlController extends ApplicationController{
     $this->__vehicle_listing();
     $this->use_view = "vehicle-search";
     $this->use_layout = false;
-  }
     unset($_GET['uvl']);
+  }
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one - view of the actual vehicle
