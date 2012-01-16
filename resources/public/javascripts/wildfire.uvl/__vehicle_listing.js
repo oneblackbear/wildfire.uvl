@@ -19,6 +19,9 @@ jQuery(document).ready(function(){
             
           }
         });
+      },
+      __compound_lookup = function(select_obj){
+        
       }
       ;
   form.find("input[type=submit]").hide();
@@ -51,10 +54,15 @@ jQuery(document).ready(function(){
     obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
   });
 
-  form.find("select, input[type=checkbox]").live("change", function(){
+  form.find("select:not(.range_compound_dropdown_start), input[type=checkbox]").live("change", function(){
     clearTimeout(__vehicle_form_timer);
     __vehicle_form_timer = setTimeout(__vehicle_form_post, 800);
   });
   
+  form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
 
+  form.find("select.range_compound_dropdown_start").live("change", function(){
+    clearTimeout(__vehicle_form_timer);
+
+  });
 });

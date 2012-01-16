@@ -5,6 +5,7 @@ class WildfireUvlController extends ApplicationController{
   public $paginate_vehicles_list = true;
 
   public $vehicle_class = "WildfireUvlVehicle";
+  public $per_page = 1;
 
   //pushing back to the stack
   public function controller_global(){
@@ -61,7 +62,7 @@ class WildfireUvlController extends ApplicationController{
     if(!$search_options){
       $model = new WildfireUvlVehicleSearchField;
       foreach($model->all() as $search){
-        $opt =  array('col'=>$search->column_name, 'title'=>$search->title, 'type'=>$search->search_type, 'inc'=>$search->increment);
+        $opt =  array('col'=>$search->column_name, 'title'=>$search->title, 'type'=>$search->search_type, 'inc'=>$search->increment, 'pos'=>$search->position);
         if($search->search_type == "range") $opt['range'] = $this->__vehicle_search_range_values(new $this->vehicle_class, $search->column_name);
         else $opt['options'] = $this->__vehicle_search_select_options(new $this->vehicle_class, $search->column_name);
         $search_options[$search->column_name] = $opt;
@@ -69,6 +70,15 @@ class WildfireUvlController extends ApplicationController{
     }
     $this->search_options = $search_options;
     if($return) return $this->search_options;
+  }
+
+  public function __compound_lookup(){
+    $this->use_layout = false;
+    $this->results = array();
+    if(($col = Request::param('col')) && ($val = Request::param('val')) && ($need = Request::param('need'))){
+      $model = new $this->vehicle_class($this->cms_live_scope);
+      foreach($model->filter($col, $val)->group($need)->all() as $row) $this->results[] = $row->$need;
+    }
   }
   /**
    * this is a range column, so we just look for the min & max values on the db, called by __vehicle_search_options
