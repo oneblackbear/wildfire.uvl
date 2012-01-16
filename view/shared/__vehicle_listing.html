@@ -1,8 +1,9 @@
 <div class='vehicles_page vehicles_listing clearfix'>
-
+  <?if($cms_content):?>
   <div class='vehicles_header_block clearfix'>
     <h1 class='vehicles_title clearfix'><?=$cms_content->title?></h1>
   </div>
+  <?endif?>
   <div class='vehicles_wrapper clearfix'>
     <?if($cms_content->content):?>
     <div class='vehicles_content clearfix'>
