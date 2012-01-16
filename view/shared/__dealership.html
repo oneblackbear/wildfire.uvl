@@ -34,7 +34,7 @@ if(!$static_map_size) $static_map_size = 300;
       <div class='dealership_key_features dkf-<?=count($vehicle_fields)?>'>
         <a href="#dl<?=$cms_content->primval?>" class='dealership_key_feature key_feature button telephone_number'>CALL US: <?=$cms_content->telephone?></a>
         <a href="mailto:<?=$cms_content->email?>" class='dealership_key_feature key_feature button email'>EMAIL US</a>
-        <a href="#dealership_stock_list<?=$cms_content->primval?>" class='dealership_key_feature key_feature button stock'>STOCK LIST</a>
+        <?if($show_stock_list !== false):?><a href="#dealership_stock_list<?=$cms_content->primval?>" class='dealership_key_feature key_feature button stock'>STOCK LIST</a><?endif?>
       </div>
 
       <div class='dealership_and_content clearfix'>
@@ -49,8 +49,9 @@ if(!$static_map_size) $static_map_size = 300;
     </div>
 
   </div>
-
+  <?if($show_stock_list !== false):?>
   <div class='dealership_stock_list clearfix' id="dealership_stock_list<?=$cms_content->primval?>">
     <?=partial("__vehicle_listing")?>
   </div>
+  <?endif?>
 </div>
