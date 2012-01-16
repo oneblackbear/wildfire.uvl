@@ -1,0 +1,6 @@
+<?if(($branches = $cms_content->branches) && ($branches = $branches->scope("live")->all() )):?>
+<div class='contact_branch'>
+  <span class='vehicle_contact'>CALL:</span>
+  <?foreach($branches as $branch):?><?if($branch->telephone):?><span class='vehicle_contact_number'><?=$branch->telephone?></span><?endif?><?endforeach?>
+</div>
+<?endif?>
