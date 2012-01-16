@@ -38,7 +38,7 @@ if(!$large_image_size) $large_image_size = 600;
         <div class='vehicle_gallery'>
           <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>$gallery_image_type, 'gallery_image_type_size'=>$gallery_image_type_size, 'primary_image_size'=>$primary_image_size, 'large_image_size'=>$large_image_size))?>
         </div>
-        <div class='vehicle_summary clearfix'>
+        <div class='vehicle_summary_block clearfix'>
           <?=partial("__uvl_summary_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_summary_fields))?>
         </div>
         <div class='vehicle_content clearfix'>
