@@ -9,6 +9,7 @@ else $vals = array();
 <?if($data['pos'] != "end"):?>
   <h3><?=$data['title']?></h3>
 <?endif?>
+<?if($data['pos']) $data['title'] = $col;?>
   
   <label for="vehicle_<?=$col?>"><?=$data['title']?></label>
   <select name="vehicle[<?=$col?>]" id="vehicle_<?=$col?>" class="range_select_dropdown range_compound_dropdown range_compound_dropdown_<?=$data['pos']?>">
