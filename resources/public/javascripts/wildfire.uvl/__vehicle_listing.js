@@ -21,7 +21,24 @@ jQuery(document).ready(function(){
         });
       },
       __compound_lookup = function(select_obj){
-        
+        var first_col = select_obj.data('col'),
+            value = select_obj.val(),
+            sub = select_obj.parent().next(".range_compound_end").find("select"),
+            needed = sub.data("col"),
+            data = {col:first_col, val:value, need:needed}
+            ;
+        console.log(first_col+":"+value+":"+needed);
+        jQuery.ajax({
+          data:data,
+          type:"post",
+          url:"/used/__compound_lookup",
+          success:function(res){
+            sub.html(res);
+          },
+          error:function(xhr,status,err){
+            
+          }
+        });
       }
       ;
   form.find("input[type=submit]").hide();
@@ -63,6 +80,6 @@ jQuery(document).ready(function(){
 
   form.find("select.range_compound_dropdown_start").live("change", function(){
     clearTimeout(__vehicle_form_timer);
-
+    __compound_lookup(jQuery(this));
   });
 });

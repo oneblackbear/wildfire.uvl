@@ -115,17 +115,20 @@ class WildfireUvlController extends ApplicationController{
     $search_options = $this->__vehicle_search_options(true, true);
     $process = array();
     foreach($filters as $key=>$val){
-      if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key]);
+      if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key], $search_options[$key]);
     }
     return $model;
   }
   /**
    * the most basic filter, ranges are between 2 values, so set the >= / <= on the model for the relevant column
    */
-  protected function __vehicle_filter_range($model, $col, $values){
+  protected function __vehicle_filter_range($model, $col, $values, $search){
     if($values['min']) $model = $model->filter($col, $values['min'], ">=");
     if($values['max']) $model = $model->filter($col, $values['max'], "<=");
     return $model;
+  }
+  protected function __vehicle_filter_compound($model, $col, $values, $search){
+    return $model->filter($col, $values);
   }
   /**
    * more complicated, this could be either a many to many, a regular column or a foreign key
@@ -133,9 +136,9 @@ class WildfireUvlController extends ApplicationController{
    * - foreign key will need to find the real column name for the db filter by joining table & primary key from the other side
    * - otherwise its just a straight $col = $values
    */
-  protected function __vehicle_filter_multiselect($model, $col,$values){
+  protected function __vehicle_filter_multiselect($model, $col,$values, $search){
     //many to many
-    if($values && $model->columns[$col][1]['target_model'] && $model->columns[$col][0] == "ManyToManyField") return $this->__vehicle_filter_join($model, $col, $values);
+    if($values && $model->columns[$col][1]['target_model'] && $model->columns[$col][0] == "ManyToManyField") return $this->__vehicle_filter_join($model, $col, $values, $search);
     elseif($values && $model->columns[$col][0] == "ForeignKey" && ($mc = $model->columns[$col][1]['target_model']) && ($m = new $mc) ) return $model->filter($mc->table."_".$mc->primary_key, $values);
     //otherise assume its a filter on a foreign key or a group col like body_style etc
     elseif($values) return $model->filter($col, $values);
@@ -146,7 +149,7 @@ class WildfireUvlController extends ApplicationController{
    * - if $model is the vehicle, $col is "transmission" and $values is array(1,2) this will find all vehicles
    *   which are joined to transmission type 1 or 2
    */
-  protected function __vehicle_filter_join($model, $col, $values){
+  protected function __vehicle_filter_join($model, $col, $values, $search){
     //find the target table
     $target_class = $model->columns[$col][1]['target_model'];
     $target = new $target_class;
@@ -169,8 +172,8 @@ class WildfireUvlController extends ApplicationController{
   /**
    * the normal select dropdown should only be a column or a foreign key, so pass along to multiple select version which can handle it
    */
-  protected function __vehicle_filter_select($model, $col, $value){
-    return $this->__vehicle_filter_multiselect($model, $col, $value);
+  protected function __vehicle_filter_select($model, $col, $value, $search){
+    return $this->__vehicle_filter_multiselect($model, $col, $value, $search);
   }
   /**
    * check the post data for sort value, if none is found than apply the first sort field from the db (called in __vehicle_listing)
