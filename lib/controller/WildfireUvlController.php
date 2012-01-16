@@ -128,7 +128,8 @@ class WildfireUvlController extends ApplicationController{
     return $model;
   }
   protected function __vehicle_filter_compound($model, $col, $values, $search){
-    return $model->filter($col, $values);
+    if($values) $model->filter($col, $values);
+    return $model;
   }
   /**
    * more complicated, this could be either a many to many, a regular column or a foreign key
