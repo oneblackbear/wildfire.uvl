@@ -1,0 +1,20 @@
+<?
+$posted = Request::param('vehicle');
+if(($col = $data['col']) && $posted[$col]) $val = $posted[$col];
+else $vals = array();
+?>
+<?if(count($data['options']) > 1):?>
+
+<?if($data['pos'] != "end"):?>
+<fieldset class='range_select range_compound col_<?=$col?>'>
+  <h3><?=$data['title']?></h3>
+<?endif?>
+  
+  <label for="vehicle_<?=$col?>"><?=$data['title']?></label>
+  <select name="vehicle[<?=$col?>]" id="vehicle_<?=$col?>" class="range_select_dropdown range_compound_dropdown range_compound_dropdown_<?=$data['pos']?>">
+    <option value=''>-- Any --</option>
+    <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == urldecode($opt['primval'])):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
+  </select>
+  
+<?if($data['pos'] != "end"):?></fieldset><?endif?>
+<?endif?>
