@@ -13,7 +13,7 @@ else $vals = array();
   
   <label for="vehicle_<?=$col?>"><?=$data['title']?></label>
   <select name="vehicle[<?=$col?>]" id="vehicle_<?=$col?>" data-col="<?=$col?>" class="range_select_dropdown range_compound_dropdown range_compound_dropdown_<?=$data['pos']?>">
-    <option value=''>-- Any --</option>
+    <option value=''>-- All --</option>
     <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == urldecode($opt['primval'])):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
   </select>
   
