@@ -5,8 +5,8 @@ else $vals = array();
 ?>
 <?if(count($data['options']) > 1):?>
 
+<fieldset class='range_select range_compound range_compound_<?=$data['pos']?> col_<?=$col?>'>
 <?if($data['pos'] != "end"):?>
-<fieldset class='range_select range_compound col_<?=$col?>'>
   <h3><?=$data['title']?></h3>
 <?endif?>
   
@@ -16,5 +16,5 @@ else $vals = array();
     <?foreach($data['options'] as $opt):?><option value='<?=$opt['primval']?>'<?if($val == urldecode($opt['primval'])):?> selected="selected"<?endif?>><?=$opt['title']?></option><?endforeach?>
   </select>
   
-<?if($data['pos'] != "end"):?></fieldset><?endif?>
+</fieldset>
 <?endif?>
