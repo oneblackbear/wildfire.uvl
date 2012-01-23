@@ -7,15 +7,15 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true));
     $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
 
-    $this->define("body_make", "CharField", array('scaffold'=>true));
-    $this->define("body_model", "CharField", array('scaffold'=>true));
     parent::setup();
     $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'editable'=>true, 'label'=>"Live", 'info_preview'=>1, "tree_scaffold"=>1));
+    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2'));
+    $this->define("code", "CharField", array('required'=>true, 'group'=>'extras')); //a unique ref from import
 
+    $this->define("date_of_manufacture", "CharField", array('group'=>'extras'));
+    $this->define("date_of_first_registration", "CharField", array('group'=>'extras'));
 
-
-    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
-    $this->define("previous_price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
+    $this->define("previous_price", "FloatField", array('maxlength'=>'12,2', 'group'=>'prices'));
     //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
     $this->define("price_has_vat", "IntegerField", array('group'=>'prices', 'label'=>'Show vehicle price inc VAT**', 'widget'=>'SelectInput', 'choices'=>self::$vat_options));
     //the vat rate to use (percentage, so 20, 17.5 etc)
@@ -25,12 +25,14 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("co2", "CharField", array('group'=>'engine'));
     $this->define("mileage", "CharField", array('group'=>'engine'));
 
-    $this->define("seating_capacity", "IntegerField", array('group'=>'sizes'));
-    $this->define("standing_capacity", "IntegerField", array('group'=>'sizes'));
-    $this->define("length", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
-    $this->define("width", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
-    $this->define("height", "FloatField", array('group'=>'sizes','maxlength'=>'8,2'));
-
+    $this->define("body_make", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
+    $this->define("body_model", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
+    $this->define("body_style", "CharField", array('group'=>'sizes / chasis'));
+    $this->define("seating_capacity", "IntegerField", array('group'=>'sizes / chasis'));
+    $this->define("standing_capacity", "IntegerField", array('group'=>'sizes / chasis'));
+    $this->define("length", "FloatField", array('group'=>'sizes / chasis','maxlength'=>'8,2'));
+    $this->define("width", "FloatField", array('group'=>'sizes / chasis','maxlength'=>'8,2'));
+    $this->define("height", "FloatField", array('group'=>'sizes / chasis','maxlength'=>'8,2'));
 
     $this->define("colour", "CharField");
 
@@ -43,7 +45,6 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("featured_fields", "ManyToManyField", array('target_model'=>'WildfireUvlVehicleField', 'group'=>'relationships'));
 
     //ability to make offers etc
-    $this->define("code", "CharField", array('required'=>true, 'group'=>'extras')); //a unique ref from import
     $this->define("make_an_offer", "BooleanField", array('group'=>'extras'));
     $this->define("book_a_test_drive", "BooleanField", array('group'=>'extras'));
 
@@ -55,9 +56,6 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("model_range_description", "CharField", array('group'=>'extras'));
     $this->define("model_series", "CharField", array('group'=>'extras'));
     $this->define("model_variant_description", "CharField", array('group'=>'extras'));
-    $this->define("date_of_manufacture", "CharField", array('group'=>'extras'));
-    $this->define("date_of_first_registration", "CharField", array('group'=>'extras'));
-    $this->define("body_style", "CharField", array('group'=>'extras'));
 
     //remove the date_start / date_end
     $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
@@ -78,6 +76,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
   public function before_save(){
     $this->date_end = $this->date_start = "1970-01-01 00:00:00"; //epoc
+    if(!$this->code) $this->code = rand(1000,9999);
     parent::before_save();
   }
 
