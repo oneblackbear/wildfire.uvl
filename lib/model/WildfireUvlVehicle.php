@@ -9,8 +9,9 @@ class WildfireUvlVehicle extends WildfireContent{
 
     $this->define("body_make", "CharField", array('scaffold'=>true));
     $this->define("body_model", "CharField", array('scaffold'=>true));
-
     parent::setup();
+    $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'editable'=>true, 'label'=>"Live", 'info_preview'=>1, "tree_scaffold"=>1));
+
 
 
     $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'group'=>'prices'));
