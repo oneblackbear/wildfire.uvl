@@ -56,8 +56,9 @@ class WildfireUvlController extends ApplicationController{
    */
   public function __vehicle_search_options($cache=true, $return=false){
     //this could be a very slow query, lots of db look ups, so add in some caching
-    if($cache && ($cached = $this->__uvl_cache("__vehicle_search_options"))) $search_options = $cached;
-    else $search_options = array();
+    // if($cache && ($cached = $this->__uvl_cache("__vehicle_search_options"))) $search_options = $cached;
+    // else
+    $search_options = array();
 
     if(!$search_options){
       $model = new WildfireUvlVehicleSearchField;
