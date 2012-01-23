@@ -30,11 +30,11 @@ if(!$key_limited) $key_limited = 3;
   <div class='vehicle_wrapper clearfix'>
 
     <div class='vehicle_details'>
-      <div class='vehicle_key_features vkf'>
-        <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields, 'limited'=>$key_limited))?>
-      </div>
 
       <div class='vehicle_and_content clearfix'>
+        <div class='vehicle_key_features vkf'>
+          <?=partial("__uvl_key_features", array('cms_content'=>$cms_content, 'default_fields'=>$default_fields, 'limited'=>$key_limited))?>
+        </div>
         <div class='vehicle_gallery'>
           <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>$gallery_image_type, 'gallery_image_type_size'=>$gallery_image_type_size, 'primary_image_size'=>$primary_image_size, 'large_image_size'=>$large_image_size))?>
         </div>
