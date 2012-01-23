@@ -1,11 +1,11 @@
-      
+
 <fieldset class='clearfix vehicles_set'>
   <div class='clearfix vehicle_sort'>
     <?=partial("__vehicle_sort_and_pagination_options", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page))?>
   </div>
   <div class='clearfix vehicle_result_list'>
   <?if($vehicles):?>
-    <?foreach($vehicles as $vehicle):?><?=partial("__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
+    <?foreach($vehicles as $vehicle):?><?=partial(trim($controller,"/")."/__vehicle_summary", array('cms_content'=>$vehicle))?><?endforeach?>
   <?else:?>
     <p class='vehicle_error'>No vehicles found.</p>
   <?endif?>
