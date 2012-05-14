@@ -11,5 +11,18 @@ CMSApplication::register_module("uvlvehiclefeature", array("display_name"=>"Extr
 
 CMSApplication::register_module("uvlvehicle", array("display_name"=>"Vehicles", "link"=>"/admin/uvlvehicle/",'split'=>true));
 
+if(defined("DEALERS")){
+  //hook in to the model setup of dealer model to add a join to branches
+  WaxEvent::add("Dealer.setup", function(){
+    $obj = WaxEvent::data();
+    $obj->define("branches", "ManyToManyField", array('target_model'=>"WildfireUvlBranch", 'group'=>'relationships'));
+  });
+  //link back to the dealer
+  WaxEvent::add("WildfireUvlBranch.setup", function(){
+    $obj = WaxEvent::data();
+    $obj->define("dealers", "ManyToManyField", array('target_model'=>"Dealer", 'group'=>'relationships'));
+  });
+}
+
 
 ?>
