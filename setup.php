@@ -17,17 +17,25 @@ if(defined("DEALERS")){
   //hook in to the model setup of dealer model to add a join to branches
   WaxEvent::add("Dealer.setup", function(){
     $obj = WaxEvent::data();
-    $obj->define("branches", "ManyToManyField", array('target_model'=>"WildfireUvlBranch", 'group'=>'relationships'));
+    $obj->define("branches", "HasManyField", array('target_model'=>"WildfireUvlBranch", 'group'=>'relationships'));
   });
   //link back to the dealer
   WaxEvent::add("WildfireUvlBranch.setup", function(){
     $obj = WaxEvent::data();
-    $obj->define("dealers", "ManyToManyField", array('target_model'=>"Dealer", 'group'=>'relationships'));
+    //make this a foreign key
+    $obj->define("dealer", "ForeignKey", array('target_model'=>"Dealer", 'group'=>'relationships'));
+  });
+  //add in this so it will block all views of the branch
+  WaxEvent::add("Dealer.user_creation", function(){
+    $dealer = WaxEvent::data();
+    $user = $dealer->wu;
+    $block = new WildfirePermissionBlacklist;
+    $block->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlBranch', 'operation'=>"tree", "value"=>"0:id"));
   });
   //create branch when saving and the id is set
   WaxEvent::add("Dealer.branch_creation", function(){
     $dealer = WaxEvent::data();
-    if($dealer->primval && $dealer->title){
+    if($dealer->primval && $dealer->title && ($user = $dealer->wu)){
       $branch = new WildfireUvlBranch;
       //if the join already exists
       if(($branches = $dealer->branches) && $branches->count()) $branch = $branches->first();
@@ -48,10 +56,16 @@ if(defined("DEALERS")){
                   'lat'           => $dealer->lat,
                   'lng'           => $dealer->lng,
                   'date_start'    => $dealer->date_start,
-                  'date_end'      => $dealer->date_end
+                  'date_end'      => $dealer->date_end,
+                  'dealer_id'     => $dealer->primval
                   );
+      //if worked, update permissions
       if($saved = $branch->update_attributes($details)){
-        $branch->dealers = $dealer;
+        $block = new WildfirePermissionBlacklist;
+        if(($found = $block->filter($user->table."_id", $user->primval)->filter('class', 'WildfireUvlBranch')->filter('operation', "tree")->filter("value", "0:id")->all()) && $found->count()){
+          foreach($found as $f) $f->update_attributes(array('value'=>$dealer->primval":dealer_id"));
+
+        }
       }
     }
   });
