@@ -7,13 +7,6 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   public $file_tags = array('gallery image');
   public static $restricted_tree = false;
 
-  // public function events(){
-  //   parent::events();
-  //   WaxEvent::add("cms.model.filters", function(){
-  //     $obj = WaxEvent::data();
-  //     if($branches = $obj->current_user->)
-  //   });
-  // }
 
 }
 ?>

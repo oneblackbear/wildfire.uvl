@@ -22,15 +22,24 @@ if(defined("DEALERS")){
   //link back to the dealer
   WaxEvent::add("WildfireUvlBranch.setup", function(){
     $obj = WaxEvent::data();
-    //make this a foreign key
     $obj->define("dealer", "ForeignKey", array('target_model'=>"Dealer", 'group'=>'relationships'));
   });
-  //add in this so it will block all views of the branch
+  WaxEvent::add("WildfireUvlVehicle.setup", function(){
+    $obj = WaxEvent::data();
+    $obj->define("dealer", "ForeignKey", array('target_model'=>"Dealer", 'group'=>'relationships'));
+  });
+  //add hook on saving of the vehicle to lock it to the dealer
+  WaxEvent::add("WildfireUvlVehicle.before_save", function(){
+    $obj = WaxEvent::data();
+    if(($user = $obj->author) && ($dealer = $user->dealer)) $obj->dealer_id = $dealer->primval;
+    else $obj->dealer_id = 0; //put in a 0 to filter from the lists etc
+  });
+  //add in this so it will block all views of the branch & join the created user to the dealership
   WaxEvent::add("Dealer.user_creation", function(){
     $dealer = WaxEvent::data();
-    $user = $dealer->wu;
-    $block = new WildfirePermissionBlacklist;
-    $block->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlBranch', 'operation'=>"tree", "value"=>"0:id"));
+    $block2 = $block1 = new WildfirePermissionBlacklist;
+    $block1->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlBranch', 'operation'=>"tree", "value"=>"0:id"));
+    $block2->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlVehicle', 'operation'=>"tree", "value"=>"0:id"));
   });
   //create branch when saving and the id is set
   WaxEvent::add("Dealer.branch_creation", function(){
@@ -62,7 +71,7 @@ if(defined("DEALERS")){
       //if worked, update permissions
       if($saved = $branch->update_attributes($details)){
         $block = new WildfirePermissionBlacklist;
-        if(($found = $block->filter($user->table."_id", $user->primval)->filter('class', 'WildfireUvlBranch')->filter('operation', "tree")->filter("value", "0:id")->all()) && $found->count()){
+        if(($found = $block->filter($user->table."_id", $user->primval)->filter('class', array('WildfireUvlBranch', 'WildfireUvlVehicle'))->filter('operation', "tree")->filter("value", "0:id")->all()) && $found->count()){
           foreach($found as $f) $f->update_attributes(array('value'=>$dealer->primval":dealer_id"));
 
         }
