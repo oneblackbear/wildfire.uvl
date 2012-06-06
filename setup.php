@@ -72,7 +72,7 @@ if(defined("DEALERS")){
       if($saved = $branch->update_attributes($details)){
         $block = new WildfirePermissionBlacklist;
         if(($found = $block->filter($user->table."_id", $user->primval)->filter('class', array('WildfireUvlBranch', 'WildfireUvlVehicle'))->filter('operation', "tree")->filter("value", "0:id")->all()) && $found->count()){
-          foreach($found as $f) $f->update_attributes(array('value'=>$dealer->primval":dealer_id"));
+          foreach($found as $f) $f->update_attributes(array('value'=>$dealer->primval.":dealer_id"));
 
         }
       }
