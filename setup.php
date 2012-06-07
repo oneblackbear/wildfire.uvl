@@ -37,6 +37,7 @@ if(defined("DEALERS")){
   //add in this so it will block all views of the branch & join the created user to the dealership
   WaxEvent::add("Dealer.user_creation", function(){
     $dealer = WaxEvent::data();
+    $user = $dealer->wu;
     $block2 = $block1 = new WildfirePermissionBlacklist;
     $block1->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlBranch', 'operation'=>"tree", "value"=>"0:id"));
     $block2->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlVehicle', 'operation'=>"tree", "value"=>"0:id"));
