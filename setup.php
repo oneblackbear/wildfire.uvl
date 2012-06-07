@@ -13,7 +13,7 @@ CMSApplication::register_module("uvlvehicle", array("display_name"=>"Vehicles", 
 
 if(defined("DEALERS")){
   //change the dealer allowed modules
-  Dealer::$allowed_modules = array('home'=>array('index'=>array()),'content'=>array('index'=>array(), 'edit'=>array('details', 'media', 'google map'), 'uvlvehicle'=>array('details', 'media', 'extras', 'prices', 'engine', 'sizes / chasis')));
+  Dealer::$allowed_modules = array('home'=>array('index'=>array()),'content'=>array('index'=>array(), 'edit'=>array('details', 'media', 'google map')), 'uvlvehicle'=>array('index'=>array(), 'edit'=>array('details', 'media', 'extras', 'prices', 'engine', 'sizes / chasis')));
   //hook in to the model setup of dealer model to add a join to branches
   WaxEvent::add("Dealer.setup", function(){
     $obj = WaxEvent::data();
