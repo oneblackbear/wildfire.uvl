@@ -112,6 +112,7 @@ class WildfireUvlController extends ApplicationController{
    * take the passed in filter data, work out what data type it is, call its matching function which updates the model with filters
    */
   protected function __vehicle_filters($model, $filters){
+    WaxEvent::run("uvl.vehicle.filters", $model);
     //go over the filters, compare to the search and based on what type they are run code to update the model filters
     $search_options = $this->__vehicle_search_options(true, true);
     $process = array();

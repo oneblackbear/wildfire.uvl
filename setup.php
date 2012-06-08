@@ -1,5 +1,5 @@
 <?
-
+define("UVL",true);
 CMSApplication::register_module("uvlbranch", array("display_name"=>"Dealerships", "link"=>"/admin/uvlbranch/", 'split'=>true));
 
 CMSApplication::register_module("uvlvehicletransmission", array("display_name"=>"Transmissions", "link"=>"/admin/uvlvehicletransmission/"));
