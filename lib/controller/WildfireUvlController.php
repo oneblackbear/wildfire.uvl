@@ -104,7 +104,7 @@ class WildfireUvlController extends ApplicationController{
       //assume its a column, so grab all the versions of that col from this table
       $class = get_class($model);
       $cloned = new $class($this->cms_content_scope);
-      foreach($cloned->group($join_name)->all() as $item) $options[] = array('title'=>$item->$join_name, 'primval'=>urlencode($item->$join_name));
+      if($cloned->columns[$join_name]) foreach($cloned->group($join_name)->all() as $item) $options[] = array('title'=>$item->$join_name, 'primval'=>urlencode($item->$join_name));
     }
     return $options;
   }
