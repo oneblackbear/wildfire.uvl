@@ -1,14 +1,20 @@
-<?if(($attached = $cms_content->file_meta_get(false, $gallery_image_type)) && $attached->count()):?>
+<?if(($attached = $cms_content->media(array("tag"=>$gallery_image_type))) && $attached->count()):?>
   <?$i=0;?>
   <?foreach($attached as $x=>$a):?>
     <?
     if($i == 0) $sz = $primary_image_size;
     else $sz = $gallery_image_type_size;
     ?>
-    <?$image = new WildfireMedia($a->wildfire_media_id);?>
-    <?if($image->primval && is_readable(PUBLIC_DIR.$image->rpath.$image->filename) && is_file(PUBLIC_DIR.$image->rpath.$image->filename)):?>
+    <?if($a->primval):?>
       <?$i++;?>
-    <a href="<?=$image->permalink($large_image_size)?>" data-s="<?=$image->permalink($gallery_image_type_size)?>"  data-m="<?=$image->permalink($primary_image_size)?>" data-l="<?=$image->permalink($large_image_size)?>" class='vehicle_gallery_image_link vgil-<?=$i?>' title="<?=$a->title?>"><img src="<?=$image->permalink($sz)?>" class="vehicle_gallery_image" alt="<?=$a->title?>"></a>
+    <a
+      href="<?=$a->permalink($large_image_size)?>"
+      data-s="<?=$a->permalink($gallery_image_type_size)?>"
+      data-m="<?=$a->permalink($primary_image_size)?>"
+      data-l="<?=$a->permalink($large_image_size)?>"
+      class='vehicle_gallery_image_link vgil-<?=$i?>'
+      title="<?=$a->title?>"
+    ><?=$a->render($sz)?></a>
     <?endif?>
   <?endforeach?>
 <?endif?>
