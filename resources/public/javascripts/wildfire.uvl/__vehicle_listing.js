@@ -23,11 +23,10 @@ jQuery(document).ready(function(){
       __compound_lookup = function(select_obj){
         var first_col = select_obj.data('col'),
             value = select_obj.val(),
-            sub = select_obj.parent().next(".range_compound_end").find("select"),
+            sub = select_obj.closest("fieldset").next(".range_compound_end").find("select"),
             needed = sub.data("col"),
             data = {col:first_col, val:value, need:needed}
             ;
-        console.log(first_col+":"+value+":"+needed);
         jQuery.ajax({
           data:data,
           type:"post",
