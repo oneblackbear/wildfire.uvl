@@ -7,13 +7,15 @@
     ?>
     <?if($a->primval):?>
       <?$i++;?>
+
     <a
       href="<?=$a->permalink($large_image_size)?>"
       data-s="<?=$a->permalink($gallery_image_type_size)?>"
       data-m="<?=$a->permalink($primary_image_size)?>"
       data-l="<?=$a->permalink($large_image_size)?>"
-      class='vehicle_gallery_image_link vgil-<?=$i?>'
+      class='vehicle_gallery_image_link vgil-<?=$x?>'
       title="<?=$a->title?>"
+      rel="image_<?=$cms_content->primval?>"
     ><?=$a->render($sz)?></a>
     <?endif?>
   <?endforeach?>
