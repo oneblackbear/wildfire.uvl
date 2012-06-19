@@ -61,7 +61,7 @@ class WildfireUvlController extends ApplicationController{
     $search_options = array();
 
     if(!$search_options){
-      $model = new WildfireUvlVehicleSearchField;
+      $model = new WildfireUvlVehicleSearchField("sorted");
       foreach($model->all() as $search){
         $opt =  array('col'=>$search->column_name, 'title'=>$search->title, 'type'=>$search->search_type, 'inc'=>$search->increment, 'pos'=>$search->position);
         if($search->search_type == "range") $opt['range'] = $this->__vehicle_search_range_values(new $this->vehicle_class, $search->column_name);
