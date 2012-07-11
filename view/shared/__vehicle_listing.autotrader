@@ -1,0 +1,19 @@
+"<?=implode('","', array_keys(Autotrader::$fields))?>"
+<?foreach($vehicles as $vehicle){
+  $vehicle->copy_media($image_export_path);
+  $this_row = array();
+  foreach(Autotrader::$fields as $theirs => $ours){
+    $data = '';
+    if($ours){
+      $res = $vehicle->$ours();
+      if($res instanceof WaxRecordSet){
+        $complex = array();
+        foreach($res as $d) $complex[] = $d->{$d->identifier};
+        $data = implode(",", $complex);
+      }elseif($res instanceof WaxModel) $data = $res->{$res->identifier};
+      else $data = $res;
+    }
+    $this_row[$theirs] = $data;
+  }
+  echo '"'.implode('","', $this_row)."\"\n";
+}?>

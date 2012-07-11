@@ -14,6 +14,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
     $this->define("date_of_manufacture", "CharField", array('group'=>'extras'));
     $this->define("date_of_first_registration", "CharField", array('group'=>'extras'));
+    $this->define("number_of_previous_owners", "IntegerField", array('group'=>'extras','maxlength'=>'3'));
 
     $this->define("previous_price", "FloatField", array('maxlength'=>'12,2', 'group'=>'prices'));
     //should prices be shown ex VAT, inc VAT, or as raw price (ie new car & used commericals need vat, used normal cars dont)
@@ -28,6 +29,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("body_make", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
     $this->define("body_model", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
     $this->define("body_style", "CharField", array('group'=>'sizes / chasis'));
+    $this->define("number_of_doors", "IntegerField", array('group'=>'sizes / chasis','maxlength'=>'3'));
     $this->define("seating_capacity", "IntegerField", array('group'=>'sizes / chasis'));
     $this->define("standing_capacity", "IntegerField", array('group'=>'sizes / chasis'));
     $this->define("length", "FloatField", array('group'=>'sizes / chasis','maxlength'=>'8,2'));
@@ -80,5 +82,24 @@ class WildfireUvlVehicle extends WildfireContent{
     parent::before_save();
   }
 
+  public function year_of_first_registration(){
+    return date("Y", strtotime($this->date_of_first_registration));
+  }
+
+  public function autotrader_dealer_id(){
+    return $this->dealer->autotrader_id;
+  }
+
+  public function autotrader_images(){
+    foreach($this->media(array("media_class"=>"WildfireDiskFile")) as $media) $r[] = basename($media->source);
+    return implode(",", $r);
+  }
+
+  public function copy_media($image_export_path){
+    if(!$image_export_path) return;
+    foreach($this->media(array("media_class"=>"WildfireDiskFile")) as $media){
+      copy(PUBLIC_DIR.$media->source, $image_export_path.basename($media->source));
+    }
+  }
 }
 ?>
