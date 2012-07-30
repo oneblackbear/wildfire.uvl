@@ -77,6 +77,10 @@ jQuery(document).ready(function(){
   
   form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
 
+  form.find("select.range_compound_dropdown_start").each(function(){
+    if(jQuery(this).val()) __compound_lookup(jQuery(this));
+  });
+
   form.find("select.range_compound_dropdown_start").live("change", function(){
     clearTimeout(__vehicle_form_timer);
     __compound_lookup(jQuery(this));
