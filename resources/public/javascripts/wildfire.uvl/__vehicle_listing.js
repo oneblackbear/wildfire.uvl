@@ -10,7 +10,7 @@ jQuery(document).ready(function(){
         jQuery.ajax({
           data:data,
           type:"get",
-          url:form.attr("data-action"),
+          url:"/used/vehicle_search",
           success:function(res){
             form.find(".vehicles_set").replaceWith(res);
             form.addClass("vehicle_success").removeClass("vehicle_loading").removeClass("vehicle_failed");
