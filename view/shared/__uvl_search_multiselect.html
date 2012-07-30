@@ -1,5 +1,5 @@
 <?
-$posted = Request::param('vehicle');
+$posted = $vehicle_filters;
 if(($col = $data['col']) && $posted[$col]) $vals = $posted[$col];
 else $vals = array();
 ?>
