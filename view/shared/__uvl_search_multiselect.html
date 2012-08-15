@@ -8,7 +8,7 @@ else $vals = array();
   <h3><?=$data['title']?></h3>
   
   <?foreach($data['options'] as $opt):?>
-  <span class='range_multiselect_option'><input id="vehicle_<?=$col?>_<?=$opt['primval']?>" type='checkbox' name='vehicle[<?=$col?>][]' value='<?=$opt['primval']?>'<?if(in_array($opt['primval'], $vals) ):?> checked="checked"<?endif?>><label for="vehicle_<?=$col?>_<?=$opt['primval']?>"><?=$opt['title']?></label></span>
+  <span class='range_multiselect_option multiselect_<?=$col?></span>'><input id="vehicle_<?=$col?>_<?=Inflections::to_url($opt['primval'])?>" type='checkbox' name='vehicle[<?=$col?>][]' value='<?=$opt['primval']?>'<?if(in_array($opt['primval'], $vals) ):?> checked="checked"<?endif?>><label for="vehicle_<?=$col?>_<?=Inflections::to_url($opt['primval'])?>"><?=$opt['title']?></label></span>
   <?endforeach?>
   
 </fieldset>
