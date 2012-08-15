@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
   var form = jQuery("form.vehicles_search_form"),
       __vehicle_form_timer = false,
-      __vehicle_form_post = function(){        
+      __vehicle_form_post = function(){
           var data = form.serialize()+"&uvl=1";
             ;
         //add the loading classes
@@ -10,13 +10,13 @@ jQuery(document).ready(function(){
         jQuery.ajax({
           data:data,
           type:"get",
-          url:"/used/vehicle_search",
+          url:"/uvl/vehicle_search",
           success:function(res){
             form.find(".vehicles_set").replaceWith(res);
             form.addClass("vehicle_success").removeClass("vehicle_loading").removeClass("vehicle_failed");
           },
           error:function(xhr,status,err){
-            
+
           }
         });
       },
@@ -30,12 +30,12 @@ jQuery(document).ready(function(){
         jQuery.ajax({
           data:data,
           type:"post",
-          url:"/used/__compound_lookup",
+          url:"/uvl/__compound_lookup",
           success:function(res){
             sub.html(res);
           },
           error:function(xhr,status,err){
-            
+
           }
         });
       }
@@ -62,7 +62,7 @@ jQuery(document).ready(function(){
         p.find(".range_current_val_max").html(ui.values[1]);
         p.find(".range_current_val_min").html(ui.values[0]);
         p.find(".range_slider_min").val(ui.values[0]);
-        p.find(".range_slider_max").val(ui.values[1]);  
+        p.find(".range_slider_max").val(ui.values[1]);
         clearTimeout(__vehicle_form_timer);
         __vehicle_form_timer = setTimeout(__vehicle_form_post, 800);
       }
@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
     clearTimeout(__vehicle_form_timer);
     __vehicle_form_timer = setTimeout(__vehicle_form_post, 800);
   });
-  
+
   form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
 
   form.find("select.range_compound_dropdown_start").each(function(){
