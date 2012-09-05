@@ -15,7 +15,7 @@ if(defined("DEALERS")){
   //change the dealer allowed modules
   Dealer::$allowed_modules = array('home'=>array('index'=>array()),'content'=>array('index'=>array(), 'edit'=>array('details', 'media', 'google map')), 'uvlvehicle'=>array('index'=>array(), 'edit'=>array('details', 'media', 'extras', 'prices', 'engine', 'sizes / chasis')));
   //hook in to the model setup of dealer model to add a join to branches
-  WaxEvent::add("Dealer.setup", function(){
+  WaxEvent::add(DEALER_MODEL.".setup", function(){
     $obj = WaxEvent::data();
     $obj->define("branches", "HasManyField", array('target_model'=>"WildfireUvlBranch", 'group'=>'relationships'));
   });
@@ -35,7 +35,7 @@ if(defined("DEALERS")){
     else $obj->dealer_id = 0; //put in a 0 to filter from the lists etc
   });
   //add in this so it will block all views of the branch & join the created user to the dealership
-  WaxEvent::add("Dealer.user_creation", function(){
+  WaxEvent::add(DEALER_MODEL.".user_creation", function(){
     $dealer = WaxEvent::data();
     $user = $dealer->wu;
     $block2 = $block1 = new WildfirePermissionBlacklist;
@@ -43,7 +43,7 @@ if(defined("DEALERS")){
     $block2->update_attributes(array($user->table."_id"=>$user->primval, 'class'=>'WildfireUvlVehicle', 'operation'=>"tree", "value"=>"0:id"));
   });
   //create branch when saving and the id is set
-  WaxEvent::add("Dealer.branch_creation", function(){
+  WaxEvent::add(DEALER_MODEL.".branch_creation", function(){
     $dealer = WaxEvent::data();
     if($dealer->primval && $dealer->title && ($user = $dealer->wu)){
       $branch = new WildfireUvlBranch;
