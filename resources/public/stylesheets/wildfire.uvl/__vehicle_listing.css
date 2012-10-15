@@ -1,6 +1,7 @@
 .vehicles_search_container{}
   
   .vehicle_sort{
+    overflow:hidden;
     padding:8px 5px;
   }
   .vehicle_sort  .pagination_top_block{

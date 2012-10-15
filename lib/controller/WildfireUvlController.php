@@ -5,7 +5,7 @@ class WildfireUvlController extends ApplicationController{
   public $paginate_vehicles_list = true;
 
   public $vehicle_class = "WildfireUvlVehicle";
-  public $per_page = 1;
+  public $per_page = 5;
 
   //pushing back to the stack
   public function controller_global(){
@@ -42,6 +42,7 @@ class WildfireUvlController extends ApplicationController{
   public function __vehicle_listing(){
     $model = new $this->vehicle_class($this->cms_live_scope);
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
+    elseif($vehicle_filters = Request::param('vehicle')) $this->vehicle_filters = array_merge($vehicle_filters, $this->vehicle_filters);
     if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
     $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);
 

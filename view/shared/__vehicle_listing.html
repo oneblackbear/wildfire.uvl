@@ -13,10 +13,10 @@
     <?if($vehicles):?>
     <form class='clearfix vehicles_search_container vehicles_search_form' action="?" method="get">
       <div class='clearfix vehicle_search_options'>
-        <?=partial(trim($controller."/")."/__vehicle_search_options")?>
+        <?=partial(trim($controller."/")."/__vehicle_search_options",array("vehicle_filters"=>$vehicle_filters, 'controller'=>$controller))?>
       </div>
 
-      <?=partial(trim($controller."/")."/__vehicle_search_results", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page))?>
+      <?=partial(trim($controller."/")."/__vehicle_search_results", array('vehicles'=>$vehicles, 'paginate_vehicles_list'=>$paginate_vehicles_list, 'this_page'=>$this_page, 'per_page'=>$per_page, 'controller'=>$controller))?>
 
     </form>
     <?else:?>

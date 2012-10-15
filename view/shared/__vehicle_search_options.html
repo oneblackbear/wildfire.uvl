@@ -1,4 +1,6 @@
 <?foreach($search_options as $search):?>
-  <?=partial("__uvl_search_".$search['type'], array('data'=>$search))?>
+  <?if($search['type']):?>
+  <?=partial("__uvl_search_".$search['type'], array('data'=>$search,"vehicle_filters"=>$vehicle_filters))?>
+  <?endif?>
 <?endforeach?>
 <input type="submit" name="vehicle_submit" value="Search" class='button submit_button'>

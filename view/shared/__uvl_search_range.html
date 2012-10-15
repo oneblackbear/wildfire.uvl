@@ -1,5 +1,5 @@
 <?
-$posted = Request::param('vehicle');
+$posted = $vehicle_filters;
 if(($col = $data['col']) && ($vals = $posted[$col])){
   $min = $vals['min'];
   $max = $vals['max'];
