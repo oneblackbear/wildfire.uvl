@@ -41,7 +41,7 @@ class Autotrader{
     $image_export_path = CACHE_DIR."autotrader/".date("c")."/";
     $export_name = "oneblackbear-".date("dmY")."-DMS14";
     mkdir($image_export_path, 0777, true);
-    $autotrader_data = partial("used/__vehicle_listing", array("paginate_vehicles_list"=>false, "image_export_path"=>$image_export_path), "autotrader");
+    $autotrader_data = partial("uvl/__vehicle_listing", array("paginate_vehicles_list"=>false, "image_export_path"=>$image_export_path), "autotrader");
     file_put_contents($image_export_path.$export_name.".txt", $autotrader_data);
     exec("cd ".$image_export_path." && zip -j ".$export_name.".zip *");
     return 1;
