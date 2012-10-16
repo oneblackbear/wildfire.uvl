@@ -26,7 +26,7 @@ if(defined("DEALERS")){
   });
   WaxEvent::add("WildfireUvlVehicle.setup", function(){
     $obj = WaxEvent::data();
-    $obj->define("dealer", "ForeignKey", array('target_model'=>"Dealer", 'group'=>'relationships'));
+    $obj->define("dealer", "ForeignKey", array('target_model'=>"Dealer", 'group'=>'relationships', "editable"=>false));
   });
   //add hook on saving of the vehicle to lock it to the dealer
   WaxEvent::add("WildfireUvlVehicle.before_save", function(){
