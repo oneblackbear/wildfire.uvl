@@ -29,7 +29,6 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   }
 
   public function import(){
-    print_r($this->controller); exit;
     if($dealer = $this->current_user->dealer){
       $import = new WildfireUvlImport(array(
         "import_dir" => WAX_ROOT."tmp/used_import/$dealer->client_id",
