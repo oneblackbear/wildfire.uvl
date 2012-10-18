@@ -157,6 +157,7 @@ class WildfireUvlImport{
         //now we make a new media item
         $model = new WildfireMedia;
         $vars = array('title'=>basename($name, ".".$ext),
+                      'file_type'=>File::detect_mime($file),
                       'status'=>0,
                       'media_class'=>$class,
                       'uploaded_location'=>str_replace(PUBLIC_DIR, "", $path.$name),
@@ -167,6 +168,8 @@ class WildfireUvlImport{
           $obj = new WildfireDiskFile;
           $obj->set($saved);
         }
+
+        $model->tag = "gallery image";
 
         $car->media = $model;
       }
