@@ -27,5 +27,15 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
       });
     }
   }
+
+  public function import(){
+    if($dealer = $this->current_user->dealer){
+      $import = new WildfireUvlImport(array(
+        "import_dir" => WAX_ROOT."tmp/used_import/$dealer->client_id",
+        "dealer_id" => $dealer->id
+      ));
+      $import->import_all();
+    }
+  }
 }
 ?>
