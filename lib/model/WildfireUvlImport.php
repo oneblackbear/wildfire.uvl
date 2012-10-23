@@ -18,7 +18,7 @@ class WildfireUvlImport{
         "Make"               => "make",
         "Model"              => "model",
         "Variant"            => "model_variant_description",
-        "EngineEngineSize"   => "engine_size",
+        "EngineSize"         => "engine_size",
         "Price"              => "price",
         "Transmission"       => "transmission",
         "PictureRefs"        => "images",
@@ -48,14 +48,12 @@ class WildfireUvlImport{
     foreach($data as $k => $v) $this->$k = $v;
   }
 
-  public function import_all(){
-    if(!$this->dealer_id) return;
+  public function import_all($type = "zip"){
     $maxtime = 0;
     $file = false;
-    $zips = glob($this->import_dir."/*.zip");
+    $zips = glob($this->import_dir."/*.".$type);
     $sorted = array();
     foreach($zips as $zip) if(!stristr($zip,"done")) $sorted[filemtime($zip)] = $zip;
-    ksort($sorted);
     $time_counter = 0;
     foreach($sorted as $k=>$zip){
       $data = array();
@@ -69,7 +67,9 @@ class WildfireUvlImport{
   }
 
   public function import($file,&$time_counter){
-    $this->sort_zip($file);
+    $file_type = substr($file,-4);
+    if($file_type == ".zip") $this->sort_zip($file);
+
     $filenames = glob($this->import_dir."/*.csv");
     $maxtime = 0;
     $filename = false;
@@ -85,16 +85,20 @@ class WildfireUvlImport{
       $count = 0;
 
       $used_cars = new WildfireUvlVehicle;
-      $used_cars->query("UPDATE `$used_cars->table` SET `status` = 0 where dealer_id = $this->dealer_id");
+      if($this->dealer_id) $used_cars->query("UPDATE `$used_cars->table` SET `status` = 0 where dealer_id = $this->dealer_id");
+      else $used_cars->query("UPDATE `$used_cars->table` SET `status` = 0");
 
       foreach($data as $import_id => $bulk) {
         $car = new WildfireUvlVehicle;
-        $existing = $car->filter(array("code"=>$this->dealer_id."_".$bulk[$this->mappings[$this->mapping]["primary_key"]]))->first();
+        if($this->dealer_id) $existing = $car->filter(array("code"=>$this->dealer_id."_".$bulk[$this->mappings[$this->mapping]["primary_key"]]))->first();
+        else $existing = $car->filter(array("code"=> $bulk[$this->mappings[$this->mapping]["primary_key"]]))->first();
+
         if($existing->primval) {
           $used_car = $existing;
         }else{
           $used_car = new WildfireUvlVehicle;
         }
+
         foreach($this->mappings[$this->mapping]['fields'] as $from => $to){   
           if($to) {
             if(!in_array($to, array("images","fuel_type","transmission"))){
@@ -105,11 +109,16 @@ class WildfireUvlImport{
             }
           }
         }
-        $used_car->dealer_id = $this->dealer_id;
+
+        if($this->dealer_id){
+          $used_car->dealer_id = $this->dealer_id;
+          $used_car->code = $this->dealer_id . "_" .$used_car->code;
+        }
         $used_car->status = 1;
         $used_car->date_start = date("Y-m-d H:i:s");
         $used_car->title = $used_car->make." ".$used_car->model;
-
+        $used_car->price = floatval($used_car->price);
+        
         if($used_car->save()){
           $count++; 
           //find files in export location
