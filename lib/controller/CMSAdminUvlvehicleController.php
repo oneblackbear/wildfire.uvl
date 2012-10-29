@@ -47,6 +47,8 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
       "auth_token" => "AgAAAA**AQAAAA**aAAAAA**fH6OUA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCZWHoQqdj6x9nY+seQ**4PoBAA**AAMAAA**UoS/CxHRSJ05ic6010PFIcDdMOEyh29CMDElCp30jVklXttRcMoGMkD7jBtTXJY/XlAVVwyRO5c+gbHWcdpqRL66hFrSNh+HZP1kK5zRIGZAko1EK1znX3rD3buQHgBmHZkiCPtvxeXpramxVIapEP/WBMhsALaZ46VTZDcm4Lb/SaSeJZnc9OSukvDegCIc9T8dTT6HgwVrI4KhcrDz8rtXhYMW41btIDSiXl5ZyLr0fQqpx1F9PSne+HgiLNzEmhr3a6f7IQixRz48gl09GcdiMwiNFjwdP93eZfylGgPS1am92imH/0daglWl5tduA9OPIEWTAsouaOIHGuLMuMNd9t6781KEkx79hMzTXAD1tU78YIi8DftRum5c5g0xGkkMFya9E60F7l4AKLpmdJR4a5MGN4bpgDkycppPqSDlR5ISwJacevXYyOnJpHVcrKPcxIMbprmsRYbP1L3zRetwSZpbvxX4717xcKum6n4Syo1IvH4JVrF/etR6LfS5naNui4mJQQUO0UPUH5wUvovKHystTe6NVTLJ40g4mUYY9618VRqay68WL1550eT7j6rph7BdW7d+HEAal8gg56c7xe/k7d+dFI4+4oO/gW38oZL7LknX4/WbZgpwcuOKYWNzXPLVa5iSyqk+VO2d2QoWXeokISwydMuV6JMRuyTGxzjZeIXpsKgKGov6icGFckWo+mv6sPZqnmN/zJp/tJtPBCPkzWX8jVD4ylJkWlha95N1nDHIe+uIQzM+CF13"
     ];
 
+    //specs for this structure are on http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/AddItems.html#Request.AddItemRequestContainer.Item.ListingType
+    //you can have multiple item holders per request, to post as many items as you like
     $item_holder = new stdClass;
     $item_holder->MessageID = "1";
     $item_holder->Item->ConditionID = "1000";
