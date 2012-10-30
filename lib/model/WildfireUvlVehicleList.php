@@ -10,7 +10,10 @@ class WildfireUvlVehicleList extends WaxModel{
 
   public static function find_manufacturers() {
     $model = new WildfireUvlVehicleList;
-    return $model->group("manufacturer")->all();
+    $results = $model->group("manufacturer")->all();
+    $manufacturers = array();
+    foreach($results as $res) $manufacturers[]=$res->manufacturer;
+    return $manufacturers;
   }
   
 }
