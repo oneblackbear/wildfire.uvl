@@ -79,6 +79,11 @@ class WildfireUvlVehicle extends WildfireContent{
     if(!$this->code) $this->code = rand(1000,9999);
     parent::before_save();
   }
+  
+  public function humanize($column=false){
+    if($column == "make" ) return $this->make;
+    return parent::humanize($column);
+  }
+
 
 }
-?>
