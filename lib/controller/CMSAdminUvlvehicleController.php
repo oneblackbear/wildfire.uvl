@@ -6,6 +6,7 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   public $dashboard = false;
   public $file_tags = array('gallery image');
   public static $restricted_tree = false;
+  public $per_page = 25;
 
   public function events(){
     parent::events();
