@@ -5,7 +5,7 @@ class WildfireUvlVehicle extends WildfireContent{
   public function setup(){
     $this->define("registration", "CharField", array('required'=>true, 'scaffold'=>true)); //reg plate
     $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true, 'widget'=>"SelectInput", 'choices'=>WildfireUvlVehicleList::find_manufacturers(), 'text_choices'=>true));
-    $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
+    $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true, 'widget'=>"SelectInput", 'choices'=>WildfireUvlVehicleList::find_models($this->make), 'text_choices'=>true));
 
     parent::setup();
     $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'editable'=>true, 'label'=>"Live", 'info_preview'=>1, "tree_scaffold"=>1));

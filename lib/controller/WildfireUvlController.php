@@ -31,6 +31,16 @@ class WildfireUvlController extends ApplicationController{
     $this->use_layout = false;
     unset($_GET['uvl']);
   }
+  
+  public function model_list() {
+    $make = get("wildfire_uvl_vehicle_make");
+    $select = get("model");
+    $models = WildfireUvlVehicleList::find_models($make, false);
+    if($select) $models['selected']=$select;
+    echo json_encode($models);
+    exit;
+  }
+  
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one - view of the actual vehicle
