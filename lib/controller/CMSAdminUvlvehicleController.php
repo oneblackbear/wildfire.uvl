@@ -39,49 +39,37 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
     $this->redirect_to("/$this->controller");
   }
 
-  public function ebaytest(){
+  public function ebay_export(){
     $ebay_config = [
       "system" => "sandbox",
-      "siteid" => "2c684554-a9ce-4fbd-bd4e-cbd443a25a3c",
       "appid" => "OneBlack-5c85-4661-83b1-7b1902d54e91",
-      "auth_token" => "AgAAAA**AQAAAA**aAAAAA**fH6OUA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCZWHoQqdj6x9nY+seQ**4PoBAA**AAMAAA**UoS/CxHRSJ05ic6010PFIcDdMOEyh29CMDElCp30jVklXttRcMoGMkD7jBtTXJY/XlAVVwyRO5c+gbHWcdpqRL66hFrSNh+HZP1kK5zRIGZAko1EK1znX3rD3buQHgBmHZkiCPtvxeXpramxVIapEP/WBMhsALaZ46VTZDcm4Lb/SaSeJZnc9OSukvDegCIc9T8dTT6HgwVrI4KhcrDz8rtXhYMW41btIDSiXl5ZyLr0fQqpx1F9PSne+HgiLNzEmhr3a6f7IQixRz48gl09GcdiMwiNFjwdP93eZfylGgPS1am92imH/0daglWl5tduA9OPIEWTAsouaOIHGuLMuMNd9t6781KEkx79hMzTXAD1tU78YIi8DftRum5c5g0xGkkMFya9E60F7l4AKLpmdJR4a5MGN4bpgDkycppPqSDlR5ISwJacevXYyOnJpHVcrKPcxIMbprmsRYbP1L3zRetwSZpbvxX4717xcKum6n4Syo1IvH4JVrF/etR6LfS5naNui4mJQQUO0UPUH5wUvovKHystTe6NVTLJ40g4mUYY9618VRqay68WL1550eT7j6rph7BdW7d+HEAal8gg56c7xe/k7d+dFI4+4oO/gW38oZL7LknX4/WbZgpwcuOKYWNzXPLVa5iSyqk+VO2d2QoWXeokISwydMuV6JMRuyTGxzjZeIXpsKgKGov6icGFckWo+mv6sPZqnmN/zJp/tJtPBCPkzWX8jVD4ylJkWlha95N1nDHIe+uIQzM+CF13"
+      "auth_token" => "AgAAAA**AQAAAA**aAAAAA**Q+6PUA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCZWHoQmdj6x9nY+seQ**4PoBAA**AAMAAA**BsCEULphN3npZa1USxpwcBaE1BgqjvedyNc23i5MBKKQkb9c+aBhMMkKvLbxplb0bRWf6QjoRRYQPTTVlwrCSyth/EzILoaUerVJg3stwqr/azxHS691XWWUwC2xT0FDdGdzZlhFm1twVT8ogANk3haTNC7cgjD8mPsadKFiaHWYDFgDGZcf1gexYtgRm3u6CMx9j21ky0D7VZvd1G35nbbVOna8bI7zfS47dvdxgV1w5TCYjym1YRd2L4Q8cgpWGUR61WL14BqzUfnRAgt0AAmlK+rQDPPYOGhyak/kuyFs0kD6boSxzKCdtYXMKlL5h8UQLchNjPmdQpui87mdNmykffPi8INWcfaffAUV9gYAulgW5j3iQwiOtb/LJJDsmHCdOa8jlWaio8kiJlgrn1EuSmu8qYVMNlFwcDfKK8Zn6XcOMteYT+g2KSriXI06G/Ysqx/dNpCxlM3a1+YqWP9zymPPVgZbE1P/sxxAK1UxavFkcr976K8wRSj+R8KzMwwet8hvzVJyY+28M2yZVvVoyp9reVFglVfN4dbAqR5i0/065kePdSb+Cbh6BmdRF+qFlPqb1zjTOtdLyaHdUXXopv0pQ3dI7VnjsGKA9ISmIV21eEEqMvGa8LsUweWzFt+wTd+DGfv8qXNEGG4fEtP3ErMby9HHhkGox7RADXJNDil/rFqt9Ze/Ob3ONJYeJY3er8TjQTT8KDuEllolFsmcKdah+A9lTHBElPTVru2qMgHGCaRSkJSgzxB+B4Fn"
     ];
 
-    //specs for this structure are on http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/AddItems.html#Request.AddItemRequestContainer.Item.ListingType
-    //you can have multiple item holders per request, to post as many items as you like
-    $item_holder = new stdClass;
-    $item_holder->MessageID = "1";
-    $item_holder->Item->ConditionID = "1000";
-    $item_holder->Item->Site = "UK";
-    $item_holder->Item->Quantity = "1";
-    $item_holder->Item->StartPrice = "1.0";
-    $item_holder->Item->ListingDuration = "Days_7";
-    $item_holder->Item->ListingType = "FixedPriceItem";
-    $item_holder->Item->DispatchTimeMax = "3";
-    $item_holder->Item->ProductListingDetails->ISBN = "0439784549";
-    $item_holder->Item->ProductListingDetails->IncludePrefilledItemInformation = "true";
-    $item_holder->Item->ProductListingDetails->IncludeStockPhotoURL = "true";
-    $item_holder->Item->ShippingDetails->ShippingType = "Flat";
-    $item_holder->Item->ShippingDetails->ShippingServiceOptions->ShippingServicePriority = "1";
-    $item_holder->Item->ShippingDetails->ShippingServiceOptions->ShippingService = "USPSMedia";
-    $item_holder->Item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost = "2.50";
-    $item_holder->Item->ReturnPolicy->ReturnsAcceptedOption = "ReturnsAccepted";
-    $item_holder->Item->ReturnPolicy->RefundOption = "MoneyBack";
-    $item_holder->Item->ReturnPolicy->ReturnsWithinOption = "Days_30";
-    $item_holder->Item->ReturnPolicy->Description = "Text description of return policy details";
-    $item_holder->Item->ReturnPolicy->ShippingCostPaidByOption = "Buyer";
-    $item_holder->Item->Country = "US";
-    $item_holder->Item->Currency = "USD";
-    $item_holder->Item->PostalCode = "95125";
-    $item_holder->Item->PaymentMethods = "PayPal";
-    $item_holder->Item->PayPalEmailAddress = "magicalbookseller@yahoo.com";
-    // $item_holder->Item->UUID = "529c4b0f95a04d808bada0841e42f69a";
-    $item_holder->Item->PictureDetails->PictureURL = "http://i1.sandbox.ebayimg.com/03/i/00/3e/60/d7_1.JPG?set_id=8800005007";
+    $vehicles = WildfireUvlVehicle::find("all", [
+      "filter" => [[
+        "status" => 1,
+        "ebay is null" => null]],
+      "limit"  => [6]
+    ]);
 
+    $total_vehicles = count($vehicles) - 1;
     $data = new stdClass;
-    $data->AddItemRequestContainer = [$item_holder];
-    $res = Ebay::AddItems($ebay_config + ["data"=>$data]);
-    print_r($res); exit;
+    foreach($vehicles as $i => $vehicle) if($item_holder = $vehicle->to_ebay()){
+      if(count($data->AddItemRequestContainer) == 5 || $i >= $total_vehicles){
+        $results = Ebay::AddItems($ebay_config + ["data"=>$data]);
+        if($results->Ack == "Success"){
+          foreach($results->AddItemResponseContainer as $result){
+            $vehicle = new WildfireUvlVehicle($result->CorrelationID);
+            $vehicle->ebay = $result->ItemID;
+            $vehicle->save();
+          }
+        }else throw new WaxException("Ebay Export Error");
+        $data->AddItemRequestContainer = [];
+      }
+      $data->AddItemRequestContainer[] = $item_holder;
+    }
   }
+
 }
 ?>

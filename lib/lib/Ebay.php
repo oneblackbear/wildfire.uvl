@@ -20,7 +20,12 @@ class Ebay{
     $params[0]["data"]->ErrorLanguage = "en_US";
     $params[0]["data"]->WarningLevel = "High";
 
-    $client->__setLocation(self::$url[$params[0]["system"]]."?version=795&routing=default&callname=$name&siteid=".$params[0]["siteid"]."&appid=".$params[0]["appid"]);
-    return $client->$name($params[0]["data"]);
+    $client->__setLocation(self::$url[$params[0]["system"]]."?version=795&routing=default&callname=$name&siteid=3&appid=".$params[0]["appid"]);
+
+    try{
+      return $client->$name($params[0]["data"]);
+    }catch(Exception $e){
+      WaxLog::log("error", print_r($e, 1), "ebay");
+    }
   }
 }

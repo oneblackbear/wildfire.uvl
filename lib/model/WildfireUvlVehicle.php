@@ -62,6 +62,8 @@ class WildfireUvlVehicle extends WildfireContent{
 	$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
 	$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
     unset($this->columns['view'], $this->columns['layout']);
+
+    $this->define("ebay", "CharField");
   }
 
 
@@ -80,5 +82,24 @@ class WildfireUvlVehicle extends WildfireContent{
     parent::before_save();
   }
 
+  //specs for this structure are on http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/AddItems.html
+  public function to_ebay(){
+    $item_holder = new stdClass;
+    $item_holder->MessageID = $this->id;
+    $item_holder->Item->Title = $this->title;
+    $item_holder->Item->Description = $this->content;
+    $item_holder->Item->Site = "UK";
+    $item_holder->Item->Quantity = "1";
+    $item_holder->Item->StartPrice = $this->price;
+    $item_holder->Item->ListingDuration = "Days_7";
+    $item_holder->Item->ListingType = "FixedPriceItem";
+    $item_holder->Item->ReturnPolicy->ReturnsAcceptedOption = "ReturnsNotAccepted";
+    $item_holder->Item->Country = "GB";
+    $item_holder->Item->Currency = "GBP";
+    $item_holder->Item->PostalCode = $this->dealer->postal_code;
+    $item_holder->Item->PaymentMethods = "CashOnPickup";
+    $item_holder->Item->PrimaryCategory->CategoryID = 52636;
+    return $item_holder;
+  }
 }
 ?>
