@@ -59,9 +59,18 @@ class WildfireUvlVehicle extends WildfireContent{
 
     //remove the date_start / date_end
     $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
-	$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
-	$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
+	  $this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
+	  $this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
+    
+    
+    
+    //ability to search by vehicle location
+    $this->define("postcode_location", "CharField", array('label'=>"UK postcode location"));
+    $this->define("lat", "CharField", array('editable'=>false));
+    $this->define("lng", "CharField", array('editable'=>false));
+   
     unset($this->columns['view'], $this->columns['layout']);
+    
   }
 
 
@@ -84,6 +93,17 @@ class WildfireUvlVehicle extends WildfireContent{
     if($column == "make" ) return $this->make;
     if($column == "model" ) return $this->model;
     return parent::humanize($column);
+  }
+  public function after_save() {
+    // Try and copy across lat/lng details from branch to speed up search by distance
+    if(count($this->branches)) {
+      $this->lat = $this->branches[0]->lat;
+      $this->lng = $this->branches[0]->lng;
+    } elseif($this->postcode_location) {
+      $coords = geo_locate($this->postcode_location, Config::get("uvl/google_maps_key"));
+      $this->lat = $coords['lat'];
+      $this->lng = $coords['lng'];
+    }
   }
 
 
