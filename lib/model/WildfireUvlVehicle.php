@@ -9,7 +9,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
     parent::setup();
     $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'editable'=>true, 'label'=>"Live", 'info_preview'=>1, "tree_scaffold"=>1));
-    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2'));
+    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'label'=>"Price(&pound;) - numbers only"));
     $this->define("code", "CharField", array('required'=>true, 'group'=>'extras')); //a unique ref from import
 
     $this->define("date_of_manufacture", "CharField", array('group'=>'extras'));
@@ -82,6 +82,7 @@ class WildfireUvlVehicle extends WildfireContent{
   
   public function humanize($column=false){
     if($column == "make" ) return $this->make;
+    if($column == "model" ) return $this->model;
     return parent::humanize($column);
   }
 
