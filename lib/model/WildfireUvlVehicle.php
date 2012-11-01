@@ -84,6 +84,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
   //specs for this structure are on http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/AddItems.html
   public function to_ebay(){
+    if(!($dealer = $this->dealer)) return;
     $item_holder = new stdClass;
     $item_holder->MessageID = $this->id;
     $item_holder->Item->Title = $this->title;
@@ -96,7 +97,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $item_holder->Item->ReturnPolicy->ReturnsAcceptedOption = "ReturnsNotAccepted";
     $item_holder->Item->Country = "GB";
     $item_holder->Item->Currency = "GBP";
-    $item_holder->Item->PostalCode = $this->dealer->postal_code;
+    $item_holder->Item->PostalCode = $dealer->postal_code;
     $item_holder->Item->PaymentMethods = "CashOnPickup";
     $item_holder->Item->PrimaryCategory->CategoryID = 52636;
     return $item_holder;
