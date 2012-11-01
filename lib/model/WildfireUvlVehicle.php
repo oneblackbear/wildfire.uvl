@@ -87,7 +87,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $item_holder = new stdClass;
     $item_holder->MessageID = $this->id;
     $item_holder->Item->Title = $this->title;
-    $item_holder->Item->Description = $this->content;
+    $item_holder->Item->Description = $this->content?$this->content:$this->title;
     $item_holder->Item->Site = "UK";
     $item_holder->Item->Quantity = "1";
     $item_holder->Item->StartPrice = $this->price;
