@@ -1,4 +1,6 @@
 <?php
+// ebay soap api. input: [system (sandbox/production), appid, auth_token, data] with data in their layout using stdClass
+// http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/ has various calls and data formats
 class Ebay{
   public static $url = [
     "sandbox" => "https://api.sandbox.ebay.com/wsapi",
@@ -25,7 +27,7 @@ class Ebay{
     try{
       return $client->$name($params[0]["data"]);
     }catch(Exception $e){
-      WaxLog::log("error", print_r($e, 1), "ebay");
+      WaxLog::log("error", print_r($e, 1).print_r($client, 1), "ebay");
     }
   }
 }
