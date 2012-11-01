@@ -2,10 +2,10 @@
 // ebay soap api. input: [system (sandbox/production), appid, auth_token, data] with data in their layout using stdClass
 // http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/ has various calls and data formats
 class Ebay{
-  public static $url = [
+  public static $url = array(
     "sandbox" => "https://api.sandbox.ebay.com/wsapi",
     "production" => "https://api.ebay.com/wsapi"
-  ];
+  );
 
   public function __callStatic($name, $params){
     $client = new SoapClient("http://developer.ebay.com/webservices/latest/ebaySvc.wsdl", array("trace"=>1));

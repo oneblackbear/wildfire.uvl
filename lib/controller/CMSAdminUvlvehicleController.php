@@ -40,24 +40,24 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   }
 
   public function ebay_export(){
-    $ebay_config = [
+    $ebay_config = array(
       "system" => "sandbox",
       "appid" => "OneBlack-5c85-4661-83b1-7b1902d54e91",
       "auth_token" => "AgAAAA**AQAAAA**aAAAAA**Q+6PUA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCZWHoQmdj6x9nY+seQ**4PoBAA**AAMAAA**BsCEULphN3npZa1USxpwcBaE1BgqjvedyNc23i5MBKKQkb9c+aBhMMkKvLbxplb0bRWf6QjoRRYQPTTVlwrCSyth/EzILoaUerVJg3stwqr/azxHS691XWWUwC2xT0FDdGdzZlhFm1twVT8ogANk3haTNC7cgjD8mPsadKFiaHWYDFgDGZcf1gexYtgRm3u6CMx9j21ky0D7VZvd1G35nbbVOna8bI7zfS47dvdxgV1w5TCYjym1YRd2L4Q8cgpWGUR61WL14BqzUfnRAgt0AAmlK+rQDPPYOGhyak/kuyFs0kD6boSxzKCdtYXMKlL5h8UQLchNjPmdQpui87mdNmykffPi8INWcfaffAUV9gYAulgW5j3iQwiOtb/LJJDsmHCdOa8jlWaio8kiJlgrn1EuSmu8qYVMNlFwcDfKK8Zn6XcOMteYT+g2KSriXI06G/Ysqx/dNpCxlM3a1+YqWP9zymPPVgZbE1P/sxxAK1UxavFkcr976K8wRSj+R8KzMwwet8hvzVJyY+28M2yZVvVoyp9reVFglVfN4dbAqR5i0/065kePdSb+Cbh6BmdRF+qFlPqb1zjTOtdLyaHdUXXopv0pQ3dI7VnjsGKA9ISmIV21eEEqMvGa8LsUweWzFt+wTd+DGfv8qXNEGG4fEtP3ErMby9HHhkGox7RADXJNDil/rFqt9Ze/Ob3ONJYeJY3er8TjQTT8KDuEllolFsmcKdah+A9lTHBElPTVru2qMgHGCaRSkJSgzxB+B4Fn"
-    ];
+    );
 
-    $vehicles = WildfireUvlVehicle::find("all", [
-      "filter" => [[
+    $vehicles = WildfireUvlVehicle::find("all", array(
+      "filter" => array(array(
         "status" => 1,
-        "ebay is null" => null]],
-      "limit"  => [6]
-    ]);
+        "ebay is null" => null)),
+      "limit"  => array(6)
+    ));
 
     $total_vehicles = count($vehicles) - 1;
     $data = new stdClass;
     foreach($vehicles as $i => $vehicle) if($item_holder = $vehicle->to_ebay()){
       if(count($data->AddItemRequestContainer) == 5 || $i >= $total_vehicles){
-        $results = Ebay::AddItems($ebay_config + ["data"=>$data]);
+        $results = Ebay::AddItems($ebay_config + array("data"=>$data));
         if($results->Ack == "Success"){
           foreach($results->AddItemResponseContainer as $result){
             $vehicle = new WildfireUvlVehicle($result->CorrelationID);
@@ -68,7 +68,7 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
           WaxLog::log("error", print_r($results, 1), "ebay");
           throw new WaxException("Ebay Export Error");
         }
-        $data->AddItemRequestContainer = [];
+        $data->AddItemRequestContainer = array();
       }
       $data->AddItemRequestContainer[] = $item_holder;
     }
