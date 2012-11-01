@@ -63,7 +63,8 @@ class WildfireUvlVehicle extends WildfireContent{
 	$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
     unset($this->columns['view'], $this->columns['layout']);
 
-    $this->define("ebay", "CharField");
+    $this->define("export_to_ebay", "BooleanField", array("group"=>"export"));
+    $this->define("ebay_id", "CharField", array("editable"=>false));
   }
 
 
@@ -82,9 +83,23 @@ class WildfireUvlVehicle extends WildfireContent{
     parent::before_save();
   }
 
+  public function after_save(){
+    if($this->export_to_ebay && !$this->ebay_id && ($data = $this->to_ebay())){
+      $res = Ebay::AddItem([
+        "system" => "sandbox",
+        "appid" => "OneBlack-5c85-4661-83b1-7b1902d54e91",
+        "auth_token" => "AgAAAA**AQAAAA**aAAAAA**Q+6PUA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6wFk4GhCZWHoQmdj6x9nY+seQ**4PoBAA**AAMAAA**BsCEULphN3npZa1USxpwcBaE1BgqjvedyNc23i5MBKKQkb9c+aBhMMkKvLbxplb0bRWf6QjoRRYQPTTVlwrCSyth/EzILoaUerVJg3stwqr/azxHS691XWWUwC2xT0FDdGdzZlhFm1twVT8ogANk3haTNC7cgjD8mPsadKFiaHWYDFgDGZcf1gexYtgRm3u6CMx9j21ky0D7VZvd1G35nbbVOna8bI7zfS47dvdxgV1w5TCYjym1YRd2L4Q8cgpWGUR61WL14BqzUfnRAgt0AAmlK+rQDPPYOGhyak/kuyFs0kD6boSxzKCdtYXMKlL5h8UQLchNjPmdQpui87mdNmykffPi8INWcfaffAUV9gYAulgW5j3iQwiOtb/LJJDsmHCdOa8jlWaio8kiJlgrn1EuSmu8qYVMNlFwcDfKK8Zn6XcOMteYT+g2KSriXI06G/Ysqx/dNpCxlM3a1+YqWP9zymPPVgZbE1P/sxxAK1UxavFkcr976K8wRSj+R8KzMwwet8hvzVJyY+28M2yZVvVoyp9reVFglVfN4dbAqR5i0/065kePdSb+Cbh6BmdRF+qFlPqb1zjTOtdLyaHdUXXopv0pQ3dI7VnjsGKA9ISmIV21eEEqMvGa8LsUweWzFt+wTd+DGfv8qXNEGG4fEtP3ErMby9HHhkGox7RADXJNDil/rFqt9Ze/Ob3ONJYeJY3er8TjQTT8KDuEllolFsmcKdah+A9lTHBElPTVru2qMgHGCaRSkJSgzxB+B4Fn",
+        "data" => $data]);
+      if($res->Ack == "Success"){
+        $this->ebay_id = $res->ItemID;
+        $this->save();
+      }
+    }
+  }
+
   //specs for this structure are on http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/AddItems.html
   public function to_ebay(){
-    if(!($dealer = $this->dealer)) return;
+    if(!($dealer = $this->dealer) || !$this->title) return;
     $item_holder = new stdClass;
     $item_holder->MessageID = $this->id;
     $item_holder->Item->Title = $this->title;

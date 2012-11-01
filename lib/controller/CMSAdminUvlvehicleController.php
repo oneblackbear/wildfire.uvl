@@ -61,7 +61,7 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
         if($results->Ack == "Success"){
           foreach($results->AddItemResponseContainer as $result){
             $vehicle = new WildfireUvlVehicle($result->CorrelationID);
-            $vehicle->ebay = $result->ItemID;
+            $vehicle->ebay_id = $result->ItemID;
             $vehicle->save();
           }
         }else{
