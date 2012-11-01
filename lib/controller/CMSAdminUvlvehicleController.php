@@ -64,7 +64,10 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
             $vehicle->ebay = $result->ItemID;
             $vehicle->save();
           }
-        }else throw new WaxException("Ebay Export Error");
+        }else{
+          WaxLog::log("error", print_r($results, 1), "ebay");
+          throw new WaxException("Ebay Export Error");
+        }
         $data->AddItemRequestContainer = [];
       }
       $data->AddItemRequestContainer[] = $item_holder;
