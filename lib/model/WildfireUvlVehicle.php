@@ -96,7 +96,7 @@ class WildfireUvlVehicle extends WildfireContent{
   }
   public function after_save() {
     // Try and copy across lat/lng details from branch to speed up search by distance
-    if(count($this->branches)) {
+    if(!$this->postcode_location && count($this->branches)) {
       $this->lat = $this->branches[0]->lat;
       $this->lng = $this->branches[0]->lng;
     } elseif($this->postcode_location) {
