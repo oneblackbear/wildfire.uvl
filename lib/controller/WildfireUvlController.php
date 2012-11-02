@@ -54,13 +54,11 @@ class WildfireUvlController extends ApplicationController{
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
     elseif($vehicle_filters = Request::param('vehicle')) $this->vehicle_filters = array_merge($vehicle_filters, $this->vehicle_filters);
     if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
-    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);
-
+    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);    
     if($this->paginate_vehicles_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
-      $this->vehicles = $model->page($this->this_page, $this->per_page);
-    }else $this->vehicles = $model->all();
-
+      $this->vehicles = $model->page($this->this_page, $this->per_page);      
+    }else $this->vehicles = $model->all(); 
   }
   /**
    * find min - max values for search options, custom search fields etc, partial is used in __vehicle_listing
@@ -123,13 +121,14 @@ class WildfireUvlController extends ApplicationController{
    * take the passed in filter data, work out what data type it is, call its matching function which updates the model with filters
    */
   protected function __vehicle_filters($model, $filters){
-    WaxEvent::run("uvl.vehicle.filters", $model);
+    
     //go over the filters, compare to the search and based on what type they are run code to update the model filters
-    $search_options = $this->__vehicle_search_options(true, true);
+    $search_options = $this->__vehicle_search_options(true, true);    
     $process = array();
     foreach($filters as $key=>$val){
       if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key], $search_options[$key]);
     }
+    WaxEvent::run("uvl.vehicle.filters", $model);
     return $model;
   }
   /**
