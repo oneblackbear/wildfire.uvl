@@ -32,6 +32,7 @@ class WildfireUvlVehicleList extends WaxModel{
       else $models[(string)$res->model]=$res->model;
     }
     if(!$make) self::$models = $models;
+    ksort($models);
     return $models;
   }
   
