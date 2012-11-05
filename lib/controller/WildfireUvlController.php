@@ -6,6 +6,7 @@ class WildfireUvlController extends ApplicationController{
 
   public $vehicle_class = "WildfireUvlVehicle";
   public $per_page = 5;
+  public $cms_live_scope = "live";
 
   //pushing back to the stack
   public function controller_global(){
