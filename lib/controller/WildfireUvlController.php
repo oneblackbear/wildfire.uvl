@@ -86,7 +86,7 @@ class WildfireUvlController extends ApplicationController{
   public function __compound_lookup(){
     $this->use_layout = false;
     $this->results = array();
-    if(($col = Request::param('col')) && ($val = Request::param('val')) && ($need = Request::param('need'))){
+    if(($col = Request::param('col')) && ($val = urldecode(Request::param('val'))) && ($need = Request::param('need'))){
       $model = new $this->vehicle_class($this->cms_live_scope);
       foreach($model->filter($col, $val)->group($need)->all() as $row) $this->results[] = $row->$need;
     }
@@ -127,6 +127,7 @@ class WildfireUvlController extends ApplicationController{
     $search_options = $this->__vehicle_search_options(true, true);    
     $process = array();
     foreach($filters as $key=>$val){
+      if(is_string($val)) $val = urldecode($val);
       if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key], $search_options[$key]);
     }
     WaxEvent::run("uvl.vehicle.filters", $model);
