@@ -151,7 +151,8 @@ class WildfireUvlImport{
       $found = array();   
       //loop around all found - dont add to db yet as we want the p prefixed image to be added first
       $folder_name = $this->get_folder($car);
-      foreach($files as $file){
+      $car->media->unlink();
+      foreach($files as $i => $file){
         $name = str_replace($this->import_dir."/", '', $file);
         $data = file_get_contents($file);
         //from the file name find the extension
@@ -179,6 +180,7 @@ class WildfireUvlImport{
         }
 
         $model->tag = "gallery image";
+        $model->join_order = $i;
 
         $car->media = $model;
       }
