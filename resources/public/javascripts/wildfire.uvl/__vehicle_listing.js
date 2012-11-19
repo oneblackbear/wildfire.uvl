@@ -36,6 +36,40 @@ jQuery(document).ready(function(){
       error:function(xhr,status,err){}
     });
   };
+  
+  
+  uvl.bind_selects = function() {
+    uvl.form.find("select:not(.range_compound_dropdown_start), input[type=checkbox]").live("change", function(){
+      clearTimeout(uvl.__vehicle_form_timer);
+      uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
+    });
+  }
+  
+  uvl.initial_range_html = function() {
+    uvl.form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
+  }
+  
+  uvl.range_start_init = function() {
+    uvl.form.find("select.range_compound_dropdown_start").each(function(){
+      if(jQuery(this).val()) uvl.__compound_lookup(jQuery(this));
+    });
+  }
+  
+  uvl.range_change_handlers = function() {
+    uvl.form.find("select.range_compound_dropdown_start").live("change", function(){
+      clearTimeout(uvl.__vehicle_form_timer);
+      uvl.__compound_lookup(jQuery(this));
+    });
+  }
+  
+  
+  uvl.init = function() {
+    uvl.bind_selects();
+    uvl.initial_range_html();
+    uvl.range_start_init();
+    uvl.range_change_handlers();
+  }
+  
   uvl.form.find("input[type=submit]").hide();
   //range sliders
   uvl.form.find("fieldset.range_slider").each(function(){
@@ -65,20 +99,13 @@ jQuery(document).ready(function(){
     });
     obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
   });
+  
+  
 
-  uvl.form.find("select:not(.range_compound_dropdown_start), input[type=checkbox]").live("change", function(){
-    clearTimeout(uvl.__vehicle_form_timer);
-    uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
-  });
+  uvl.init();
 
-  uvl.form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
 
-  uvl.form.find("select.range_compound_dropdown_start").each(function(){
-    if(jQuery(this).val()) uvl.__compound_lookup(jQuery(this));
-  });
+  
 
-  uvl.form.find("select.range_compound_dropdown_start").live("change", function(){
-    clearTimeout(uvl.__vehicle_form_timer);
-    uvl.__compound_lookup(jQuery(this));
-  });
+  
 });
