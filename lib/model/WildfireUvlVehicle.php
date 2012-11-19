@@ -4,12 +4,12 @@ class WildfireUvlVehicle extends WildfireContent{
 
   public function setup(){
     $this->define("registration", "CharField", array('required'=>true, 'scaffold'=>true)); //reg plate
-    $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true));
-    $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true));
+    $this->define("make", "CharField", array('required'=>true, 'scaffold'=>true, 'widget'=>"SelectInput", 'choices'=>WildfireUvlVehicleList::find_manufacturers(), 'text_choices'=>true));
+    $this->define("model", "CharField", array('required'=>true, 'scaffold'=>true, 'widget'=>"SelectInput", 'choices'=>WildfireUvlVehicleList::find_models($this->make), 'text_choices'=>true));
 
     parent::setup();
     $this->define("status", "IntegerField", array('default'=>0, 'maxlength'=>2, "widget"=>"SelectInput", "choices"=>array(0=>"Not Live",1=>"Live"), 'scaffold'=>true, 'editable'=>true, 'label'=>"Live", 'info_preview'=>1, "tree_scaffold"=>1));
-    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2'));
+    $this->define("price", "FloatField", array('required'=>true, 'maxlength'=>'12,2', 'label'=>"Price(&pound;) - numbers only"));
     $this->define("code", "CharField", array('required'=>true, 'group'=>'extras')); //a unique ref from import
 
     $this->define("date_of_manufacture", "CharField", array('group'=>'extras'));
@@ -59,8 +59,16 @@ class WildfireUvlVehicle extends WildfireContent{
 
     //remove the date_start / date_end
     $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
-	$this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
-	$this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
+	  $this->define("date_end", "DateTimeField", array('export'=>true, 'editable'=>false));
+	  $this->define("sort", "IntegerField", array('maxlength'=>3, 'default'=>0, 'widget'=>"HiddenInput", 'editable'=>false, 'group'=>false));
+    
+    
+    
+    //ability to search by vehicle location
+    $this->define("postcode_location", "CharField", array('label'=>"UK postcode location"));
+    $this->define("lat", "CharField", array('editable'=>false));
+    $this->define("lng", "CharField", array('editable'=>false));
+   
     unset($this->columns['view'], $this->columns['layout']);
 
     $this->define("export_to_ebay", "BooleanField", array("group"=>"export"));
@@ -82,6 +90,24 @@ class WildfireUvlVehicle extends WildfireContent{
     if(!$this->code) $this->code = rand(1000,9999);
     parent::before_save();
   }
+  
+  public function humanize($column=false){
+    if($column == "make" ) return $this->make;
+    if($column == "model" ) return $this->model;
+    return parent::humanize($column);
+  }
+  public function after_save() {
+    // Try and copy across lat/lng details from branch to speed up search by distance
+    if(!$this->postcode_location && count($this->branches)) {
+      $this->lat = $this->branches[0]->lat;
+      $this->lng = $this->branches[0]->lng;
+    } elseif($this->postcode_location) {
+      $coords = geo_locate($this->postcode_location, Config::get("uvl/google_maps_key"));
+      $this->lat = $coords['lat'];
+      $this->lng = $coords['lng'];
+    }
+  }
+
 
   public function after_save(){
     if($this->export_to_ebay && !$this->ebay_id && ($data = $this->to_ebay())){
@@ -118,4 +144,3 @@ class WildfireUvlVehicle extends WildfireContent{
     return $item_holder;
   }
 }
-?>

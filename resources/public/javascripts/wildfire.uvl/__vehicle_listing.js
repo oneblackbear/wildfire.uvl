@@ -1,48 +1,44 @@
+var uvl = {};
 jQuery(document).ready(function(){
-  var form = jQuery("form.vehicles_search_form"),
-      __vehicle_form_timer = false,
-      __vehicle_form_post = function(){
-          var data = form.serialize()+"&uvl=1";
-            ;
-        //add the loading classes
-        form.addClass("vehicle_loading").removeClass("vehicle_success").removeClass("vehicle_failed");
+  uvl.form = jQuery("form.vehicles_search_form");
+  uvl.__vehicle_form_timer = false,
+  uvl.__vehicle_form_post = function(){
+          var data = uvl.form.serialize()+"&uvl=1";
+          //add the loading classes
+          uvl.form.addClass("vehicle_loading").removeClass("vehicle_success").removeClass("vehicle_failed");
         //call form
         jQuery.ajax({
           data:data,
           type:"get",
           url:"/uvl/vehicle_search",
           success:function(res){
-            form.find(".vehicles_set").replaceWith(res);
-            form.addClass("vehicle_success").removeClass("vehicle_loading").removeClass("vehicle_failed");
+            uvl.form.find(".vehicles_set").replaceWith(res);
+            uvl.form.addClass("vehicle_success").removeClass("vehicle_loading").removeClass("vehicle_failed");
+            jQuery(document).trigger("uvl.search_complete");
           },
-          error:function(xhr,status,err){
-
-          }
+          error:function(xhr,status,err){}
         });
+  };
+  uvl.__compound_lookup = function(select_obj){
+    var first_col = select_obj.data('col'),
+        value = select_obj.val(),
+        sub = select_obj.closest("fieldset").next(".range_compound_end").find("select"),
+        needed = sub.data("col"),
+        data = {col:first_col, val:value, need:needed}
+        ;
+    jQuery.ajax({
+      data:data,
+      type:"post",
+      url:"/uvl/__compound_lookup",
+      success:function(res){
+        sub.html(res);
       },
-      __compound_lookup = function(select_obj){
-        var first_col = select_obj.data('col'),
-            value = select_obj.val(),
-            sub = select_obj.closest("fieldset").next(".range_compound_end").find("select"),
-            needed = sub.data("col"),
-            data = {col:first_col, val:value, need:needed}
-            ;
-        jQuery.ajax({
-          data:data,
-          type:"post",
-          url:"/uvl/__compound_lookup",
-          success:function(res){
-            sub.html(res);
-          },
-          error:function(xhr,status,err){
-
-          }
-        });
-      }
-      ;
-  form.find("input[type=submit]").hide();
+      error:function(xhr,status,err){}
+    });
+  };
+  uvl.form.find("input[type=submit]").hide();
   //range sliders
-  form.find("fieldset.range_slider").each(function(){
+  uvl.form.find("fieldset.range_slider").each(function(){
     var obj = jQuery(this),
         _min = parseFloat(obj.find(".range_slider_min").hide().attr("data-min")),
         _max = parseFloat(obj.find(".range_slider_max").hide().attr("data-max")),
@@ -63,26 +59,26 @@ jQuery(document).ready(function(){
         p.find(".range_current_val_min").html(ui.values[0]);
         p.find(".range_slider_min").val(ui.values[0]);
         p.find(".range_slider_max").val(ui.values[1]);
-        clearTimeout(__vehicle_form_timer);
-        __vehicle_form_timer = setTimeout(__vehicle_form_post, 800);
+        clearTimeout(uvl.__vehicle_form_timer);
+        uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
       }
     });
     obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
   });
 
-  form.find("select:not(.range_compound_dropdown_start), input[type=checkbox]").live("change", function(){
-    clearTimeout(__vehicle_form_timer);
-    __vehicle_form_timer = setTimeout(__vehicle_form_post, 800);
+  uvl.form.find("select:not(.range_compound_dropdown_start), input[type=checkbox]").live("change", function(){
+    clearTimeout(uvl.__vehicle_form_timer);
+    uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
   });
 
-  form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
+  uvl.form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
 
-  form.find("select.range_compound_dropdown_start").each(function(){
-    if(jQuery(this).val()) __compound_lookup(jQuery(this));
+  uvl.form.find("select.range_compound_dropdown_start").each(function(){
+    if(jQuery(this).val()) uvl.__compound_lookup(jQuery(this));
   });
 
-  form.find("select.range_compound_dropdown_start").live("change", function(){
-    clearTimeout(__vehicle_form_timer);
-    __compound_lookup(jQuery(this));
+  uvl.form.find("select.range_compound_dropdown_start").live("change", function(){
+    clearTimeout(uvl.__vehicle_form_timer);
+    uvl.__compound_lookup(jQuery(this));
   });
 });
