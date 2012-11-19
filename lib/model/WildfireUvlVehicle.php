@@ -139,6 +139,7 @@ class WildfireUvlVehicle extends WildfireContent{
     $item_holder->Item->PostalCode = $dealer->postal_code;
     $item_holder->Item->PaymentMethods = "CashOnPickup";
     $item_holder->Item->PrimaryCategory->CategoryID = 52636;
+    foreach($this->media as $m) $item_holder->Item->PictureDetails->PictureURL = $m->permalink();
     return $item_holder;
   }
 }
