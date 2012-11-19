@@ -106,10 +106,8 @@ class WildfireUvlVehicle extends WildfireContent{
       $this->lat = $coords['lat'];
       $this->lng = $coords['lng'];
     }
-  }
 
-
-  public function after_save(){
+    //ebay export
     if($this->export_to_ebay && !$this->ebay_id && ($data = $this->to_ebay())){
       $res = Ebay::AddItem(array(
         "system" => "sandbox",
