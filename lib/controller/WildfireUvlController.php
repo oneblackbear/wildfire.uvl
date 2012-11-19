@@ -97,7 +97,7 @@ class WildfireUvlController extends ApplicationController{
   protected function __vehicle_search_range_values($model, $column){
     //find min & max of this column
     $wax_model = new WaxModel;
-    $sql = "SELECT DISTINCT MIN(IFNULL(0, `$column`)) as minval, MAX(`$column`) as maxval FROM ".$model->table;
+    $sql = "SELECT DISTINCT MIN(IFNULL(0, CAST(`$column` AS UNSIGNED))) as minval, MAX(CAST(`$column` AS UNSIGNED)) as maxval FROM ".$model->table;
     $res = $wax_model->query($sql)->fetchAll();
     return array('min'=>$res[0]['minval'], 'max'=>$res[0]['maxval']);
   }
