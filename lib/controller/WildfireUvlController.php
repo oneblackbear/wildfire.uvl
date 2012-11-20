@@ -128,7 +128,7 @@ class WildfireUvlController extends ApplicationController{
     foreach($filters as $key=>&$val){
       if(is_string($val)) $val = urldecode($val);
       if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key], $search_options[$key]);
-    }
+    }    
     WaxEvent::run("uvl.vehicle.filters", $model);
     return $model;
   }
