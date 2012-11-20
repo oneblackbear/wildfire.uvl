@@ -23,7 +23,7 @@ class WildfireUvlVehicle extends WildfireContent{
 
     $this->define("engine_size", "CharField", array('group'=>'engine'));
     $this->define("co2", "CharField", array('group'=>'engine'));
-    $this->define("mileage", "CharField", array('group'=>'engine'));
+    $this->define("mileage", "IntegerField", array('group'=>'engine'));
 
     $this->define("body_make", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
     $this->define("body_model", "CharField", array('scaffold'=>true, 'group'=>'sizes / chasis'));
