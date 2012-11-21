@@ -6,6 +6,7 @@ class WildfireUvlController extends ApplicationController{
 
   public $vehicle_class = "WildfireUvlVehicle";
   public $per_page = 5;
+  public $cms_live_scope = "live";
 
   //pushing back to the stack
   public function controller_global(){
@@ -31,6 +32,16 @@ class WildfireUvlController extends ApplicationController{
     $this->use_layout = false;
     unset($_GET['uvl']);
   }
+  
+  public function model_list() {
+    $make = get("wildfire_uvl_vehicle_make");
+    $select = get("model");
+    $models = WildfireUvlVehicleList::find_models($make, false);
+    if($select) $models['selected']=$select;
+    echo json_encode($models);
+    exit;
+  }
+  
   //small on used on the listing
   public function __vehicle_summary(){}
   //main one - view of the actual vehicle
@@ -44,13 +55,11 @@ class WildfireUvlController extends ApplicationController{
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
     elseif($vehicle_filters = Request::param('vehicle')) $this->vehicle_filters = array_merge($vehicle_filters, $this->vehicle_filters);
     if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
-    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);
-
+    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);    
     if($this->paginate_vehicles_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
-      $this->vehicles = $model->page($this->this_page, $this->per_page);
-    }else $this->vehicles = $model->all();
-
+      $this->vehicles = $model->page($this->this_page, $this->per_page);      
+    }else $this->vehicles = $model->all(); 
   }
   /**
    * find min - max values for search options, custom search fields etc, partial is used in __vehicle_listing
@@ -77,7 +86,7 @@ class WildfireUvlController extends ApplicationController{
   public function __compound_lookup(){
     $this->use_layout = false;
     $this->results = array();
-    if(($col = Request::param('col')) && ($val = Request::param('val')) && ($need = Request::param('need'))){
+    if(($col = Request::param('col')) && ($val = urldecode(Request::param('val'))) && ($need = Request::param('need'))){
       $model = new $this->vehicle_class($this->cms_live_scope);
       foreach($model->filter($col, $val)->group($need)->all() as $row) $this->results[] = $row->$need;
     }
@@ -88,7 +97,7 @@ class WildfireUvlController extends ApplicationController{
   protected function __vehicle_search_range_values($model, $column){
     //find min & max of this column
     $wax_model = new WaxModel;
-    $sql = "SELECT DISTINCT MIN(`$column`) as minval, MAX(`$column`) as maxval FROM ".$model->table." WHERE `$column` > 0";
+    $sql = "SELECT DISTINCT MIN(IFNULL(0, CAST(`$column` AS UNSIGNED))) as minval, MAX(CAST(`$column` AS UNSIGNED)) as maxval FROM ".$model->table;
     $res = $wax_model->query($sql)->fetchAll();
     return array('min'=>$res[0]['minval'], 'max'=>$res[0]['maxval']);
   }
@@ -113,13 +122,14 @@ class WildfireUvlController extends ApplicationController{
    * take the passed in filter data, work out what data type it is, call its matching function which updates the model with filters
    */
   protected function __vehicle_filters($model, $filters){
-    WaxEvent::run("uvl.vehicle.filters", $model);
     //go over the filters, compare to the search and based on what type they are run code to update the model filters
-    $search_options = $this->__vehicle_search_options(true, true);
+    $search_options = $this->__vehicle_search_options(true, true);    
     $process = array();
-    foreach($filters as $key=>$val){
+    foreach($filters as $key=>&$val){
+      if(is_string($val)) $val = urldecode($val);
       if($search = $search_options[$key]) $model = $this->{"__vehicle_filter_".$search['type']}($model, $key, $filters[$key], $search_options[$key]);
     }
+    WaxEvent::run("uvl.vehicle.filters", $model);
     return $model;
   }
   /**

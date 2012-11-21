@@ -6,6 +6,7 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
   public $dashboard = false;
   public $file_tags = array('gallery image');
   public static $restricted_tree = false;
+  public $per_page = 25;
 
   public function events(){
     parent::events();
@@ -26,6 +27,17 @@ class CMSAdminUvlvehicleController extends CMSAdminUvlController{
         }
       });
     }
+  }
+
+  public function import(){
+    if($dealer = $this->current_user->dealer){
+      $import = new WildfireUvlImport(array(
+        "import_dir" => WAX_ROOT."tmp/used_import/$dealer->client_id",
+        "dealer_id" => $dealer->id
+      ));
+      $import->import_all();
+    }
+    $this->redirect_to("/$this->controller");
   }
 }
 ?>

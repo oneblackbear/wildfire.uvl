@@ -1,0 +1,14 @@
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         bootstrap="tests/bootstrap.php"
+         cacheTokens="false"
+         colors="true"
+         strict="false"
+         verbose="true">
+         
+  <testsuites>
+    <testsuite name="UVL Import Test Suite">
+      <directory>Tests/</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
