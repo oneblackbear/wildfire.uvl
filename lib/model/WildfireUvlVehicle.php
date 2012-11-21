@@ -138,7 +138,12 @@ class WildfireUvlVehicle extends WildfireContent{
     $item_holder->Item->Currency = "GBP";
     $item_holder->Item->PostalCode = $dealer->postal_code;
     $item_holder->Item->PaymentMethods = "CashOnPickup";
-    $item_holder->Item->PrimaryCategory->CategoryID = 52636;
+    $list = new WildfireUvlVehicleList;
+    foreach($list->manufacturers() as $manu) if($manu->manufacturer == $this->make && $manu->ebay_id){
+      $item_holder->Item->PrimaryCategory->CategoryID = $manu->ebay_id;
+      break;
+    }
+    if(!$item_holder->Item->PrimaryCategory->CategoryID) $item_holder->Item->PrimaryCategory->CategoryID = 18308; //18308 is the other cars cat, when a make doesn't match
     $item_holder->Item->VRM = $this->registration;
     foreach($this->media as $m) $item_holder->Item->PictureDetails->PictureURL[] = "http://".$_SERVER['HTTP_HOST'].$m->permalink();
     return $item_holder;

@@ -7,7 +7,9 @@ class WildfireUvlVehicleList extends WaxModel{
 
   public static function find_manufacturers() {
     $m_model = new WildfireUvlVehicleList;
-    return $m_model->manufacturers();
+    $manufacturers = array();
+    foreach($m_model->manufacturers() as $res) $manufacturers[]=$res->manufacturer;
+    return $manufacturers;
   }
   
   public static function find_models($make = false, $prefix = true) {
@@ -17,14 +19,9 @@ class WildfireUvlVehicleList extends WaxModel{
   
   public function manufacturers() {
     if(self::$manufacturers) return self::$manufacturers;
-    
     $api_key = Config::get("uvl/vrm_api_key");
     if(!$api_key) throw new Exception("Vehicle Lookup Required API Key","Please check your configuration");
-    $man_results = $this->json_url_cache($this->api."?token=".$api_key);
-    $manufacturers = array();
-    foreach($man_results as $res) $manufacturers[]=$res->manufacturer;
-    self::$manufacturers = $manufacturers;
-    return $manufacturers;
+    return self::$manufacturers = $this->json_url_cache($this->api."?token=".$api_key);
   }
   
   public function models($make = false, $prefix = true) {
