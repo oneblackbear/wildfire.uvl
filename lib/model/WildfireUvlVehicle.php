@@ -90,7 +90,7 @@ class WildfireUvlVehicle extends WildfireContent{
     return $this->dealer->autotrader_id;
   }
 
-  public function autotrader_images(){
+  public function csv_images(){
     foreach($this->media(array("media_class"=>"WildfireDiskFile")) as $media) $r[] = basename($media->source);
     return implode(",", $r);
   }
@@ -100,6 +100,14 @@ class WildfireUvlVehicle extends WildfireContent{
     foreach($this->media(array("media_class"=>"WildfireDiskFile")) as $media){
       copy(PUBLIC_DIR.$media->source, $image_export_path.basename($media->source));
     }
+  }
+
+  public function gforces_is_plus_vat(){
+    return $this->price_has_vat == "exc VAT"?"Y":"N";
+  }
+
+  public function gforces_is_new(){
+    return "N";
   }
 }
 ?>

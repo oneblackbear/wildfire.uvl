@@ -1,8 +1,8 @@
-"<?=implode('","', array_keys(Autotrader::$fields))?>"
+"<?=implode('","', array_keys($field_mapping))?>"
 <?foreach($vehicles as $vehicle){
   $vehicle->copy_media($image_export_path);
   $this_row = array();
-  foreach(Autotrader::$fields as $theirs => $ours){
+  foreach($field_mapping as $theirs => $ours){
     $data = '';
     if($ours){
       $res = $vehicle->$ours();
