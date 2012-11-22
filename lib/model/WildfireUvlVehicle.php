@@ -71,7 +71,6 @@ class WildfireUvlVehicle extends WildfireContent{
    
     unset($this->columns['view'], $this->columns['layout']);
 
-    $this->define("export_to_ebay", "BooleanField", array("group"=>"export"));
     $this->define("ebay_id", "CharField", array("editable"=>false));
   }
 
@@ -108,15 +107,18 @@ class WildfireUvlVehicle extends WildfireContent{
     }
 
     //ebay export
-    if($this->export_to_ebay && !$this->ebay_id && ($data = $this->to_ebay())){
-      $res = Ebay::AddItem(array(
-        "system" => "sandbox",
-        "appid" => $this->dealer->ebay_appid,
-        "auth_token" => $this->dealer->ebay_auth_token,
-        "data" => $data));
-      if($res->Ack == "Success"){
-        $this->ebay_id = $res->ItemID;
-        $this->save();
+    if(defined("DEALERS")){
+      $dealer = $this->dealer;
+      if($dealer->ebay_system && $dealer->ebay_appid && $dealer->ebay_auth_token && !$this->ebay_id && ($data = $this->to_ebay())){
+        $res = Ebay::AddItem(array(
+          "system" => $dealer->ebay_system,
+          "appid" => $dealer->ebay_appid,
+          "auth_token" => $dealer->ebay_auth_token,
+          "data" => $data));
+        if($res->Ack == "Success"){
+          $this->ebay_id = $res->ItemID;
+          $this->save();
+        }
       }
     }
   }
