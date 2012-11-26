@@ -1,5 +1,7 @@
-"<?=implode('","', array_keys($field_mapping))?>"
-<?foreach($vehicles as $vehicle){
+<?
+$output = new SplFileObject('php://output', 'w');
+foreach(array_keys($field_mapping) as $header) $output->fputcsv($fields);
+foreach($vehicles as $vehicle){
   $vehicle->copy_media($image_export_path);
   $this_row = array();
   foreach($field_mapping as $theirs => $ours){
@@ -15,5 +17,6 @@
     }
     $this_row[$theirs] = $data;
   }
-  echo '"'.implode('","', $this_row)."\"\n";
-}?>
+  $output->fputcsv($this_row);
+}
+?>
