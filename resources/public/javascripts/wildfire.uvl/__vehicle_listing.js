@@ -62,45 +62,49 @@ jQuery(document).ready(function(){
     });
   }
   
+  uvl.hide_submit = function() {
+    uvl.form.find("input[type=submit]").hide();
+  }
+  
+  uvl.setup_sliders = function(){
+    uvl.form.find("fieldset.range_slider").each(function(){
+      var obj = jQuery(this),
+          _min = parseFloat(obj.find(".range_slider_min").hide().attr("data-min")),
+          _max = parseFloat(obj.find(".range_slider_max").hide().attr("data-max")),
+          step = parseFloat(obj.find(".range_slider_max").attr("data-inc")),
+          min = _min,
+          max = _max
+          ;
+
+      obj.find(".slider").slider({
+        range:true,
+        min:min,
+        max:max,
+        values:[_min, _max],
+        step:step,
+        slide: function(e, ui){
+          var p = jQuery(e.target).closest("fieldset.range_slider");
+          p.find(".range_current_val_max").html(ui.values[1]);
+          p.find(".range_current_val_min").html(ui.values[0]);
+          p.find(".range_slider_min").val(ui.values[0]);
+          p.find(".range_slider_max").val(ui.values[1]);
+          clearTimeout(uvl.__vehicle_form_timer);
+          uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
+        }
+      });
+      obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
+    });
+  }
+  
   
   uvl.init = function() {
     uvl.bind_selects();
     uvl.initial_range_html();
     uvl.range_start_init();
     uvl.range_change_handlers();
-  }
-  
-  uvl.form.find("input[type=submit]").hide();
-  //range sliders
-  uvl.form.find("fieldset.range_slider").each(function(){
-    var obj = jQuery(this),
-        _min = parseFloat(obj.find(".range_slider_min").hide().attr("data-min")),
-        _max = parseFloat(obj.find(".range_slider_max").hide().attr("data-max")),
-        step = parseFloat(obj.find(".range_slider_max").attr("data-inc")),
-        min = _min,
-        max = _max
-        ;
-
-    obj.find(".slider").slider({
-      range:true,
-      min:min,
-      max:max,
-      values:[_min, _max],
-      step:step,
-      slide: function(e, ui){
-        var p = jQuery(e.target).closest("fieldset.range_slider");
-        p.find(".range_current_val_max").html(ui.values[1]);
-        p.find(".range_current_val_min").html(ui.values[0]);
-        p.find(".range_slider_min").val(ui.values[0]);
-        p.find(".range_slider_max").val(ui.values[1]);
-        clearTimeout(uvl.__vehicle_form_timer);
-        uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
-      }
-    });
-    obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
-  });
-  
-  
+    uvl.hide_submit();
+    uvl.setup_sliders();
+  }  
 
   uvl.init();
 
