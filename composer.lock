@@ -1,0 +1,106 @@
+{
+    "hash": "af471d4debe034bb531de8445eb49821",
+    "packages": [
+        {
+            "name": "phpwax/model",
+            "version": "dev-master",
+            "target-dir": "Wax/Model",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpwax/model",
+                "reference": "f4443fccd031251a87d485228f34f227cab0b5d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/phpwax/model/archive/f4443fccd031251a87d485228f34f227cab0b5d0.zip",
+                "reference": "f4443fccd031251a87d485228f34f227cab0b5d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-11-21 21:53:36",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Wax\\Model": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ross Riley",
+                    "email": "ross@oneblackbear.com"
+                }
+            ],
+            "description": "Wax Model Component",
+            "homepage": "http://php-wax.com"
+        },
+        {
+            "name": "phpwax/mogilefs",
+            "version": "dev-master",
+            "target-dir": "MogileFS",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpwax/mogilefs",
+                "reference": "727f99b0eed14f9f67bb68aaa5acfe9c53f97f64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/phpwax/mogilefs/archive/727f99b0eed14f9f67bb68aaa5acfe9c53f97f64.zip",
+                "reference": "727f99b0eed14f9f67bb68aaa5acfe9c53f97f64",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-11-20 14:22:32",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "MogileFS": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ross Riley",
+                    "email": "ross@oneblackbear.com"
+                },
+                {
+                    "name": "Jon Skarpeteig",
+                    "email": "jon.skarpeteig@gmail.com"
+                }
+            ],
+            "description": "MogileFS Component",
+            "homepage": "http://php-wax.com",
+            "keywords": [
+                "MogileFS"
+            ]
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ]
+}
