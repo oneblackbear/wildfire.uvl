@@ -1,5 +1,5 @@
 <?
-require_once __DIR__.'/vendor/autoload.php';
+//require_once __DIR__.'/vendor/autoload.php';
 define("UVL",true);
 CMSApplication::register_module("uvlbranch", array("display_name"=>"Dealerships", "link"=>"/admin/uvlbranch/", 'split'=>true));
 
