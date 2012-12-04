@@ -1,6 +1,6 @@
 <?
 $output = new SplFileObject('php://output', 'w');
-foreach(array_keys($field_mapping) as $header) $output->fputcsv($fields);
+$output->fputcsv(array_keys($field_mapping));
 foreach($vehicles as $vehicle){
   $vehicle->copy_media($image_export_path);
   $this_row = array();
