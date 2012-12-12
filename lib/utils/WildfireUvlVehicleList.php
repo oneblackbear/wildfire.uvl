@@ -57,6 +57,9 @@ class WildfireUvlVehicleList extends WaxModel{
         $store->set($result);
         return json_decode(unserialize($result));
       }
+    }else{
+      $result = serialize(file_get_contents($url));      
+      return json_decode(unserialize($result));
     }
     return false;
   }
