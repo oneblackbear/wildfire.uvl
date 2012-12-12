@@ -1,0 +1,16 @@
+{
+    "name": "oneblackbear/uvl",
+    "description": "UVL Solution",
+    "authors": [
+        {
+            "name": "Ross Riley",
+            "email": "riley.ross@gmail.com"
+        }
+    ],
+    "require": {
+      "php": ">=5.3.3",
+      "phpwax/mogilefs": "1.0.*",
+      "phpwax/model": "1.0.*"
+    },
+    "minimum-stability": "dev"
+}
