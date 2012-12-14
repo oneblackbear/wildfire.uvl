@@ -1,7 +1,7 @@
 var uvl = {};
 jQuery(document).ready(function(){
   uvl.form = jQuery("form.vehicles_search_form");
-  uvl.__vehicle_form_timer = false,
+  uvl.__vehicle_form_timer = false;
   uvl.__vehicle_form_post = function(){
           var data = uvl.form.serialize()+"&uvl=1";
           //add the loading classes
@@ -43,28 +43,28 @@ jQuery(document).ready(function(){
       clearTimeout(uvl.__vehicle_form_timer);
       uvl.__vehicle_form_timer = setTimeout(uvl.__vehicle_form_post, 800);
     });
-  }
+  };
   
   uvl.initial_range_html = function() {
     uvl.form.find(".range_compound_dropdown_end").html("<option value=''>--</option>");
-  }
+  };
   
   uvl.range_start_init = function() {
     uvl.form.find("select.range_compound_dropdown_start").each(function(){
       if(jQuery(this).val()) uvl.__compound_lookup(jQuery(this));
     });
-  }
+  };
   
   uvl.range_change_handlers = function() {
     uvl.form.find("select.range_compound_dropdown_start").live("change", function(){
       clearTimeout(uvl.__vehicle_form_timer);
       uvl.__compound_lookup(jQuery(this));
     });
-  }
+  };
   
   uvl.hide_submit = function() {
     uvl.form.find("input[type=submit]").hide();
-  }
+  };
   
   uvl.setup_sliders = function(){
     uvl.form.find("fieldset.range_slider").each(function(){
@@ -94,7 +94,30 @@ jQuery(document).ready(function(){
       });
       obj.append("<div class='range_status clearfix'><span class='range_current_val_max'>"+_max+"</span><span class='range_current_val_min'>"+_min+"</span></div>");
     });
-  }
+  };
+  
+  uvl.bind_pagination = function() {
+    
+    jQuery(document).bind("uvl.search_complete", function() {
+      uvl.form.find(".pagination_link a").click(function(e){
+        uvl.form.addClass("vehicle_loading").removeClass("vehicle_success").removeClass("vehicle_failed");
+        s_url = $(this).attr("href");
+        $.ajax({
+          type:"get",
+          url:s_url,
+          success:function(res){
+            uvl.form.find(".vehicles_set").replaceWith(res);
+            uvl.form.addClass("vehicle_success").removeClass("vehicle_loading").removeClass("vehicle_failed");
+            jQuery(document).trigger("uvl.search_complete");
+          },
+          error:function(xhr,status,err){}
+        });
+        e.preventDefault();
+      });
+    });
+    
+    
+  };
   
   
   uvl.init = function() {
@@ -104,7 +127,8 @@ jQuery(document).ready(function(){
     uvl.range_change_handlers();
     uvl.hide_submit();
     uvl.setup_sliders();
-  }  
+    uvl.bind_pagination();
+  }; 
 
   uvl.init();
 
