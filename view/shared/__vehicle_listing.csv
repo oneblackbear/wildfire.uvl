@@ -8,6 +8,7 @@ foreach($vehicles as $vehicle){
     $data = '';
     if($ours){
       $res = $vehicle->$ours();
+      if($res === NULL) $res = $vehicle->$ours;
       if($res instanceof WaxRecordSet){
         $complex = array();
         foreach($res as $d) $complex[] = $d->{$d->identifier};
