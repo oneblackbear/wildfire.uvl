@@ -30,7 +30,7 @@ class CSVFileImporter {
     $csv  = new SplFileObject($this->file, 'r');
     while(!$csv->eof() && ($row = $csv->fgetcsv()) ) {
       if($csv->key()==0 && $this->fields_first) $this->fields = $row;
-      else $this->data[]=array_combine($this->fields, $row);
+      elseif(count($row)==count($this->fields)) $this->data[]=array_combine($this->fields, $row);
     }
     if(count($this->mappings)) $this->map();
   }
