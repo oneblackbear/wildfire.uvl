@@ -31,6 +31,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase {
   public function setup() {
     $this->csv_file = __DIR__."/resources/csv_test.csv";
     $this->image_file = __DIR__."/resources/image_test.jpg";
+    $this->mannhein_file = __DIR__."/resources/mannhein.zip";
   }
   
   public function teardown() {
@@ -84,6 +85,18 @@ class ImportTest extends \PHPUnit_Framework_TestCase {
     $this->assertFileExists($image->destination);
     unlink($image->destination);
     $this->assertFileNotExists($image->destination);
+  }
+  
+  public function test_mannhein() {
+    $zip = new ZipArchive;
+    $archive = $zip->open($this->mannhein_file);
+    $csv_file = $zip->getFromName("cars.txt");
+    $tmp_csv = tempnam(sys_get_temp_dir(),"");
+    file_put_contents($tmp_csv, $csv_file);
+    $csv = new MannheinImporter($tmp_csv);
+    $csv->parse();
+    $this->assertGreaterThan(1,count($csv->parsed_data));    
+    
   }
   
 }
