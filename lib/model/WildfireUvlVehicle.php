@@ -99,7 +99,7 @@ class WildfireUvlVehicle extends WildfireContent{
     if(!$this->postcode_location && count($this->branches)) {
       $this->lat = $this->branches[0]->lat;
       $this->lng = $this->branches[0]->lng;
-    } elseif($this->postcode_location) {
+    } elseif($this->postcode_location && (!$this->lat || !$this->lng)) {
       $coords = geo_locate($this->postcode_location, Config::get("uvl/google_maps_key"));
       $this->lat = $coords['lat'];
       $this->lng = $coords['lng'];
