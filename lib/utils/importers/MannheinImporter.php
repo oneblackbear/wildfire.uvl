@@ -77,6 +77,7 @@ class MannheinImporter extends CSVFileImporter {
   
   public function handle_image_imports() {
     foreach($this->data as &$vehicle) {
+      $images = array();
       $real_images = array();
       if(strlen($vehicle["PictureRefs"])<2) continue;
       $images = explode(",",$vehicle['PictureRefs']);
