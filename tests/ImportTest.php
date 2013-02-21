@@ -88,12 +88,7 @@ class ImportTest extends \PHPUnit_Framework_TestCase {
   }
   
   public function test_mannhein() {
-    $zip = new ZipArchive;
-    $archive = $zip->open($this->mannhein_file);
-    $csv_file = $zip->getFromName("cars.txt");
-    $tmp_csv = tempnam(sys_get_temp_dir(),"");
-    file_put_contents($tmp_csv, $csv_file);
-    $csv = new MannheinImporter($tmp_csv);
+    $csv = new MannheinImporter($this->mannhein_file);
     $csv->parse();
     $this->assertGreaterThan(1,count($csv->parsed_data));    
     

@@ -51,15 +51,15 @@ class WildfireUvlController extends ApplicationController{
    * handles the display, filtering, search etc of vehicles - main partial
    */
   public function __vehicle_listing(){
-    $model = new $this->vehicle_class($this->cms_live_scope);
+    $model = new $this->vehicle_class($this->cms_live_scope);    
     if(!$this->vehicle_filters) $this->vehicle_filters = Request::param('vehicle');
     elseif($vehicle_filters = Request::param('vehicle')) $this->vehicle_filters = array_merge($vehicle_filters, $this->vehicle_filters);
     if(!$this->vehicle_sort) $this->vehicle_sort = Request::param('sort');
-    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);    
+    $model = $this->__vehicle_sort( $this->__vehicle_filters($model, $this->vehicle_filters), $this->vehicle_sort);      
     if($this->paginate_vehicles_list){
       if(!$this->this_page = Request::param('page')) $this->this_page = 1;
       $this->vehicles = $model->page($this->this_page, $this->per_page);      
-    }else $this->vehicles = $model->all(); 
+    }else $this->vehicles = $model->all();
   }
   /**
    * find min - max values for search options, custom search fields etc, partial is used in __vehicle_listing

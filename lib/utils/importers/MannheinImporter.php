@@ -70,7 +70,7 @@ class MannheinImporter extends CSVFileImporter {
     $dealer_rows = explode("\n", $dealer_file);
     $fields = str_getcsv(array_shift($dealer_rows));
     foreach($dealer_rows as $row) {
-      $dealer_maps[] = array_combine($fields, str_getcsv($row));
+      if(count($fields)==count(str_getcsv($row))) $dealer_maps[] = array_combine($fields, str_getcsv($row));
     }
     $this->dealer_locations = $dealer_maps;
   }
