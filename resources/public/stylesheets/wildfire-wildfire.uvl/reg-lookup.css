@@ -1,0 +1,19 @@
+.reg_lookup_table {
+  width:50%;
+  margin:20px 0;
+  background:white;
+  border-collapse:collapse;
+}
+.reg_lookup_table td {
+  background:#BCCFDB;
+  border-bottom:1px solid #9CAFBC;
+}
+#vehicle_try_again {
+  margin-right:30px;
+}
+#fetch_reg {
+  margin-top:10px;
+}
+.old_entry {
+  float:right;
+}

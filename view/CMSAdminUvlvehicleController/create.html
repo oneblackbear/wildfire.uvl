@@ -1,0 +1,103 @@
+<form enctype="multipart/form-data" method="post" class="tabs_container form_container clearfix" action="">      
+  <ul class="tabs clearfix">
+    <li><a href="#details">New Vehicle</a></li>
+  </ul>
+  
+  <fieldset id="details" class="tab-contents clearfix details ui-tabs-panel ui-widget-content ui-corner-bottom">
+    <a class="old_entry" href="../old_create">Having problems? Click here to use manual entry.</a>
+    
+    <div id="reg_lookup_form" class="field field-registration field-details-registration clearfix">        
+      <label for="reg_lookup">Find Your Vehicle: Enter your Registration Below</label>
+      <input id="reg_lookup" value="" placeholder="eg: AB 456 DEF" class="input_field text_field">
+      <input type="button" id="fetch_reg" class="button feature_button" value="Find Vehicle">
+    </div>
+    <div id="vehicle_search_results" class="field">
+            
+    </div>
+    
+  </fieldset>
+  <fieldset class="submit">
+    <div class="field form-submit clearfix">
+      <button class="button" id="vehicle_try_again" type="button">Wrong Vehicle, Clear</button>
+      <input type="submit" class="submit_field input_field live WildfireCategory-live" value="Create Vehicle" name="live">      
+    </div>    
+  </fieldset>
+</form>
+
+
+
+<script id="found_vehicle_template" type="text/html">
+  <div class="vehicle_select">
+      <p><strong>The following vehicle details match the registration entered. If ok, click the create vehicle button to continue.</strong></p>
+      <table class='reg_lookup_table'>
+        <tr>
+          <td><strong>Make</strong></td>
+          <td>
+            {{=Combined_Make}}
+            <input type="hidden" name="wildfire_uvl_vehicle[make]" value="{{=Combined_Make}}">
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Model</strong></td>
+          <td>
+            {{=Combined_Model}}
+            <input type="hidden" name="wildfire_uvl_vehicle[model]" value="{{=Combined_Model}}">
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Fuel Type</strong></td>
+          <td>
+            {{=FuelType}}</td>
+            <input type="hidden" name="wildfire_uvl_vehicle[fuel]" value="{{=FuelType}}">
+        </tr>
+        <tr>
+          <td><strong>Transmission</strong></td>
+          <td>
+            {{=Combined_Transmission}}</td>
+            <input type="hidden" name="wildfire_uvl_vehicle[transmission]" value="{{=Combined_Transmission}}">
+            <input type="hidden" name="wildfire_uvl_vehicle[transmission_type]" value="{{=Combined_Transmission}}">
+        </tr>
+        <tr>
+          <td><strong>Engine</strong></td>
+          <td>
+            {{=Combined_EngineCapacity}}
+            <input type="hidden" name="wildfire_uvl_vehicle[engine_size]" value="{{=Combined_EngineCapacity}}">
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Year</strong></td>
+          <td>
+            {{=DVLAYearOfManufacture}}
+            <input type="hidden" name="wildfire_uvl_vehicle[date_of_manufacture]" value="{{=DVLAYearOfManufacture}}">
+            <input type="hidden" name="wildfire_uvl_vehicle[date_of_first_registration]" value="{{=DateFirstRegistered}}">
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Colour</strong></td>
+          <td>
+            {{=ColourCurrent}}
+            <input type="hidden" name="wildfire_uvl_vehicle[colour]" value="{{=ColourCurrent}}">
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Body Style</strong></td>
+          <td>
+            {{=BodyStyleDescription}}
+            <input type="hidden" name="wildfire_uvl_vehicle[body_style]" value="{{=BodyStyleDescription}}">
+          </td>
+        </tr>
+
+      </table>
+      <div class="field">
+        <label for="wildfire_uvl_vehicle_price">Please enter the vehicle sale price (&pound;) numbers only (eg: 10400.00)</label>
+        <input type="text" name="wildfire_uvl_vehicle[price]" value="" id="wildfire_uvl_vehicle_price" class="input_field text_field">
+      </div>
+      <input type="hidden" name="wildfire_uvl_vehicle[registration]" value="{{=VRM_Curr}}">      
+  </div>
+</script>
+<script id="no_vehicle_template" type="text/html">
+  <div class="vehicle_select">
+    <p><strong>We were unable to find your vehicle!</strong> Please check and try again</p>
+    <button class="button" id="vehicle_try_again" type="button">Try Again</button>
+  </div>
+</script>
