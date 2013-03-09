@@ -56,6 +56,10 @@ class WildfireUvlVehicle extends WildfireContent{
     $this->define("model_range_description", "CharField", array('group'=>'extras'));
     $this->define("model_series", "CharField", array('group'=>'extras'));
     $this->define("model_variant_description", "CharField", array('group'=>'extras'));
+    $this->define("vrm_data_matched", "BooleanField", array('editable'=>false));
+    $this->define("feed_provider", "CharField", array('editable'=>false));
+    $this->define("fuel", "CharField", array('editable'=>false));
+    $this->define("transmission_type", "CharField", array('editable'=>false));
 
     //remove the date_start / date_end
     $this->define("date_start", "DateTimeField", array('export'=>true, 'editable'=>false));
