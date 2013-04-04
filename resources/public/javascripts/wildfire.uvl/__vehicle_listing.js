@@ -120,6 +120,7 @@ jQuery(document).ready(function(){
   };
   
   
+  
   uvl.init = function() {
     uvl.bind_selects();
     uvl.initial_range_html();

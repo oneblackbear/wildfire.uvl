@@ -12,13 +12,49 @@ if(!$vehicle_fields) $vehicle_fields = $default_fields;
 if($limited > 0) $vehicle_fields = array_slice($vehicle_fields, 0, $limited, true);
 ?>
 
-<?if($vehicle_fields):?>
-<table>
-<?foreach($vehicle_fields as $field=>$name):?>
-  <?$val = $cms_content->humanize($field);?>
-  <?if($val):?>
-  <tr><th><?=$name?></th><td><?=$val?></td></tr>
-  <?endif?>
-<?endforeach?>
-</table>
-<?endif?>
+
+<div class="vehicle_show_item">
+  <div class="vehicle_show_header">
+    <div class="options">
+      <a href="#" class="trigger_specs_close option_close"></a>
+    </div>
+    <h2><?=$cms_content->title?></h2>
+    <h4 class="accessory_product_code"><?=$cms_content->make?> <?=$cms_content->model?> <?=$cms_content->model_variant_description?> / <?=$cms_content->colour?></h4>
+    <h4 class="accessory_product_code">Registration: <?=$cms_content->registration?></h4>
+    <div class="pricing">
+      <div class="main_price">
+        <?if($cms_content->previous_price > 1):?>
+        <span class='has_sale_price vehicle_price'>
+          <span class='vehicle_sale_price'>NOW &pound;<?=number_format($cms_content->price,2)?><?if($cms_content->price_has_vat == 1):?><span class="vat"> +VAT</span><?endif?></span>
+          <span class='vehicle_previous_price previous_price'>WAS &pound;<?=number_format($cms_content->previous_price,2)?></span>
+        </span>
+        <?else:?>
+        <span class='price vehicle_price'>&pound;<?=number_format($cms_content->price,2)?><?if($cms_content->price_has_vat == 1):?><span class="vat"> +VAT</span><?endif?></span>
+        <?endif?>
+      </div>
+    </div>
+  </div>
+
+  <div class="main_info_section">
+    <div class="vehicle_gallery">
+      <?=partial("__uvl_images", array('cms_content'=>$cms_content, 'gallery_image_type'=>"gallery image", 'gallery_image_type_size'=>115,"primary_image_size"=>240,"large_image_size"=>500))?>
+    </div>
+    
+    <div class="vehicle_content_wrapper">
+      <?=$cms_content->format_content()?>
+      <div class="vehicle_data">
+        <?if($vehicle_fields):?>
+        <table>
+        <?foreach($vehicle_fields as $field=>$name):?>
+          <?$val = $cms_content->humanize($field);?>
+          <?if($val):?>
+          <tr><th><?=$name?></th><td><?=$val?></td></tr>
+          <?endif?>
+        <?endforeach?>
+        </table>
+        <?endif?>
+      
+      </div>
+    </div>
+  </div>
+</div>
